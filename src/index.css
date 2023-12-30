@@ -1,0 +1,30 @@
+html,
+body,
+#root,
+#App {
+  height: 100%;
+}
+
+#App > div {
+  height: 100%;
+}
+
+.css-r6z5ec {
+  width: 30%;
+}
+
+.rdrStaticRanges,
+.rdrInputRange span {
+  color: black;
+}
+
+.rdrInputRangeInput {
+  background: none !important;
+}
+
+.rdrCalendarWrapper {
+  width: -webkit-fill-available;
+}
+.rdrMonth {
+  width: 100% !important;
+}
