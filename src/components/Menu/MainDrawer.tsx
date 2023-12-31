@@ -10,12 +10,19 @@ import {
   DrawerOverlay,
   Heading,
   Icon,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
   Text,
   useColorMode,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import axios, { AxiosResponse } from "axios";
 import { IconType } from "react-icons";
 import {
   BsBox,
@@ -29,7 +36,6 @@ import {
 import { FaPeopleCarry } from "react-icons/fa";
 import {
   MdCategory,
-  MdClear,
   MdClose,
   MdConstruction,
   MdDarkMode,
@@ -43,19 +49,8 @@ import {
   MdRadioButtonUnchecked,
 } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { MenuCard } from "./MenuCard";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { Auth } from "../../functions/services/auth-services";
 import useTokenStore from "../../functions/store/token";
+import { MenuCard } from "./MenuCard";
 
 interface Props {
   isOpen: boolean;
