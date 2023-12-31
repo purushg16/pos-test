@@ -33,9 +33,10 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
       <div id="invoice-POS" ref={ref}>
         <center id="top">
           <div className="info">
-            <h2> ஸ்ரீ அங்காளபரமேஸ்வரி துணை </h2>
-            <h2>50-வது ஆண்டு பொன்விழா காணும்</h2>
-            <h2>பத்மா ஸ்டோர்</h2>
+            <h6 style={{ textDecoration: "underline" }}> உ </h6>
+            <p> ஸ்ரீ அங்காளபரமேஸ்வரி துணை </p>
+            <p>50-வது ஆண்டு பொன்விழா காணும்</p>
+            <h1>பத்மா ஸ்டோர்</h1>
           </div>
         </center>
 
@@ -47,7 +48,7 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               சின்ன சேலம் <br />
             </p>
           </div>
-          <h2 style={{ margin: "10px 0" }}> Wallet Bill </h2>
+          <h2 style={{ margin: "10px 0" }}> Cash Bill </h2>
 
           <SimpleGrid columns={2} my={1}>
             <SimpleGrid columns={2}>
