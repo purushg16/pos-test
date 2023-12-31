@@ -33,7 +33,7 @@ const AddPayOutTable = () => {
     const currentDate = new Date();
     const startDate = new Date(currentDate);
     startDate.setDate(startDate.getDate() - numberOfDays!);
-    filter(startDate);
+    filter(startDate.setHours(0, 0, 0, 0));
   };
 
   return (

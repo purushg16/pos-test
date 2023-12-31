@@ -13,6 +13,8 @@ import {
   SimpleGrid,
   Text,
   useColorMode,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 import {
@@ -33,14 +35,27 @@ import {
   MdDarkMode,
   MdDeleteForever,
   MdLightMode,
+  MdLogout,
   MdOutlineAccountTree,
   MdOutlineFactCheck,
   MdOutlineMoney,
   MdRadioButtonChecked,
   MdRadioButtonUnchecked,
 } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MenuCard } from "./MenuCard";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { Auth } from "../../functions/services/auth-services";
+import useTokenStore from "../../functions/store/token";
 
 interface Props {
   isOpen: boolean;
@@ -74,6 +89,15 @@ const routes: {
 
 export default function MainDrawer({ isOpen, onClose }: Props) {
   const { toggleColorMode, colorMode } = useColorMode();
+  const currentUserType = useTokenStore((s) => s.currentUserType);
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    onClose();
+    localStorage.clear();
+    navigate("/login");
+  };
 
   return (
     <>
@@ -99,7 +123,7 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
                   {colorMode === "dark" ? <MdDarkMode /> : <MdLightMode />}
                 </Button>
                 <Link to="/reviewBills" onClick={onClose}>
-                  <Button ml={5} colorScheme="red" size="lg">
+                  <Button ml={5} colorScheme="yellow" size="lg">
                     <BellIcon />
                   </Button>
                 </Link>
@@ -111,6 +135,9 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
                 >
                   <BsFullscreen />
                 </Button>
+                <Button onClick={logout} size="lg" ml={5} colorScheme="red">
+                  <MdLogout />
+                </Button>
               </Heading>
             </SimpleGrid>
           </DrawerHeader>
@@ -118,7 +145,19 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
           <DrawerBody padding={10}>
             <SimpleGrid columns={4} spacing={10} padding={10}>
               {Object.keys(routes).map((route, index) => (
-                <Box boxShadow="dark-lg" borderRadius={20} key={index}>
+                <Box
+                  boxShadow="dark-lg"
+                  borderRadius={20}
+                  key={index}
+                  pointerEvents={
+                    route === "Reports" && currentUserType !== "admin"
+                      ? "none"
+                      : "all"
+                  }
+                  opacity={
+                    route === "Reports" && currentUserType !== "admin" ? 0.4 : 1
+                  }
+                >
                   <Link to={routes[route][0]} onClick={onClose}>
                     <MenuCard
                       title={route}
@@ -129,7 +168,8 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
                 </Box>
               ))}
 
-              <Box
+              <ConfirmModal />
+              {/* <Box
                 boxShadow="dark-lg"
                 borderRadius={20}
                 cursor="pointer"
@@ -145,7 +185,7 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
                     </Text>
                   </Box>
                 </SimpleGrid>
-              </Box>
+              </Box> */}
 
               <Box
                 boxShadow="dark-lg"
@@ -212,4 +252,65 @@ function toggleFullScreen() {
   } else {
     cancelFullScreen.call(doc);
   }
+}
+
+interface Response {
+  msg: string;
+}
+
+function ConfirmModal() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+
+  const deleteAllTransaction = () =>
+    axios
+      .post("https://padma-stores.onrender.com/settings/deleteTransaction")
+      .then((res) => {
+        toast({
+          title: (res as AxiosResponse<Response>).data.msg,
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+          position: "top",
+        });
+      });
+
+  return (
+    <>
+      <Box
+        boxShadow="dark-lg"
+        borderRadius={20}
+        cursor="pointer"
+        onClick={onOpen}
+        background="teal.700"
+      >
+        <SimpleGrid padding={10} gap={8}>
+          <Icon as={MdDeleteForever} boxSize={12} />
+          <Box flex={1}>
+            <Heading size="md"> Clear Transaction </Heading>
+            <Text color="gray" mt={1}>
+              Delete All Transactions
+            </Text>
+          </Box>
+        </SimpleGrid>
+      </Box>
+
+      <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader> Confirm </ModalHeader>
+          <ModalBody></ModalBody>
+
+          <ModalFooter>
+            <Button variant="ghost" mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="red" onClick={deleteAllTransaction}>
+              Delete All Transaction
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
 }

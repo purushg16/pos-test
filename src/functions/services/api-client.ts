@@ -24,13 +24,6 @@ const createAxiosInstance = () => {
 // Now you can use createAxiosInstance() to get an instance with the token dynamically set
 const instance = createAxiosInstance();
 
-// const axiosInstance = axios.create({
-//   baseURL: "https://pos-svn4.onrender.com/",
-//   // headers: {
-//   //   Authorization: localStorage.getItem("token"),
-//   // },
-// });
-
 export class APIGetClient<T> {
   // class attributes
   endpoint: string;

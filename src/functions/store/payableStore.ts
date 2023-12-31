@@ -5,7 +5,7 @@ interface PayableStoreType {
   payablesList: PayingSupplier[] | undefined;
   filteredPayables: PayingSupplier[] | undefined;
 
-  filterPayables: (date: Date) => void;
+  filterPayables: (date: number) => void;
   setPayablesList: (payables: PayingSupplier[]) => void;
   clearFilters: () => void;
 
@@ -23,7 +23,8 @@ const usePayableStore = create<PayableStoreType>((set) => ({
   filterPayables: (startDate) =>
     set((store) => ({
       filteredPayables: store.payablesList?.filter(
-        (customer) => new Date(customer.createdAt) <= startDate
+        (customer) =>
+          new Date(customer.createdAt).setHours(0, 0, 0, 0) <= startDate
       ),
     })),
 
