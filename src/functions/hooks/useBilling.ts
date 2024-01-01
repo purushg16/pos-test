@@ -19,6 +19,7 @@ const useGetBills = (startDate: Date, endDate: Date) =>
         params: { startDate: startDate, endDate: endDate },
       }),
     refetchOnWindowFocus: false,
+    enabled: false,
   });
 
 export { useGetBills };
