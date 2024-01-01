@@ -127,7 +127,9 @@ const BillingItemIdSelector = ({ small = false, stock = false }: Props) => {
           </Box>
 
           <Box maxHeight={400} overflowY="scroll" padding={2}>
-            {searchedProductList.length > 0 ? (
+            {!searchedProductList ? (
+              <Spinner />
+            ) : searchedProductList.length > 0 && ref.current?.value ? (
               <VStack marginX={3} gap={3}>
                 {searchedProductList.map((item: Product) => (
                   <ButtonGroup
@@ -155,12 +157,14 @@ const BillingItemIdSelector = ({ small = false, stock = false }: Props) => {
                   </ButtonGroup>
                 ))}
               </VStack>
-            ) : ref.current?.value ? (
+            ) : searchedProductList.length === 0 && ref.current?.value ? (
               <Text textAlign="center" fontSize="lg">
                 No Products found!
               </Text>
             ) : (
-              <Spinner />
+              <Text textAlign="center" fontSize="lg">
+                Enter product Name or ID
+              </Text>
             )}
           </Box>
         </MenuList>

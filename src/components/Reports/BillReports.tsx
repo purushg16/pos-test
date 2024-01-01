@@ -8,11 +8,13 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spacer,
   Spinner,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
@@ -37,7 +39,7 @@ const BillReports = () => {
   ]);
 
   const [selected, setSelected] = useState(false);
-  const [billData, setBillDate] = useState<BillReport[]>([]);
+  const [billData, setBillDate] = useState<BillReport[]>(undefined || []);
   const { refetch } = useGetBills(state[0].startDate, state[0].endDate);
 
   const onSumbit = () => {
@@ -50,7 +52,7 @@ const BillReports = () => {
 
   return (
     <Box padding={7}>
-      <Flex>
+      <Flex alignItems="baseline">
         <Heading> Bill Report </Heading>
 
         <HStack ml={10}>
@@ -81,6 +83,15 @@ const BillReports = () => {
             </MenuList>
           </Menu>
         </HStack>
+
+        <Spacer />
+        <Heading size="md" mr={3}>
+          Total Bills: {billData.length}
+        </Heading>
+        <Heading size="md">
+          Total Bill Amount:{" "}
+          {billData.reduce((acc, d) => acc + d.billAmount, 0)}
+        </Heading>
       </Flex>
 
       <Box mt={10}>
@@ -100,27 +111,31 @@ const BillReports = () => {
                   </Tr>
                 </Thead>
 
-                <>
-                  {billData.length > 0 ? (
-                    <Tbody>
-                      {billData.map((bill) => (
-                        <Tr>
-                          <Td> {convertDate(bill.createdAt)} </Td>
-                          <Td>{bill.billNo}</Td>
-                          <Td>{bill.customer.name}</Td>
-                          <Td> {bill.billAmount} </Td>
-                          <Td> {bill.billType} </Td>
-                          <Td> {bill.billerName} </Td>
-                          <Td>
-                            <BillProductsModal products={bill.cart.product} />
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  ) : (
-                    <Spinner />
-                  )}
-                </>
+                {!billData ? (
+                  <Spinner />
+                ) : (
+                  <>
+                    {!!billData && billData.length > 0 ? (
+                      <Tbody>
+                        {billData.map((bill) => (
+                          <Tr>
+                            <Td> {convertDate(bill.createdAt)} </Td>
+                            <Td>{bill.billNo}</Td>
+                            <Td>{bill.customer.name}</Td>
+                            <Td> {bill.billAmount} </Td>
+                            <Td> {bill.billType} </Td>
+                            <Td> {bill.billerName} </Td>
+                            <Td>
+                              <BillProductsModal products={bill.cart.product} />
+                            </Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    ) : (
+                      <Heading> No data found! </Heading>
+                    )}
+                  </>
+                )}
               </Table>
             </TableContainer>
           </>

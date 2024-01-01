@@ -60,7 +60,7 @@ interface ProductStore {
   searchProductsByCategory: (category: string) => void;
 
   // By id
-  searchedProductList: Product[];
+  searchedProductList: Product[] | undefined;
   searchProductById: (digits: string) => void;
 
   barcodeProduct: Product | undefined;
@@ -71,7 +71,7 @@ interface ProductStore {
 const useProductStore = create<ProductStore>((set) => ({
   baseProducts: [],
   productsList: [],
-  searchedProductList: [],
+  searchedProductList: undefined,
 
   barcodeProduct: undefined,
 
