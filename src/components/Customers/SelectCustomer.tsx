@@ -18,7 +18,11 @@ import CustomerModal from "./CustomerModal";
 import { useRef } from "react";
 import useCustomerStore from "../../functions/store/customerStore";
 
-const SelectCustomer = () => {
+interface Props {
+  canAdd?: boolean;
+}
+
+const SelectCustomer = ({ canAdd = true }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
   const selectCustomers = useCustomerStore((s) => s.selectCustomers);
   const selectedCustomers = useCustomerStore((s) => s.selectedCustomers);
@@ -52,9 +56,11 @@ const SelectCustomer = () => {
               }}
             />
           </InputGroup>
-          <Box paddingX={2} marginY={2}>
-            <CustomerModal />
-          </Box>
+          {canAdd && (
+            <Box paddingX={2} marginY={2}>
+              <CustomerModal />
+            </Box>
+          )}
         </Box>
 
         {!selectedCustomers ? (

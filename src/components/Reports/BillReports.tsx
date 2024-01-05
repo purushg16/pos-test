@@ -24,10 +24,13 @@ import {
   getBills,
 } from "../../functions/services/billing-services";
 import { useGetBills } from "../../functions/hooks/useBilling";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
 import { convertDate } from "../../functions/conversions/dateConversion";
 import BillProductsModal from "./BillProductsModal";
+import SelectCustomer from "../Customers/SelectCustomer";
+import useCustomerStore from "../../functions/store/customerStore";
+import { MdClear, MdClearAll } from "react-icons/md";
 
 const BillReports = () => {
   const [state, setState] = useState([
@@ -40,15 +43,35 @@ const BillReports = () => {
 
   const [selected, setSelected] = useState(false);
   const [billData, setBillDate] = useState<BillReport[]>(undefined || []);
+  const [filteredBillData, setFilteredBillDate] = useState<BillReport[]>(
+    undefined || []
+  );
   const { refetch } = useGetBills(state[0].startDate, state[0].endDate);
+  const currentCustomer = useCustomerStore((s) => s.currentCustmer);
+  const setCurrentCustomer = useCustomerStore((s) => s.setCurrentCustomer);
 
   const onSumbit = () => {
     setSelected(true);
     if (state[0].startDate && state[0].endDate)
       refetch().then((res) => {
-        if (res.data) setBillDate(res.data?.data || []);
+        if (res.data) {
+          setBillDate(res.data?.data || []);
+          setFilteredBillDate(res.data?.data || []);
+        }
       });
   };
+
+  const clearFilter = () => {
+    setFilteredBillDate(billData);
+    setCurrentCustomer(undefined);
+  };
+
+  useEffect(() => {
+    if (!!currentCustomer)
+      setFilteredBillDate(
+        billData.filter((data) => data.customer._id! === currentCustomer?._id!)
+      );
+  }, [currentCustomer]);
 
   return (
     <Box padding={7}>
@@ -84,13 +107,22 @@ const BillReports = () => {
           </Menu>
         </HStack>
 
+        <HStack ml={10}>
+          <Heading size="md"> Customer: </Heading>
+          <SelectCustomer canAdd={false} />
+        </HStack>
+
+        <Button ml={2} colorScheme="red" onClick={clearFilter}>
+          <MdClear />
+        </Button>
+
         <Spacer />
         <Heading size="md" mr={3}>
-          Total Bills: {billData.length}
+          Total Bills: {filteredBillData.length}
         </Heading>
         <Heading size="md">
           Total Bill Amount:{" "}
-          {billData.reduce((acc, d) => acc + d.billAmount, 0)}
+          {filteredBillData.reduce((acc, d) => acc + d.billAmount, 0)}
         </Heading>
       </Flex>
 
@@ -111,13 +143,13 @@ const BillReports = () => {
                   </Tr>
                 </Thead>
 
-                {!billData ? (
+                {!filteredBillData ? (
                   <Spinner />
                 ) : (
                   <>
-                    {!!billData && billData.length > 0 ? (
+                    {!!filteredBillData && filteredBillData.length > 0 ? (
                       <Tbody>
-                        {billData.map((bill) => (
+                        {filteredBillData.map((bill) => (
                           <Tr>
                             <Td> {convertDate(bill.createdAt)} </Td>
                             <Td>{bill.billNo}</Td>
