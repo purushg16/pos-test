@@ -3,7 +3,7 @@ export interface CashFlow {
   inOrOut: "in" | "out";
   amount: number;
   nature: "sale";
-  mode: "UPI" | "Cash";
+  mode: "upi" | "cash";
   description: string;
   createdAt: string;
 }

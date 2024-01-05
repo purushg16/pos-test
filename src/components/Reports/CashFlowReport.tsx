@@ -8,6 +8,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spacer,
   Spinner,
   Table,
   TableContainer,
@@ -23,9 +24,10 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { convertDate } from "../../functions/conversions/dateConversion";
 import useCashFlow from "../../functions/hooks/useCashFlow";
-import cashFlowStore from "../../functions/store/cashflowStore";
-import { ArrowUpIcon } from "@chakra-ui/icons";
+import cashFlowStore, { mode } from "../../functions/store/cashflowStore";
+import { ArrowUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { BsArrowDown } from "react-icons/bs";
+import { MdClear } from "react-icons/md";
 
 type nature = "sale" | "payIn" | "payOut" | "drawing" | "expense";
 const NATURES = ["sale", "payIn", "payOut", "drawing", "expense"];
@@ -35,7 +37,9 @@ const CashFlowReport = () => {
   const filterCashflow = cashFlowStore((s) => s.filterCashflow);
   const currentNarture = cashFlowStore((s) => s.currentNarture);
   const reverse = cashFlowStore((s) => s.reverse);
+  const clear = cashFlowStore((s) => s.clearFilters);
   const [degree, setDegree] = useState(true);
+  const [currentMode, setMode] = useState<mode | undefined>(undefined);
 
   const [state, setState] = useState([
     {
@@ -51,33 +55,14 @@ const CashFlowReport = () => {
     if (state[0].startDate && state[0].endDate) refetch();
   };
 
+  console.log(cashflowList);
+
   return (
     <Box padding={7}>
       <Flex my={2} borderBottom="1px solid #6666662b" pb={4}>
         <Heading size="lg"> Cash Flow Report</Heading>
-        <HStack mx={10}>
+        <HStack mx={7}>
           <HStack mr={3}>
-            <Heading size="md"> Nature: </Heading>
-            <Menu>
-              <MenuButton as={Button}>
-                {currentNarture ? currentNarture.toUpperCase() : "Select"}
-              </MenuButton>
-              <MenuList>
-                {NATURES.map((nature) => (
-                  <MenuItem
-                    key={nature}
-                    onClick={() => {
-                      filterCashflow(nature as nature);
-                    }}
-                  >
-                    {nature.toUpperCase()}
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
-          </HStack>
-
-          <HStack>
             <Heading size="md"> Select Range: </Heading>
             <Menu>
               <MenuButton as={Button}>{"Select"}</MenuButton>
@@ -106,18 +91,73 @@ const CashFlowReport = () => {
             </Menu>
           </HStack>
 
-          {/* 
-          <HStack>
-            <Heading size="sm"> Mode: </Heading>
+          <HStack mr={3}>
+            <Heading size="md"> Nature: </Heading>
             <Menu>
-              <MenuButton as={Button}> Select </MenuButton>
+              <MenuButton as={Button}>
+                {currentNarture ? currentNarture.toUpperCase() : "Select"}
+              </MenuButton>
               <MenuList>
-                <MenuItem>jl</MenuItem>
-                <MenuItem>jl</MenuItem>
+                {NATURES.map((nature) => (
+                  <MenuItem
+                    key={nature}
+                    onClick={() => {
+                      filterCashflow(nature as nature);
+                    }}
+                  >
+                    {nature.toUpperCase()}
+                  </MenuItem>
+                ))}
               </MenuList>
             </Menu>
-          </HStack> */}
+          </HStack>
+
+          <HStack mr={3}>
+            <Heading size="md"> Mode: </Heading>
+            <Menu>
+              <MenuButton as={Button}>
+                {currentMode ? currentMode : "Select"}
+                <ChevronDownIcon />
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    filterCashflow(currentNarture, "cash");
+                    setMode("cash");
+                  }}
+                >
+                  Cash
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    filterCashflow(currentNarture, "upi");
+                    setMode("upi");
+                  }}
+                >
+                  UPI
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
+          <Button
+            colorScheme="red"
+            onClick={() => {
+              clear();
+              setMode(undefined);
+            }}
+          >
+            <MdClear />
+          </Button>
         </HStack>
+
+        <Spacer />
+        <Heading size="md" mr={3}>
+          Total Entries: {cashflowList?.length}
+        </Heading>
+        <Heading size="md">
+          Total Bill Amount:{" "}
+          {cashflowList?.reduce((acc, d) => acc + d.amount, 0)}
+        </Heading>
       </Flex>
 
       {!!cashflowList ? (
@@ -156,12 +196,12 @@ const CashFlowReport = () => {
                 ))}
               </Tbody>
             ) : (
-              <Heading> Select a Date Range </Heading>
+              <Heading> No data to display! </Heading>
             )}
           </Table>
         </TableContainer>
       ) : (
-        <Heading> No data to display! </Heading>
+        <Heading> Select a Date Range </Heading>
       )}
     </Box>
   );
