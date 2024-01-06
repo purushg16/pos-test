@@ -55,6 +55,10 @@ interface ProductStore {
   setProductList: (products: Product[]) => void;
   clearProductFilters: () => void;
 
+  // select single product
+  selectedProduct: Product | undefined;
+  selectProduct: (product: Product) => void;
+
   // By Category
   productsList: Product[];
   searchProductsByCategory: (category: string) => void;
@@ -72,6 +76,9 @@ const useProductStore = create<ProductStore>((set) => ({
   baseProducts: [],
   productsList: [],
   searchedProductList: undefined,
+  selectedProduct: undefined,
+
+  selectProduct: (product) => set(() => ({ selectedProduct: product })),
 
   barcodeProduct: undefined,
 

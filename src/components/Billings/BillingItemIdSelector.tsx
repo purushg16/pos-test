@@ -29,12 +29,19 @@ import useCustomerStore from "../../functions/store/customerStore";
 interface Props {
   small?: boolean;
   stock?: boolean;
+  pilferage?: boolean;
 }
 
-const BillingItemIdSelector = ({ small = false, stock = false }: Props) => {
+const BillingItemIdSelector = ({
+  small = false,
+  stock = false,
+  pilferage = false,
+}: Props) => {
   const addBillEntries = useBillStore((s) => s.addBillEntries);
   const searchProductById = useProductStore((s) => s.searchProductById);
   const searchedProductList = useProductStore((s) => s.searchedProductList);
+  const selectProduct = useProductStore((s) => s.selectProduct);
+  const selectedProduct = useProductStore((s) => s.selectedProduct);
 
   const toast = useToast();
 
@@ -93,6 +100,7 @@ const BillingItemIdSelector = ({ small = false, stock = false }: Props) => {
         <MenuButton
           isDisabled={
             !stock &&
+            !pilferage &&
             !(
               currentBiller &&
               currentHandler &&
@@ -105,7 +113,13 @@ const BillingItemIdSelector = ({ small = false, stock = false }: Props) => {
           rightIcon={<ChevronDownIcon />}
           size={small ? "sm" : "md"}
         >
-          {small ? "Select" : "using Product ID"}
+          {pilferage
+            ? selectedProduct
+              ? selectedProduct.itemName
+              : "Select"
+            : small
+            ? "Select"
+            : "using Product ID"}
         </MenuButton>
         <MenuList>
           <Box paddingX={2} marginY={2}>
@@ -149,7 +163,11 @@ const BillingItemIdSelector = ({ small = false, stock = false }: Props) => {
                       width="100%"
                       key={item._id}
                       onClick={() => {
-                        stock ? addStockItem(item) : addBillItem(item);
+                        pilferage
+                          ? selectProduct(item)
+                          : stock
+                          ? addStockItem(item)
+                          : addBillItem(item);
                       }}
                     >
                       {item.itemName}
