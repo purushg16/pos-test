@@ -238,7 +238,7 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               </Box>
             </SimpleGrid>
 
-            <Heading
+            {/* <Heading
               textAlign="center"
               size="sm"
               p={2}
@@ -246,7 +246,7 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               borderBottom="1px dashed #666"
             >
               ** Thank You! Visit Again! **
-            </Heading>
+            </Heading> */}
 
             <Box py={2}>
               <Heading size="xs">Customer Details</Heading>

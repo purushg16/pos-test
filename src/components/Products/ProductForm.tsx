@@ -104,6 +104,8 @@ const ProductForm = () => {
 
   const { mutate } = postNewProduct((yes) => setLoading(yes));
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    if (Number.isNaN(newProduct.taxRate))
+      editProduct({ ...newProduct, taxRate: 0 });
     event.preventDefault();
     setLoading(true);
     mutate(newProduct);
@@ -116,7 +118,6 @@ const ProductForm = () => {
       newProduct.code &&
       newProduct.unit !== "None" &&
       newProduct.category &&
-      newProduct.taxRate &&
       newProduct.mrp &&
       newProduct.salesPriceWholesale &&
       newProduct.salesPriceRetail &&

@@ -23,6 +23,7 @@ import { ProductReport } from "../entities/ProductReport";
 import { useEffect, useState } from "react";
 import { EditProduct } from "../entities/EditProduct";
 import useEditProduct from "../../functions/hooks/useEditProduct";
+import BarcodeScanner from "../Billings/BarcodeBiller";
 
 interface Props {
   product: ProductReport;
@@ -44,6 +45,7 @@ const ProductReportModal = ({ product }: Props) => {
   const [edit, toggleEdit] = useState(false);
   const [editProduct, setEditProduct] = useState<EditProduct>({
     productId: product._id,
+    barCode: product.barCode,
     itemName: product.itemName,
     unitConv: product.unitConv,
     salesPriceWholesale: product.salesPriceWholesale,
@@ -73,6 +75,15 @@ const ProductReportModal = ({ product }: Props) => {
   const [loading, setLoading] = useState(false);
   const { mutate } = useEditProduct((yes) => setLoading(yes));
   const submitEdit = () => {
+    if (editProduct.barCode !== product.barCode)
+      setEditProduct({
+        ...editProduct,
+        barCode: parseInt(
+          (document.getElementById("edit-product-bar-code") as HTMLInputElement)
+            .value
+        ),
+      });
+
     setLoading(true);
     mutate(editProduct);
   };
@@ -131,6 +142,22 @@ const ProductReportModal = ({ product }: Props) => {
                   </Heading>
                   <Heading size="md"> {product.code} </Heading>
                 </CardBody>
+              </Card>
+
+              <Card boxShadow="2xl" p={2}>
+                <CardBody textAlign="left">
+                  <Heading size="xs" fontWeight="normal" color="gray">
+                    Bar Code:
+                  </Heading>
+                  {!edit && <Heading size="md"> {product.barCode} </Heading>}
+                  <Input
+                    defaultValue={product.barCode}
+                    display={edit ? "hidden" : "none"}
+                    id="edit-product-bar-code"
+                    my={2}
+                  />
+                </CardBody>
+                <BarcodeScanner />
               </Card>
 
               <Card boxShadow="2xl" p={2}>
@@ -325,7 +352,6 @@ const ProductReportModal = ({ product }: Props) => {
                 </CardBody>
               </Card>
 
-              <Box></Box>
               <Box></Box>
               {edit && (
                 <Button

@@ -24,6 +24,10 @@ const BarcodeScanner: React.FC = () => {
         setBarcodeData((prevData) => prevData + event.key);
       } else if (event.key === "Enter") {
         getProductUsingBarCode(parseInt(barcodeData));
+        if (document.getElementById("edit-product-bar-code"))
+          (
+            document.getElementById("edit-product-bar-code") as HTMLInputElement
+          ).value = barcodeData;
         setBarcodeData("");
       }
     };

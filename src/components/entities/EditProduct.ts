@@ -5,6 +5,7 @@ export interface EditProduct {
   salesPriceWholesale: number;
   salesPriceRetail: number;
   taxRate: number;
+  barCode: number;
   mrp: number;
   zone: string;
   critical: number;

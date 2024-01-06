@@ -55,8 +55,6 @@ const CashFlowReport = () => {
     if (state[0].startDate && state[0].endDate) refetch();
   };
 
-  console.log(cashflowList);
-
   return (
     <Box padding={7}>
       <Flex my={2} borderBottom="1px solid #6666662b" pb={4}>

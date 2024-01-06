@@ -89,9 +89,7 @@ const PendingBillContent = forwardRef<HTMLDivElement, PrintableComponentProps>(
                       </p>
                     </td>
                     <td className="tableitem">
-                      <p className="itemtext">
-                        {product.stock / product.selectedUnit}
-                      </p>
+                      <p className="itemtext">{product.zone}</p>
                     </td>
                   </tr>
                 ))}
