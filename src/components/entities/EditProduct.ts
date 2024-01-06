@@ -7,6 +7,6 @@ export interface EditProduct {
   taxRate: number;
   barCode: number;
   mrp: number;
-  zone: string;
+  zone: number;
   critical: number;
 }

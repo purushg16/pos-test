@@ -1,3 +1,4 @@
+import { ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -9,7 +10,6 @@ import {
   MenuItem,
   MenuList,
   Spacer,
-  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -18,12 +18,11 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { DateRange } from "react-date-range";
 import useReport from "../../functions/hooks/useReports";
 import reportStore from "../../functions/store/reportStore";
-import { useState } from "react";
-import { ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import { GroupingType } from "../entities/GroupingType";
-import { DateRange } from "react-date-range";
 
 const TYPES = ["Product", "Customer", "Supplier", "Category", "Employe"];
 
@@ -63,7 +62,7 @@ const GPReports = () => {
   };
 
   return (
-    <Box>
+    <Box padding={7}>
       <Flex my={2}>
         <Heading size="lg">Gross Profit Report</Heading>
         <Spacer />
@@ -150,6 +149,21 @@ const GPReports = () => {
                       {sortProfit === 1 ? <ArrowUpIcon /> : <ArrowDownIcon />}
                     </Button>
                   </Th>
+                  {type === "Product" && (
+                    <Th isNumeric>
+                      Zone
+                      <Button
+                        ml={2}
+                        size="sm"
+                        onClick={() => {
+                          setSortName(sortName === 1 ? -1 : 1);
+                          sortReports("quantity", sortName === 1 ? -1 : 1);
+                        }}
+                      >
+                        {sortName === 1 ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                      </Button>
+                    </Th>
+                  )}
                 </Tr>
               </Thead>
 
@@ -162,6 +176,7 @@ const GPReports = () => {
                       {product.profit.toFixed(2)}
                       <small>{product.profit > 0 ? "(+)" : "(-)"}</small>
                     </Td>
+                    {type === "Product" && <Td isNumeric> {product.zone} </Td>}
                   </Tr>
                 ))}
               </Tbody>
@@ -178,14 +193,3 @@ const GPReports = () => {
 };
 
 export default GPReports;
-
-// purchase price (wt)
-// sales price (wt)
-
-// product : =>
-// name
-// profit
-
-// Supplier: =>
-// name
-// profit

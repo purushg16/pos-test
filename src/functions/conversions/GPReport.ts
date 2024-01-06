@@ -3,6 +3,8 @@ import { ReportData } from "../../components/entities/ReportData";
 export interface UnifiedReport {
   name: string;
   profit: number;
+  zone: number;
+  quantity: number;
 }
 
 export interface Group {
@@ -80,6 +82,8 @@ export const groupPurchases = (
       const newReport = {
         name: getName(purchase),
         profit: profit,
+        quantity: purchase.quantity,
+        zone: purchase.productId.zone,
       } as UnifiedReport;
 
       grouped[key].push(newReport);

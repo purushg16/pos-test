@@ -14,7 +14,7 @@ export interface ProductReport {
   salesPriceRetail: number;
   taxRate: number;
   mrp: number;
-  zone: string;
+  zone: number;
   suppliers: ProductReportSupplier[];
   __v: 0;
   critical: number;

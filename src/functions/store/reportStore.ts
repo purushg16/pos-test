@@ -75,7 +75,10 @@ interface Report {
   ) => void;
 
   orderedGroupedReports: UnifiedReport[];
-  sortReports: (property: "name" | "profit", order: 1 | -1) => void;
+  sortReports: (
+    property: "name" | "profit" | "quantity",
+    order: 1 | -1
+  ) => void;
 }
 
 const reportStore = create<Report>((set) => ({

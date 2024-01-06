@@ -16,6 +16,7 @@ export interface ReportData {
       name: string;
     };
     taxRate: number;
+    zone: number;
   };
   supplierId: {
     _id: string;
