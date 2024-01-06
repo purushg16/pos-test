@@ -153,12 +153,16 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
                   borderRadius={20}
                   key={index}
                   pointerEvents={
-                    route === "Reports" && currentUserType !== "admin"
+                    (route === "Reports" || route === "Manage Pilferage") &&
+                    currentUserType !== "admin"
                       ? "none"
                       : "all"
                   }
                   opacity={
-                    route === "Reports" && currentUserType !== "admin" ? 0.4 : 1
+                    (route === "Reports" || route === "Manage Pilferage") &&
+                    currentUserType !== "admin"
+                      ? 0.4
+                      : 1
                   }
                 >
                   <Link to={routes[route][0]} onClick={onClose}>
