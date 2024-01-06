@@ -22,7 +22,12 @@ const ImageModal = ({ src }: Props) => {
 
   return (
     <>
-      <Button colorScheme="green" onClick={onOpen} ml={3}>
+      <Button
+        colorScheme={!src ? "gray" : "green"}
+        onClick={onOpen}
+        ml={3}
+        isDisabled={!src}
+      >
         <BsImage />
       </Button>
 
