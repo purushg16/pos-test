@@ -1,3 +1,4 @@
+import { EditIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -5,9 +6,8 @@ import {
   Heading,
   Input,
   InputGroup,
-  useToast,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import useStock from "../../functions/hooks/useStock";
 import useSuppliers from "../../functions/hooks/useSuppliers";
 import useStockStore from "../../functions/store/stockStore";
@@ -33,54 +33,55 @@ const StockDetails = () => {
 
   useSuppliers({ type: "GET" });
 
-  const newStock = {
-    supplierId: currentSupplier?._id!,
-    amount: total!,
-    billNo: billNo!,
-    products: stockProducts.map((product) => {
-      return {
-        productId: product.productId!,
-        purchasePrice: parseFloat(
-          (product.purchasePrice / product.currentUnitValue!).toFixed(2)
-        ),
-        stock: product.stock!,
-        selectedUnit: product.currentUnitValue!,
-      };
-    }),
+  const { mutate } = useStock((yes) => setLoading(yes));
+  const data = new FormData();
+
+  const imageRef = useRef<HTMLInputElement | null>(null);
+  const [selectedImage, setImage] = useState<File | null>(null);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setImage(file);
   };
 
-  const { refetch } = useStock({ stock: newStock });
-
-  const toast = useToast();
+  const handleClick = () => {
+    if (imageRef.current) {
+      imageRef.current.click();
+    }
+  };
 
   const onSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     setLoading(true);
 
-    console.log(newStock);
+    data.append("file", selectedImage!);
+    data.append("upload_preset", "purush");
+    data.append("cloud_name", "dquna4wzz");
 
-    refetch().then((res) => {
-      const { data, isError, isSuccess } = res;
+    fetch("https://api.cloudinary.com/v1_1/dquna4wzz/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        mutate({
+          supplierId: currentSupplier?._id!,
+          amount: total!,
+          billNo: billNo!,
 
-      if (isSuccess) {
-        toast({
-          title: data.msg,
-          status: "success",
-          duration: 1000,
-          isClosable: true,
-          position: "top",
+          link: data.url,
+          products: stockProducts.map((product) => {
+            return {
+              productId: product.productId!,
+              purchasePrice: parseFloat(
+                (product.purchasePrice / product.currentUnitValue!).toFixed(2)
+              ),
+              stock: product.stock!,
+              selectedUnit: product.currentUnitValue!,
+            };
+          }),
         });
-        setLoading(false);
-      } else if (isError) {
-        toast({
-          title: data.message,
-          status: "error",
-          duration: 1000,
-          isClosable: true,
-          position: "top",
-        });
-      }
-    });
+      });
   };
 
   return (
@@ -90,60 +91,6 @@ const StockDetails = () => {
           Supplier Name
         </Heading>
         <SelectSuppliers />
-        {/* <Menu>
-          <MenuButton
-            as={Button}
-            rightIcon={<ChevronDownIcon />}
-            width="100%"
-            textAlign="left"
-          >
-            {currentSupplier?.name || "Select Supplier"}
-          </MenuButton>
-
-          <MenuList>
-            <Box paddingX={2} marginY={2}>
-              <InputGroup width="100%">
-                <InputLeftElement children={<BsSearch />} />
-                <Input
-                  ref={ref}
-                  placeholder="Search Items..."
-                  variant={"filled"}
-                  borderRadius={7}
-                  onChange={() => {
-                    if (ref.current) {
-                      selectSupplier(ref.current.value);
-                    }
-                  }}
-                />
-              </InputGroup>
-            </Box>
-
-            {!selectedSuppliers ? (
-              <Spinner />
-            ) : (
-              <Box maxHeight={500} overflowY="scroll">
-                <VStack marginX={3} gap={3}>
-                  <SupplierModal />
-
-                  {selectedSuppliers?.map(
-                    (supplier: Supplier, index: number) => (
-                      <Button
-                        width="100%"
-                        marginX={2}
-                        key={index}
-                        onClick={() => {
-                          setCurrentSupplier(supplier);
-                        }}
-                      >
-                        {supplier.name}
-                      </Button>
-                    )
-                  )}
-                </VStack>
-              </Box>
-            )}
-          </MenuList>
-        </Menu> */}
 
         <Box my={5}>
           <Heading size="1xl" mb={2}>
@@ -161,6 +108,25 @@ const StockDetails = () => {
               }}
             />
           </InputGroup>
+        </Box>
+
+        <Box my={5}>
+          <Heading size="1xl" mb={2}>
+            Upload Image
+          </Heading>
+          <Input
+            ref={(el) => (imageRef.current = el)}
+            onChange={handleFileChange}
+            type="file"
+            accept="image/*"
+            width="100%"
+            cursor="pointer"
+            display="none"
+          />
+          <Button onClick={handleClick}>
+            {selectedImage ? selectedImage.name : "Pick Image"}
+            <EditIcon ml={3} />
+          </Button>
         </Box>
 
         <Box my={5}>

@@ -10,4 +10,5 @@ export interface Stock {
   amount: number;
   billNo: number;
   products: StockProducts[];
+  link?: string;
 }
