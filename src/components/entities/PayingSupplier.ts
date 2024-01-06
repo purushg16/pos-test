@@ -6,4 +6,5 @@ export interface PayingSupplier {
   billNo: number;
   createdAt: string;
   supplierId: Supplier;
+  link?: string;
 }

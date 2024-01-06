@@ -27,6 +27,8 @@ import useSupplierStore from "../../functions/store/suppliersStore";
 import SelectCustomer from "../Customers/SelectCustomer";
 import SelectSuppliers from "../Stock/SelectSuppliers";
 import CrDrModal from "./CrDrModal";
+import ImageModal from "../AddPayOut/ImageModal";
+import { BsImage } from "react-icons/bs";
 
 type partyType = "dr" | "cr";
 
@@ -210,6 +212,14 @@ const CreditorAndDebtorReport = () => {
                                 products={entry.cartId?.product!}
                                 type={party}
                               />
+                            )}
+                            {!!entry.link &&
+                            entry.money.toUpperCase() === "PENDING" ? (
+                              <ImageModal src={entry.link} />
+                            ) : (
+                              <Button ml={4} isDisabled>
+                                <BsImage />
+                              </Button>
                             )}
                           </Td>
                         </Tr>

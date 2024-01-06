@@ -30,6 +30,7 @@ export interface CrDrType {
   } | null;
   money: "pending" | "paid";
   createdAt: string;
+  link?: string;
   __v: 0;
 }
 

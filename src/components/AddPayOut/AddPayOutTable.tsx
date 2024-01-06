@@ -20,6 +20,7 @@ import usePayableStore from "../../functions/store/payableStore";
 import PayOutModal from "./PayOutModal";
 import { convertDate } from "../../functions/conversions/dateConversion";
 import { useState } from "react";
+import ImageModal from "./ImageModal";
 
 const AddPayOutTable = () => {
   usePayOut({ type: "GET" });
@@ -102,6 +103,7 @@ const AddPayOutTable = () => {
                         amount={d.amount}
                         supplier={d.supplierId}
                       />
+                      <ImageModal src={d.link!} />
                     </Td>
                   </Tr>
                 ))}
