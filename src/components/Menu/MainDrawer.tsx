@@ -30,6 +30,7 @@ import {
   BsFullscreen,
   BsJournalCheck,
   BsKanban,
+  BsLayoutSplit,
   BsPersonPlusFill,
   BsToggles2,
 } from "react-icons/bs";
@@ -45,6 +46,7 @@ import {
   MdOutlineAccountTree,
   MdOutlineFactCheck,
   MdOutlineMoney,
+  MdOutlineSelfImprovement,
   MdRadioButtonChecked,
   MdRadioButtonUnchecked,
 } from "react-icons/md";
@@ -66,6 +68,12 @@ const routes: {
   Reports: ["/reports", MdOutlineAccountTree, ["Review Reports"]],
   "Add Product": ["/addProduct", BsBox, ["Add New Products"]],
   "Add Stock": ["/addStock", BsKanban, ["Add stock to existing Products Data"]],
+  "Manage Pilferage": [
+    "/pilferages",
+    BsLayoutSplit,
+    ["Add Pilferages", "Clear Pilferages"],
+  ],
+
   "Add Category": ["/addCategory", MdCategory, ["Add New Categories"]],
 
   "Add Customer": ["/addCustomer", BsPersonPlusFill, ["Add New Customers"]],
@@ -182,6 +190,7 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
                 </SimpleGrid>
               </Box> */}
 
+              {/* 
               <Box
                 boxShadow="dark-lg"
                 borderRadius={20}
@@ -202,7 +211,7 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
                     </Text>
                   </Box>
                 </SimpleGrid>
-              </Box>
+              </Box> */}
 
               <Button
                 height="100%"

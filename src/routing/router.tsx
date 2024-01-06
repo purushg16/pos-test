@@ -18,6 +18,7 @@ import Reports from "../components/Reports/Reports";
 import PendingBills from "../components/ReviewBills/PendingBills";
 import StockForm from "../components/Stock/StockForm";
 import { SuppliersForm } from "../components/Suppliers/SuppliersForm";
+import Pilferages from "../components/Pilferages/Pilferages";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: "/addStock", element: <StockForm /> },
       { path: "/addPayIn", element: <PayInHome /> },
       { path: "/addPayOut", element: <AddPayOutTable /> },
+      { path: "/pilferages", element: <Pilferages /> },
       { path: "/addExpense", element: <ExpenseForm /> },
       { path: "/addDrawings", element: <DrawingForm /> },
       { path: "/attendance", element: <Attendance /> },
