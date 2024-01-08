@@ -26,6 +26,7 @@ import useEmployeStore from "../../functions/store/employeStore";
 import useGSTStore from "../../functions/store/gstStore";
 import useCustomerStore from "../../functions/store/customerStore";
 import { FixedSizeList } from "react-window";
+import PaginatedWindow from "../Window/Window";
 
 interface Props {
   small?: boolean;
@@ -186,47 +187,14 @@ const BillingItemIdSelector = ({
             {!searchedProductList ? (
               <Spinner />
             ) : searchedProductList.length > 0 && ref.current?.value ? (
-              <FixedSizeList
+              <PaginatedWindow
+                children={itemRenderer}
                 height={400}
-                itemCount={searchedProductList.length}
-                itemSize={60}
+                length={searchedProductList.length}
                 width="100%"
-              >
-                {itemRenderer}
-              </FixedSizeList>
-            ) : // <VStack marginX={3} gap={3}>
-            //   {searchedProductList.map((item: Product) => (
-            //     <ButtonGroup
-            //       key={item._id}
-            //       size="md"
-            //       isAttached
-            //       variant="solid"
-            //       width="100%"
-            //     >
-            //       <Button padding={2} fontSize="small">
-            //         {item.code}
-            //       </Button>
-            //       <Button
-            //         variant="outline"
-            //         textAlign="left"
-            //         paddingY={2}
-            //         width="100%"
-            //         key={item._id}
-            //         onClick={() => {
-            //           pilferage
-            //             ? selectProduct(item)
-            //             : stock
-            //             ? addStockItem(item)
-            //             : addBillItem(item);
-            //           ref.current!.value = "";
-            //         }}
-            //       >
-            //         {item.itemName}
-            //       </Button>
-            //     </ButtonGroup>
-            //   ))}
-            // </VStack>
-            searchedProductList.length === 0 && ref.current?.value ? (
+                itemSize={60}
+              />
+            ) : searchedProductList.length === 0 && ref.current?.value ? (
               <Text textAlign="center" fontSize="lg">
                 No Products found!
               </Text>
