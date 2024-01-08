@@ -192,7 +192,7 @@ const BillingItemIdSelector = ({
                 height={400}
                 length={searchedProductList.length}
                 width="100%"
-                itemSize={60}
+                itemSize={50}
               />
             ) : searchedProductList.length === 0 && ref.current?.value ? (
               <Text textAlign="center" fontSize="lg">
