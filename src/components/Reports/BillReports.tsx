@@ -153,7 +153,7 @@ const BillReports = () => {
                     {!!filteredBillData && filteredBillData.length > 0 ? (
                       <Tbody>
                         {filteredBillData.map((bill) => (
-                          <Tr>
+                          <Tr background={bill.reversed! ? "red.300" : "none"}>
                             <Td> {convertDate(bill.createdAt)} </Td>
                             <Td>{bill.billNo}</Td>
                             <Td>{bill.customer.name}</Td>

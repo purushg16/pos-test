@@ -36,7 +36,7 @@ export interface BillReport {
   payment: string;
   partialAmount: string | null;
   createdAt: string;
-  //   reversed: true;
+  reversed?: boolean;
 }
 
 const getBills = new APIGetClient<BillReport>("/billing/allBills");
