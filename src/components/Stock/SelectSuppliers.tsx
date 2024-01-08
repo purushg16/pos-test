@@ -1,3 +1,5 @@
+import React, { useRef } from "react";
+import { FixedSizeList } from "react-window";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Menu,
@@ -16,7 +18,7 @@ import SupplierModal from "../Suppliers/SupplierModal";
 import { Supplier } from "../entities/Supplier";
 import useSuppliers from "../../functions/hooks/useSuppliers";
 import useSupplierStore from "../../functions/store/suppliersStore";
-import { useRef } from "react";
+import PaginatedWindow from "../Window/Window";
 
 const SelectSuppliers = () => {
   const ref = useRef<HTMLInputElement>(null);
@@ -26,6 +28,31 @@ const SelectSuppliers = () => {
   const selectedSuppliers = useSupplierStore((s) => s.selectedSuppliers);
   const currentSupplier = useSupplierStore((s) => s.currentSupplier);
   const setCurrentSupplier = useSupplierStore((s) => s.setCurrentSupplier);
+
+  // Custom component for rendering each supplier in the FixedSizeList
+  const SupplierItem = ({
+    index,
+    style,
+  }: {
+    index: number;
+    style: React.CSSProperties;
+  }) => {
+    const supplier = selectedSuppliers![index];
+
+    return (
+      <Box style={style}>
+        <Button
+          width="100%"
+          key={index}
+          onClick={() => {
+            setCurrentSupplier(supplier);
+          }}
+        >
+          {supplier.name}
+        </Button>
+      </Box>
+    );
+  };
 
   return (
     <Menu>
@@ -63,18 +90,13 @@ const SelectSuppliers = () => {
             <VStack marginX={3} gap={3}>
               <SupplierModal />
 
-              {selectedSuppliers?.map((supplier: Supplier, index: number) => (
-                <Button
-                  width="100%"
-                  marginX={2}
-                  key={index}
-                  onClick={() => {
-                    setCurrentSupplier(supplier);
-                  }}
-                >
-                  {supplier.name}
-                </Button>
-              ))}
+              <PaginatedWindow
+                height={300}
+                length={selectedSuppliers.length}
+                itemSize={50}
+                width="100%"
+                children={SupplierItem}
+              />
             </VStack>
           </Box>
         )}
