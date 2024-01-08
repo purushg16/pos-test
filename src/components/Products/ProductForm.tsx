@@ -3,8 +3,10 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Checkbox,
   Flex,
   Grid,
+  HStack,
   Heading,
   Input,
   InputGroup,
@@ -61,8 +63,8 @@ const ProductForm = () => {
     taxRate: parseInt(""),
     mrp: parseInt(""),
     zone: "",
-    unit: "None",
-    topUnit: "None",
+    unit: "",
+    topUnit: "",
     unitConv: parseInt(""),
     critical: parseInt(""),
     category: currentCategory?._id!,
@@ -116,14 +118,15 @@ const ProductForm = () => {
       newProduct.itemName &&
       newProduct.barCode &&
       newProduct.code &&
-      newProduct.unit !== "None" &&
+      newProduct.unit !== "" &&
       newProduct.category &&
       newProduct.mrp &&
       newProduct.salesPriceWholesale &&
       newProduct.salesPriceRetail &&
       currentCategory &&
-      (newProduct.topUnit === "None" ||
-        (newProduct.topUnit !== "None" && newProduct.unitConv))
+      (newProduct.topUnit === "" ||
+        (newProduct.topUnit !== "" && newProduct.unitConv)) &&
+      newProduct.critical
     )
       setSubmit(true);
     else setSubmit(false);
@@ -301,10 +304,19 @@ const ProductForm = () => {
               </Box>
 
               <Box>
-                <SimpleGrid columns={2} spacing={2}>
-                  <Box>
-                    <Text fontSize="xl"> Unit </Text>
-                    <Menu>
+                <Text fontSize="xl"> Unit </Text>
+                <Input
+                  focusBorderColor="teal"
+                  variant="flushed"
+                  value={newProduct.unit}
+                  onChange={(event) => {
+                    editProduct({
+                      ...newProduct,
+                      unit: event.target.value,
+                    });
+                  }}
+                />
+                {/* <Menu>
                       <MenuButton
                         as={Button}
                         rightIcon={<ChevronDownIcon />}
@@ -324,10 +336,47 @@ const ProductForm = () => {
                           </MenuItem>
                         ))}
                       </MenuList>
-                    </Menu>
+                    </Menu> */}
+              </Box>
+
+              <Box>
+                <Flex gap={2}>
+                  <Box flex={1}>
+                    <Text fontSize="xl"> Top Unit </Text>
+                    <Input
+                      focusBorderColor="teal"
+                      variant="flushed"
+                      value={newProduct.topUnit}
+                      onChange={(event) => {
+                        editProduct({
+                          ...newProduct,
+                          topUnit: event.target.value,
+                        });
+                      }}
+                    />
                   </Box>
 
-                  <Box>
+                  {newProduct.topUnit !== "" && (
+                    <Box>
+                      <Text fontSize="xl"> Conversion </Text>
+                      <Input
+                        focusBorderColor="teal"
+                        variant="flushed"
+                        type="number"
+                        value={newProduct.unitConv}
+                        onChange={(event) => {
+                          editProduct({
+                            ...newProduct,
+                            unitConv: parseInt(event.target.value),
+                          });
+                        }}
+                      />
+                    </Box>
+                  )}
+                </Flex>
+              </Box>
+
+              {/* <Box>
                     <Text fontSize="xl"> Top Unit </Text>
                     <Menu>
                       <MenuButton
@@ -350,26 +399,7 @@ const ProductForm = () => {
                         ))}
                       </MenuList>
                     </Menu>
-                  </Box>
-                </SimpleGrid>
-              </Box>
-              {newProduct.topUnit !== "None" && (
-                <Box>
-                  <Text fontSize="xl"> Unit Conversion </Text>
-                  <Input
-                    focusBorderColor="teal"
-                    variant="flushed"
-                    type="number"
-                    value={newProduct.unitConv}
-                    onChange={(event) => {
-                      editProduct({
-                        ...newProduct,
-                        unitConv: parseInt(event.target.value),
-                      });
-                    }}
-                  />
-                </Box>
-              )}
+                  </Box> */}
 
               <Box>
                 <Text fontSize="xl"> Critical Level </Text>
