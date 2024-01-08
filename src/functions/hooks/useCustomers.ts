@@ -11,17 +11,14 @@ interface Props {
   customer?: Customer;
 }
 
-export const postNewCustomer = (
-  done: (status: boolean) => void,
-  customer: Customer
-) => {
+export const postNewCustomer = (done: (status: boolean) => void) => {
   const toast = useToast();
   const addNewCustomer = useCustomerStore((s) => s.addNewCustomer);
 
   return useMutation({
     mutationFn: addCustomer.postData,
 
-    onSuccess: (res) => {
+    onSuccess: (res, data) => {
       toast({
         title: res.msg,
         status: "success",
@@ -29,7 +26,7 @@ export const postNewCustomer = (
         isClosable: true,
         position: "top",
       });
-      addNewCustomer(customer);
+      addNewCustomer(data);
       done(false);
     },
 

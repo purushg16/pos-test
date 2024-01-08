@@ -26,10 +26,15 @@ import useBillStore from "../../functions/store/billStore";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrintContent from "../BillPrinter/PrintContent";
+import { AxiosError } from "axios";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+}
+
+interface InternalError {
+  message: string;
 }
 
 const Partial = ["No Credit", "Partial Credit", "Credit"];
@@ -72,14 +77,15 @@ export default function BillPaymentModal({ isOpen, onClose }: Props) {
         setBillNo(data.billNo);
         if (!!billNo) handlePrint();
       } else if (isError) {
+        setLoading(false);
         toast({
-          title: data.message,
+          title: (res.error as AxiosError<InternalError>).response?.data
+            .message,
           status: "error",
           duration: 1000,
           isClosable: true,
           position: "top",
         });
-        setLoading(false);
       }
     });
   };

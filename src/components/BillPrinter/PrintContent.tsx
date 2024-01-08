@@ -207,9 +207,8 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
                 </Text>
 
                 {paymentMode === "cash" &&
-                  partialPayment === "partial-credit" && (
-                    <Text>{partialAmount!.toFixed(2)}</Text>
-                  )}
+                  partialPayment === "partial-credit" &&
+                  !!partialAmount && <Text>{partialAmount.toFixed(2)}</Text>}
               </Box>
 
               <Box>

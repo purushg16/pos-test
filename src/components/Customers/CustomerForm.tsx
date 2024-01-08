@@ -20,10 +20,9 @@ const CustomerForm = () => {
   const [canSubmit, setSubmit] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
-  const { mutate } = postNewCustomer((yes) => setLoading(yes), newCustomer);
+  const { mutate } = postNewCustomer((yes) => setLoading(yes));
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit = () => {
     setLoading(true);
     mutate(newCustomer);
   };
@@ -40,40 +39,39 @@ const CustomerForm = () => {
       <Box width={500}>
         <Heading> Add Customer </Heading>
 
-        <form onSubmit={(event) => onSubmit(event)}>
-          <Flex flexDirection="column" gap={5} marginY={7}>
-            <Box>
-              <Text>Customer Name</Text>
-              <Input
-                focusBorderColor="teal"
-                variant="flushed"
-                value={newCustomer.name}
-                onChange={(event) => {
-                  editCustomer({
-                    ...newCustomer,
-                    name: event.target.value,
-                  });
-                }}
-              />
-            </Box>
+        <Flex flexDirection="column" gap={5} marginY={7}>
+          <Box>
+            <Text>Customer Name</Text>
+            <Input
+              focusBorderColor="teal"
+              variant="flushed"
+              value={newCustomer.name}
+              onChange={(event) => {
+                editCustomer({
+                  ...newCustomer,
+                  name: event.target.value,
+                });
+              }}
+            />
+          </Box>
 
-            <Box>
-              <Text>Phone Number</Text>
-              <Input
-                focusBorderColor="teal"
-                variant="flushed"
-                type="number"
-                value={newCustomer.phone}
-                onChange={(event) => {
-                  editCustomer({
-                    ...newCustomer,
-                    phone: parseInt(event.target.value),
-                  });
-                }}
-              />
-            </Box>
+          <Box>
+            <Text>Phone Number</Text>
+            <Input
+              focusBorderColor="teal"
+              variant="flushed"
+              type="number"
+              value={newCustomer.phone}
+              onChange={(event) => {
+                editCustomer({
+                  ...newCustomer,
+                  phone: parseInt(event.target.value),
+                });
+              }}
+            />
+          </Box>
 
-            {/* <Box>
+          {/* <Box>
               <Text>
                 Pending Balance <small>(optional)</small>
               </Text>
@@ -91,23 +89,23 @@ const CustomerForm = () => {
               />
             </Box> */}
 
-            <Grid templateColumns={"1fr 5%"} gap={4} alignItems="center">
-              <Button
-                colorScheme="teal"
-                type="submit"
-                my={2}
-                isLoading={isLoading}
-                isDisabled={!canSubmit}
-                loadingText="Adding Customer..."
-              >
-                Add Customer
-              </Button>
-              <Button onClick={clearForm}>
-                <DeleteIcon />
-              </Button>
-            </Grid>
-          </Flex>
-        </form>
+          <Grid templateColumns={"1fr 5%"} gap={4} alignItems="center">
+            <Button
+              onClick={onSubmit}
+              colorScheme="teal"
+              type="submit"
+              my={2}
+              isLoading={isLoading}
+              isDisabled={!canSubmit}
+              loadingText="Adding Customer..."
+            >
+              Add Customer
+            </Button>
+            <Button onClick={clearForm}>
+              <DeleteIcon />
+            </Button>
+          </Grid>
+        </Flex>
       </Box>
     </Flex>
   );

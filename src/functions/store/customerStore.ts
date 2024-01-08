@@ -18,6 +18,7 @@ const useCustomerStore = create<CustomerStore>((set) => ({
   addNewCustomer: (customer) =>
     set((store) => ({
       selectedCustomers: [...store.selectedCustomers!, customer],
+      customersList: [...store.customersList, customer],
     })),
 
   setCurrentCustomer: (customer) => set(() => ({ currentCustmer: customer })),

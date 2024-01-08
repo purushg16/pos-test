@@ -74,6 +74,7 @@ const useBilling = ({ type }: Props) => {
       queryKey: ["billing", billData],
       queryFn: () => postBills.postData(billData).then((res) => res),
       enabled: false,
+      retry: 1,
     });
   }
 

@@ -4,37 +4,28 @@ import {
   Button,
   Flex,
   Heading,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   SimpleGrid,
-  Spinner,
   Switch,
   Text,
-  VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useRef } from "react";
-import { BsSearch } from "react-icons/bs";
+import React from "react";
 import useCustomers from "../../functions/hooks/useCustomers";
 import useEmployee from "../../functions/hooks/useEmployee";
 import useGST from "../../functions/hooks/useGST";
 import useBillStore from "../../functions/store/billStore";
-import useCustomerStore from "../../functions/store/customerStore";
-import CustomerModal from "../Customers/CustomerModal";
+import useTokenStore from "../../functions/store/token";
+import SelectCustomer from "../Customers/SelectCustomer";
+import KeyBoard from "../VirtualKeyBoard/VirtualKeyBoard";
 import { BillingEntry } from "../entities/BillingEntry";
-import { Customer } from "../entities/Customer";
 import BillPaymentModal from "./BillPaymentModal";
 import EmployeSelector from "./EmployeSelector";
 import GSTSelector from "./GSTSelector";
 import HandlerSelector from "./HandlerSelector";
-import SelectCustomer from "../Customers/SelectCustomer";
-import useTokenStore from "../../functions/store/token";
-import KeyBoard from "../VirtualKeyBoard/VirtualKeyBoard";
 
 export const BillingDetails = () => {
   const BillEntries = useBillStore((s) => s.BillEntries);
