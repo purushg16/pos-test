@@ -168,6 +168,7 @@ const BillingItemIdSelector = ({
                           : stock
                           ? addStockItem(item)
                           : addBillItem(item);
+                        ref.current!.value = "";
                       }}
                     >
                       {item.itemName}
