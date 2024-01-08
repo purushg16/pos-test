@@ -17,19 +17,22 @@ const PendingBillContent = forwardRef<HTMLDivElement, PrintableComponentProps>(
       <div id="invoice-POS" ref={ref}>
         <center id="top">
           <div className="info">
-            <h2>SBISTechs Inc</h2>
+            <h6 style={{ textDecoration: "underline" }}> உ </h6>
+            <p> ஸ்ரீ அங்காளபரமேஸ்வரி துணை </p>
+            <p>50-வது ஆண்டு பொன்விழா காணும்</p>
+            <h1>பத்மா ஸ்டோர்</h1>
           </div>
         </center>
 
         <div id="mid">
           <div className="info">
             <p>
-              Address : street city, state 0000 <br />
-              Email : JohnDoe@gmail.com <br />
-              Phone : 555-555-5555 <br />
+              232 சேலம் மெயின் ரோடு
+              <br />
+              சின்ன சேலம் <br />
             </p>
           </div>
-          <h2 style={{ margin: "10px 0" }}> Wallet Bill </h2>
+          <h2 style={{ margin: "10px 0" }}> Pending Bill </h2>
 
           <SimpleGrid columns={2} my={1}>
             <SimpleGrid columns={2}>
