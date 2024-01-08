@@ -22,8 +22,10 @@ const useReverseBill = (done: (status: boolean) => void) => {
     },
 
     onError: (err: AxiosError<AuthError>) => {
+      console.log(err);
+
       toast({
-        title: err.response?.data.err,
+        title: err.response?.data.err || err.response?.data.message,
         status: "error",
         duration: 1000,
         isClosable: true,

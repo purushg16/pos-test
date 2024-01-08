@@ -32,7 +32,7 @@ const ReverseBill = () => {
 
   const { mutate } = useReverseBill((yes) => setLoading(yes));
 
-  const onReverse = () => {
+  const reverse = () => {
     setLoading(true);
     mutate(reverseItem);
   };
@@ -43,7 +43,14 @@ const ReverseBill = () => {
         Reverse Bill
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+          editReverseItem({ billNo: parseInt(""), mode: "" });
+        }}
+        closeOnOverlayClick={false}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -94,14 +101,21 @@ const ReverseBill = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onClose}>
+            <Button
+              variant="ghost"
+              mr={3}
+              onClick={() => {
+                onClose();
+                editReverseItem({ billNo: parseInt(""), mode: "" });
+              }}
+            >
               Close
             </Button>
             <Button
               colorScheme="red"
-              onClick={onReverse}
+              onClick={reverse}
               isLoading={loading}
-              isDisabled={!reverseItem.billNo && reverseItem.mode !== ""}
+              isDisabled={!reverseItem.billNo || reverseItem.mode === ""}
             >
               Reverse
             </Button>

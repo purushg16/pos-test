@@ -33,7 +33,7 @@ interface Props {
   onClose: () => void;
 }
 
-interface InternalError {
+export interface InternalError {
   message: string;
 }
 

@@ -7,6 +7,7 @@ import { jwtDecode } from "jwt-decode";
 
 export interface AuthError {
   err: string;
+  message: string;
 }
 
 const useAuth = (done: (yes: boolean) => void) => {
