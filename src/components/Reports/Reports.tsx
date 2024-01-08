@@ -57,7 +57,7 @@ const Reports = () => {
                 </Image>
                 <Heading size="md"> Gross Profit Report </Heading>
                 <Text color="gray" my={2}>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Review all the profit measures in all terms.
                 </Text>
                 <Flex justifyContent="end" width="100%">
                   <Button colorScheme="teal"> View </Button>
@@ -79,7 +79,7 @@ const Reports = () => {
                 <Heading size="md"> Products Report </Heading>
 
                 <Text color="gray" my={2}>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Review all the products.
                 </Text>
                 <Flex justifyContent="end" width="100%">
                   <Button colorScheme="teal"> View </Button>
@@ -101,7 +101,7 @@ const Reports = () => {
                 <Heading size="md"> CashFlow Report </Heading>
 
                 <Text color="gray" my={2}>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Review all the cash flown through.
                 </Text>
                 <Flex justifyContent="end" width="100%">
                   <Button colorScheme="teal"> View </Button>
