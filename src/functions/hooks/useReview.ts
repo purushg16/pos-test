@@ -41,8 +41,6 @@ const useSettlePending = (
   return useMutation({
     mutationFn: postPendingBills.postData,
 
-    // onMutate: (sentBill: PostPendingBill) => {},
-
     onSuccess: (res) => {
       toast({
         title: res.msg,

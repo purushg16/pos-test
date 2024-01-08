@@ -24,11 +24,19 @@ const PendingBillsStore = create<PendingBillsStoreType>((set) => ({
 
   settleBills: (bill) =>
     set((store) => ({
-      // filteredPendingBills: store.pendingBills?.filter(
-      //   (bills) => bills._id !== bill._id
-      // ),
-
       filteredPendingBills: store.pendingBills
+        ?.map((fbill) =>
+          bill.billNo === fbill.billNo
+            ? {
+                ...fbill,
+                delivery: bill.delivery,
+                itemHandled: bill.itemHandled,
+              }
+            : fbill
+        )
+        .filter((fbill) => !fbill.itemHandled || !fbill.delivery),
+
+      pendingBills: store.pendingBills
         ?.map((fbill) =>
           bill.billNo === fbill.billNo
             ? {
