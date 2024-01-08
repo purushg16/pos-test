@@ -62,6 +62,9 @@ interface Report {
 
   critical: boolean;
 
+  noStock: boolean;
+  filterNoStock: (critical: boolean) => void;
+
   searchedProduct: ProductReport[] | undefined;
   searchProductList: (term: string) => void;
   filterCritical: (critical: boolean) => void;
@@ -86,6 +89,7 @@ const reportStore = create<Report>((set) => ({
   productReportsList: [],
   searchedProduct: undefined,
   critical: false,
+  noStock: false,
 
   editProduct: (editProduct) =>
     set((store) => ({
@@ -131,6 +135,20 @@ const reportStore = create<Report>((set) => ({
           )
         : store.productReportsList,
       critical: critical,
+      noStock: false,
+    })),
+
+  filterNoStock: (noStock) =>
+    set((store) => ({
+      searchedProduct: noStock
+        ? store.productReportsList.filter(
+            (product) =>
+              product.suppliers.reduce((acc, value) => acc + value.stock, 0) ===
+              0
+          )
+        : store.productReportsList,
+      critical: false,
+      noStock: noStock,
     })),
 
   setReports: (reports) =>
