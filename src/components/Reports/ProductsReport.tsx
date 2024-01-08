@@ -22,6 +22,7 @@ import LoadingPage from "../LoadingPage/LoadingPage";
 import ProductReportModal from "./ProductReportModal";
 import useProductReport from "../../functions/hooks/useProductReport";
 import reportStore from "../../functions/store/reportStore";
+import PaginatedWindow from "../Window/Window";
 
 const ProductsReport = () => {
   useProductReport();
@@ -30,6 +31,42 @@ const ProductsReport = () => {
   const filterCritical = reportStore((s) => s.filterCritical);
   const critical = reportStore((s) => s.critical);
   const ref = useRef<HTMLInputElement>(null);
+
+  const productItem = ({
+    index,
+    style,
+  }: {
+    index: number;
+    style: React.CSSProperties;
+  }) => {
+    const product = productReports![index];
+
+    return (
+      <Card size={"sm"} borderRadius={1} mb={1} style={style}>
+        <CardHeader>
+          <SimpleGrid columns={4} alignItems="center">
+            <Heading size="md"> {product.code} </Heading>
+            <Heading size="md"> {product.itemName} </Heading>
+
+            <Heading size="md">
+              {product.suppliers?.reduce(
+                (acc, supplier) => acc + supplier.stock,
+                0
+              )
+                ? product.suppliers?.reduce(
+                    (acc, supplier) => acc + supplier.stock,
+                    0
+                  )
+                : 0}
+            </Heading>
+            <Heading size="md">
+              <ProductReportModal product={product} />
+            </Heading>
+          </SimpleGrid>
+        </CardHeader>
+      </Card>
+    );
+  };
 
   if (!productReports)
     return (
@@ -89,7 +126,14 @@ const ProductsReport = () => {
           </CardHeader>
         </Card>
         <Box height="90vh" overflowY="scroll">
-          {productReports.map((product, index) => (
+          <PaginatedWindow
+            children={productItem}
+            height={800}
+            length={productReports.length}
+            width="100%"
+            itemSize={60}
+          />
+          {/* {productReports.map((product, index) => (
             <Card size={"sm"} borderRadius={1} mb={1}>
               <CardHeader>
                 <SimpleGrid columns={4} alignItems="center">
@@ -113,7 +157,7 @@ const ProductsReport = () => {
                 </SimpleGrid>
               </CardHeader>
             </Card>
-          ))}
+          ))} */}
         </Box>
       </Stack>
     </Box>

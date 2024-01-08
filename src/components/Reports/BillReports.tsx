@@ -31,8 +31,11 @@ import BillProductsModal from "./BillProductsModal";
 import SelectCustomer from "../Customers/SelectCustomer";
 import useCustomerStore from "../../functions/store/customerStore";
 import { MdClear, MdClearAll } from "react-icons/md";
+import useCustomers from "../../functions/hooks/useCustomers";
 
 const BillReports = () => {
+  useCustomers({ type: "GET" });
+
   const [state, setState] = useState([
     {
       startDate: new Date(),
