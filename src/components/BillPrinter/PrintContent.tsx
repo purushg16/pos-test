@@ -246,12 +246,12 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
             >
               ** Thank You! Visit Again! **
             </Heading> */}
-
+            {/* 
             <Box py={2}>
               <Heading size="xs">Customer Details</Heading>
               <Text my={1}> {currentCustmer?.name} </Text>
               <Text my={1}> {currentCustmer?.phone}</Text>
-            </Box>
+            </Box> */}
 
             <Text textAlign="center" className="legal">
               <strong>வாருங்கள் வரவேற்கிறோம் வாழ்த்துங்கள் வளர்கிறோம்</strong> 
