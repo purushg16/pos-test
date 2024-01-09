@@ -107,7 +107,7 @@ export const BillingTable = ({ stock = false }: Props) => {
                   onChange={(quantity) => {
                     updateBillEntryQuantity(
                       entry.productId,
-                      parseInt(quantity)
+                      parseFloat(quantity)
                     );
                   }}
                 >
