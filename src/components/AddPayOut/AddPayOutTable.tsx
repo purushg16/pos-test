@@ -5,6 +5,10 @@ import {
   HStack,
   Heading,
   Input,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Spacer,
   Spinner,
   Table,
@@ -19,16 +23,22 @@ import usePayOut from "../../functions/hooks/usePayOut";
 import usePayableStore from "../../functions/store/payableStore";
 import PayOutModal from "./PayOutModal";
 import { convertDate } from "../../functions/conversions/dateConversion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImageModal from "./ImageModal";
+import useSupplierStore from "../../functions/store/suppliersStore";
+import SelectSuppliers from "../Stock/SelectSuppliers";
 
 const AddPayOutTable = () => {
   usePayOut({ type: "GET" });
   const baseParties = usePayableStore((s) => s.payablesList);
   const PayableParties = usePayableStore((s) => s.filteredPayables);
   const filter = usePayableStore((s) => s.filterPayables);
+  const filterBySuppliers = usePayableStore((s) => s.filterBySuppliers);
   const clear = usePayableStore((s) => s.clearFilters);
   const [numberOfDays, setperiod] = useState(parseInt(""));
+
+  const currentSupplier = useSupplierStore((s) => s.currentSupplier);
+  const setCurrentSupplier = useSupplierStore((s) => s.setCurrentSupplier);
 
   const fetchData = () => {
     const currentDate = new Date();
@@ -37,11 +47,23 @@ const AddPayOutTable = () => {
     filter(startDate.setHours(0, 0, 0, 0));
   };
 
+  useEffect(() => {
+    filterBySuppliers(currentSupplier!);
+  }, [currentSupplier]);
+
   return (
     <Box padding={10}>
+      <Heading> Supplier Settlements </Heading>
       <Flex alignItems="baseline" mt={5} mb={10}>
-        <Heading> Supplier Settlements </Heading>
+        <HStack>
+          <Heading size="md" whiteSpace="nowrap">
+            Select Supplier:
+          </Heading>
+          <SelectSuppliers />
+        </HStack>
+
         <Spacer />
+
         {!!PayableParties && (
           <HStack>
             <Heading size="md"> More Than </Heading>
@@ -63,16 +85,18 @@ const AddPayOutTable = () => {
               Fetch
             </Button>
 
-            {baseParties?.length !== PayableParties.length && (
-              <Button
-                ml={4}
-                onClick={clear}
-                colorScheme="red"
-                variant="outline"
-              >
-                Clear
-              </Button>
-            )}
+            <Button
+              ml={4}
+              onClick={() => {
+                clear();
+                setCurrentSupplier(undefined);
+              }}
+              colorScheme="red"
+              variant="outline"
+              isDisabled={baseParties?.length === PayableParties.length}
+            >
+              Clear
+            </Button>
           </HStack>
         )}
       </Flex>

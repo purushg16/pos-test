@@ -1,10 +1,12 @@
 import { create } from "zustand";
 import { PayingSupplier } from "../../components/entities/PayingSupplier";
+import { Supplier } from "../../components/entities/Supplier";
 
 interface PayableStoreType {
   payablesList: PayingSupplier[] | undefined;
   filteredPayables: PayingSupplier[] | undefined;
 
+  filterBySuppliers: (suppiler: Supplier | undefined) => void;
   filterPayables: (date: number) => void;
   setPayablesList: (payables: PayingSupplier[]) => void;
   clearFilters: () => void;
@@ -19,6 +21,15 @@ const usePayableStore = create<PayableStoreType>((set) => ({
   payablesList: undefined,
   filteredPayables: undefined,
   selectedParty: undefined,
+
+  filterBySuppliers: (supplier) =>
+    set((store) => ({
+      filteredPayables: !!supplier
+        ? store.payablesList?.filter(
+            (entry) => entry.supplierId._id! === supplier._id!
+          ) || store.payablesList
+        : store.payablesList,
+    })),
 
   filterPayables: (startDate) =>
     set((store) => ({
