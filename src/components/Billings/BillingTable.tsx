@@ -75,9 +75,9 @@ export const BillingTable = ({ stock = false }: Props) => {
               <hr />
               <small> with tax </small>
             </Th>
-            <Th borderRight="0.1px solid #d9d9d9" textAlign="center">
+            {/* <Th borderRight="0.1px solid #d9d9d9" textAlign="center">
               Tax
-            </Th>
+            </Th> */}
             <Th borderRight="0.1px solid #d9d9d9" textAlign="center">
               Total
             </Th>
@@ -180,9 +180,9 @@ export const BillingTable = ({ stock = false }: Props) => {
               </Td>
 
               {/* Tax App. */}
-              <Td borderRight="0.1px solid #d9d9d9" isNumeric>
+              {/* <Td borderRight="0.1px solid #d9d9d9" isNumeric>
                 {entry.taxApplied + "%"}
-              </Td>
+              </Td> */}
 
               {/* Total */}
               <Td borderRight="0.1px solid #d9d9d9" isNumeric>
@@ -224,9 +224,9 @@ export const BillingTable = ({ stock = false }: Props) => {
             <Td borderRight="0.1px solid #d9d9d9" background="teal.900">
               -
             </Td>
-            <Td borderRight="0.1px solid #d9d9d9" background="teal.900">
+            {/* <Td borderRight="0.1px solid #d9d9d9" background="teal.900">
               -
-            </Td>
+            </Td> */}
           </Tr>
         </Tbody>
       </Table>
