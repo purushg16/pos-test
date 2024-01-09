@@ -62,6 +62,14 @@ const BarcodeScanner: React.FC = () => {
       location.pathname === "/"
     ) {
       addBillEntry(convertToBill(barcodeProduct, billType!));
+      toast({
+        title: "Item added to Billing List",
+        // description: desc,
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+        position: "top",
+      });
       deleteBarCodeProduct();
     }
   }, [
@@ -100,6 +108,7 @@ const BarcodeScanner: React.FC = () => {
         isClosable: true,
         position: "top",
       });
+      deleteBarCodeProduct();
     }
   }, [barcodeProduct]);
   return <></>;
