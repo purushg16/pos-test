@@ -116,7 +116,6 @@ const ProductForm = () => {
   useEffect(() => {
     if (
       newProduct.itemName &&
-      newProduct.barCode &&
       newProduct.code &&
       newProduct.unit !== "" &&
       newProduct.category &&
@@ -232,7 +231,7 @@ const ProductForm = () => {
                   onChange={(event) => {
                     editProduct({
                       ...newProduct,
-                      mrp: parseInt(event.target.value),
+                      mrp: parseFloat(event.target.value),
                     });
                   }}
                 />
@@ -266,7 +265,7 @@ const ProductForm = () => {
                   onChange={(event) => {
                     editProduct({
                       ...newProduct,
-                      salesPriceWholesale: parseInt(event.target.value),
+                      salesPriceWholesale: parseFloat(event.target.value),
                     });
                   }}
                 />
@@ -284,7 +283,7 @@ const ProductForm = () => {
                   onChange={(event) => {
                     editProduct({
                       ...newProduct,
-                      salesPriceRetail: parseInt(event.target.value),
+                      salesPriceRetail: parseFloat(event.target.value),
                     });
                   }}
                 />

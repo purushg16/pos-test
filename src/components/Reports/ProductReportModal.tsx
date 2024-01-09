@@ -203,7 +203,7 @@ const ProductReportModal = ({ product }: Props) => {
                       onChange={(event) => {
                         setEditProduct({
                           ...editProduct,
-                          salesPriceWholesale: parseInt(event.target.value),
+                          salesPriceWholesale: parseFloat(event.target.value),
                         });
                       }}
                       my={2}
@@ -226,7 +226,7 @@ const ProductReportModal = ({ product }: Props) => {
                       onChange={(event) => {
                         setEditProduct({
                           ...editProduct,
-                          salesPriceRetail: parseInt(event.target.value),
+                          salesPriceRetail: parseFloat(event.target.value),
                         });
                       }}
                       my={2}
@@ -249,7 +249,7 @@ const ProductReportModal = ({ product }: Props) => {
                       onChange={(event) => {
                         setEditProduct({
                           ...editProduct,
-                          mrp: parseInt(event.target.value),
+                          mrp: parseFloat(event.target.value),
                         });
                       }}
                       my={2}
@@ -272,7 +272,7 @@ const ProductReportModal = ({ product }: Props) => {
                       onChange={(event) => {
                         setEditProduct({
                           ...editProduct,
-                          taxRate: parseInt(event.target.value),
+                          taxRate: parseFloat(event.target.value),
                         });
                       }}
                       my={2}
