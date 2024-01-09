@@ -7,7 +7,7 @@ import {
   Input,
   InputGroup,
 } from "@chakra-ui/react";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import useStock from "../../functions/hooks/useStock";
 import useSuppliers from "../../functions/hooks/useSuppliers";
 import useStockStore from "../../functions/store/stockStore";
@@ -15,21 +15,13 @@ import useSupplierStore from "../../functions/store/suppliersStore";
 import SelectSuppliers from "./SelectSuppliers";
 
 const StockDetails = () => {
-  const Billref = useRef<HTMLInputElement>(null);
   const currentSupplier = useSupplierStore((s) => s.currentSupplier);
   const billNo = useStockStore((s) => s.billNo);
   const setBillNo = useStockStore((s) => s.setBillNo);
 
   const total = useStockStore((s) => s.total);
   const stockProducts = useStockStore((s) => s.stockProducts);
-  const [canSubmit, setSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (total && stockProducts && !!billNo && !!currentSupplier)
-      setSubmit(true);
-    else setSubmit(false);
-  }, [total, stockProducts, billNo, currentSupplier]);
 
   useSuppliers({ type: "GET" });
 
@@ -99,12 +91,12 @@ const StockDetails = () => {
 
           <InputGroup width="100%">
             <Input
-              ref={Billref}
               placeholder="Enter Bill Number"
               variant={"filled"}
               borderRadius={7}
-              onChange={() => {
-                setBillNo(parseInt(Billref.current?.value!));
+              value={billNo}
+              onChange={(event) => {
+                setBillNo(parseInt(event.target.value));
               }}
             />
           </InputGroup>
@@ -150,7 +142,12 @@ const StockDetails = () => {
           colorScheme="blue"
           width="100%"
           isLoading={loading}
-          isDisabled={!canSubmit}
+          isDisabled={
+            total === null ||
+            stockProducts.length === 0 ||
+            !!!billNo ||
+            !!!currentSupplier
+          }
           onClick={(event) => {
             onSubmit(event);
           }}

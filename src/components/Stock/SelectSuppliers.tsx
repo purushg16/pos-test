@@ -1,23 +1,21 @@
-import React, { useRef } from "react";
-import { FixedSizeList } from "react-window";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
-  Menu,
-  MenuButton,
+  Box,
   Button,
-  MenuList,
+  Input,
   InputGroup,
   InputLeftElement,
-  Input,
+  Menu,
+  MenuButton,
+  MenuList,
   Spinner,
-  Box,
   VStack,
 } from "@chakra-ui/react";
+import React, { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
-import SupplierModal from "../Suppliers/SupplierModal";
-import { Supplier } from "../entities/Supplier";
 import useSuppliers from "../../functions/hooks/useSuppliers";
 import useSupplierStore from "../../functions/store/suppliersStore";
+import SupplierModal from "../Suppliers/SupplierModal";
 import PaginatedWindow from "../Window/Window";
 
 const SelectSuppliers = () => {
