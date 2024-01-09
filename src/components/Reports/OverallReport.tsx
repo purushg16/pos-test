@@ -48,12 +48,12 @@ const OverallReport = () => {
 
   return (
     <SimpleGrid columns={1} spacing={2}>
-      <SimpleGrid columns={3} spacing={2}>
+      <SimpleGrid columns={2} spacing={2}>
         <Card>
           <CardHeader pb={0}>
             <Heading size="md">Overall Flow</Heading>
           </CardHeader>
-          <CardBody pt={1}>
+          <CardBody pt={2}>
             <Grid templateColumns={"1fr 5% 1fr 10% 1fr"} alignItems="center">
               <GridItem textAlign="center">
                 <Heading> {currentFlow.totalBillAmount} </Heading>
@@ -85,8 +85,6 @@ const OverallReport = () => {
             </Grid>
           </CardBody>
         </Card>
-
-        <Box></Box>
         <Box></Box>
       </SimpleGrid>
 
