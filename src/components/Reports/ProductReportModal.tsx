@@ -78,10 +78,9 @@ const ProductReportModal = ({ product }: Props) => {
     if (editProduct.barCode !== product.barCode)
       setEditProduct({
         ...editProduct,
-        barCode: parseInt(
-          (document.getElementById("edit-product-bar-code") as HTMLInputElement)
-            .value
-        ),
+        barCode: (
+          document.getElementById("edit-product-bar-code") as HTMLInputElement
+        ).value,
       });
 
     setLoading(true);

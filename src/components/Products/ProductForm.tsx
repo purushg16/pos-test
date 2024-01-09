@@ -58,7 +58,7 @@ const ProductForm = () => {
   const currentCategory = useCategoryStore((s) => s.currentCategory);
   const [newProduct, editProduct] = useState({
     itemName: "",
-    barCode: parseInt(""),
+    barCode: "",
     code: parseInt(""),
     taxRate: parseInt(""),
     mrp: parseInt(""),
@@ -89,7 +89,7 @@ const ProductForm = () => {
           document.getElementById("product-barCode") &&
           location.pathname === "/addProduct"
         ) {
-          editProduct({ ...newProduct, barCode: parseInt(barcodeData) });
+          editProduct({ ...newProduct, barCode: barcodeData });
         }
         setBarcodeData(""); // Clear the buffer for the next scan
       }
@@ -135,7 +135,7 @@ const ProductForm = () => {
   const bind = useLongPress(() => {
     editProduct({
       itemName: "",
-      barCode: parseInt(""),
+      barCode: "",
       code: parseInt(""),
       category: "",
       taxRate: parseInt(""),
@@ -178,12 +178,11 @@ const ProductForm = () => {
                   id="product-barCode"
                   focusBorderColor="teal"
                   variant="flushed"
-                  type="number"
                   value={newProduct.barCode}
                   onChange={(event) => {
                     editProduct({
                       ...newProduct,
-                      barCode: parseInt(event.target.value),
+                      barCode: event.target.value,
                     });
                   }}
                 />

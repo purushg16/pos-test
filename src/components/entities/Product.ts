@@ -3,7 +3,7 @@ import { ProductSupplier } from "./ProductSupplier";
 export interface Product {
   _id?: string;
   itemName: string;
-  barCode: number;
+  barCode: string;
   code: number;
   unit: string;
   topUnit: string;
