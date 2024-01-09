@@ -27,6 +27,7 @@ import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrintContent from "../BillPrinter/PrintContent";
 import { AxiosError } from "axios";
+import useCustomerStore from "../../functions/store/customerStore";
 
 interface Props {
   isOpen: boolean;
@@ -55,6 +56,8 @@ export default function BillPaymentModal({ isOpen, onClose }: Props) {
   const clearEntries = useBillStore((s) => s.clearEntries);
   const setBillNo = useBillStore((s) => s.setBillNo);
   const billNo = useBillStore((s) => s.billNo);
+  const setCurrentCustomer = useCustomerStore((s) => s.setCurrentCustomer);
+  const setBillType = useBillStore((s) => s.setBillType);
 
   const { refetch } = useBilling({ type: "POST" })!;
   const toast = useToast();
@@ -75,6 +78,9 @@ export default function BillPaymentModal({ isOpen, onClose }: Props) {
         setLoading(false);
         onClose();
         setBillNo(data.billNo);
+        setCurrentCustomer(undefined);
+        setBillType(undefined);
+
         if (!!billNo) handlePrint();
       } else if (isError) {
         setLoading(false);

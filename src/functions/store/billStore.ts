@@ -27,7 +27,7 @@ interface BillEntryStore {
   setPartialAmount: (amount: number) => void;
 
   billType: string | undefined;
-  setBillType: (billType: string) => void;
+  setBillType: (billType: string | undefined) => void;
 
   itemHandled: boolean;
   setItemHandled: (handled: boolean) => void;
