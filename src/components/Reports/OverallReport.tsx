@@ -56,7 +56,7 @@ const OverallReport = () => {
           <CardBody pt={2}>
             <Grid templateColumns={"1fr 5% 1fr 10% 1fr"} alignItems="center">
               <GridItem textAlign="center">
-                <Heading> {currentFlow.totalBillAmount} </Heading>
+                <Heading> {currentFlow.totalBillAmount.toFixed(2)} </Heading>
                 <Heading size="sm" color="gray">
                   Bill Amount
                 </Heading>
