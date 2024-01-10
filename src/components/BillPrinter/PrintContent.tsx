@@ -3,7 +3,6 @@ import "./billprinter.css";
 import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import useBillStore from "../../functions/store/billStore";
 import { BillingEntry } from "../entities/BillingEntry";
-import useCustomerStore from "../../functions/store/customerStore";
 import useEmployeStore from "../../functions/store/employeStore";
 
 interface PrintableComponentProps {}
@@ -12,7 +11,6 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
   (props, ref) => {
     const BillEntries = useBillStore((s) => s.BillEntries);
     const biller = useEmployeStore((s) => s.currentBiller);
-    const currentCustmer = useCustomerStore((s) => s.currentCustmer);
     const billNo = useBillStore((s) => s.billNo);
     const paymentMode = useBillStore((s) => s.paymentMode);
     const partialPayment = useBillStore((s) => s.partialPayment);
@@ -119,6 +117,31 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
                   </td>
                 </tr>
               ))}
+              <tr className="service">
+                <td className="tableitem">
+                  <h3 className="itemtext"> - </h3>
+                </td>
+                <td className="tableitem">
+                  <h3 className="itemtext">- </h3>
+                </td>
+                <td className="tableitem">
+                  <h3 className="itemtext">- </h3>
+                </td>
+                <td className="tableitem">
+                  <h3 className="itemtext">-</h3>
+                </td>
+                <td className="tableitem">
+                  <h2>Total</h2>
+                </td>
+                <td className="tableitem">
+                  <h2 className="itemtext">
+                    {BillEntries.reduce(
+                      (acc, entry: BillingEntry) => acc + entry.total,
+                      0
+                    ).toFixed(2)}
+                  </h2>
+                </td>
+              </tr>
             </table>
 
             <SimpleGrid
@@ -127,7 +150,7 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               borderTop="1px dashed #666"
               borderBottom="1px dashed #666"
             >
-              <SimpleGrid columns={2}>
+              {/* <SimpleGrid columns={2}>
                 <h3> Total Quantity: </h3>
                 <h3>
                   {BillEntries.reduce(
@@ -135,8 +158,9 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
                     0
                   )}
                 </h3>
-              </SimpleGrid>
-              <SimpleGrid columns={2}>
+              </SimpleGrid> */}
+              {/* <SimpleGrid columns=
+              {2}>
                 <h3> Amount: </h3>
                 <h3>
                   {BillEntries.reduce(
@@ -144,10 +168,10 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
                     0
                   ).toFixed(2)}
                 </h3>
-              </SimpleGrid>
+              </SimpleGrid> */}
               <SimpleGrid columns={2}>
-                <h3> Total Items: </h3>
-                <h3> {BillEntries.length} </h3>
+                <h3 className="itemtext"> Total Items: </h3>
+                <h3 className="itemtext"> {BillEntries.length} </h3>
               </SimpleGrid>
             </SimpleGrid>
           </div>

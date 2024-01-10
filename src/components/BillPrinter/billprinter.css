@@ -111,7 +111,8 @@ td {
   width: 24mm;
 }
 .itemtext {
-  font-size: 0.5em;
+  font-size: 0.5em !important;
+  font-weight: 600 !important;
 }
 
 #legalcopy {

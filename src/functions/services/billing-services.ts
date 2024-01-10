@@ -9,6 +9,7 @@ export interface BillReportProduct {
     code: number;
     unit: string;
     topUnit: string;
+    mrp: number;
   };
   selectedUnit: number;
   stock: number;
@@ -22,10 +23,10 @@ export interface BillReport {
   customer: Customer;
   billAmount: number;
   cart: {
-    _id: "658a93bff5be88d019640a29";
+    _id: string;
     product: BillReportProduct[];
     __v: 0;
-    createdAt: "2023-12-27T10:58:35.463Z";
+    createdAt: string;
   };
   gstinNo: string;
   billType: string;
@@ -34,7 +35,7 @@ export interface BillReport {
   handler: string;
   paymentMode: string;
   payment: string;
-  partialAmount: string | null;
+  partialAmount: number | null;
   createdAt: string;
   reversed?: boolean;
 }

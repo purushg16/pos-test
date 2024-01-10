@@ -14,27 +14,31 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import {
-  BillReport,
-  getBills,
-} from "../../functions/services/billing-services";
-import { useGetBills } from "../../functions/hooks/useBilling";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DateRange } from "react-date-range";
+import { MdClear } from "react-icons/md";
 import { convertDate } from "../../functions/conversions/dateConversion";
-import BillProductsModal from "./BillProductsModal";
-import SelectCustomer from "../Customers/SelectCustomer";
-import useCustomerStore from "../../functions/store/customerStore";
-import { MdClear, MdClearAll } from "react-icons/md";
+import { useGetBills } from "../../functions/hooks/useBilling";
 import useCustomers from "../../functions/hooks/useCustomers";
+import { BillReport } from "../../functions/services/billing-services";
+import useCustomerStore from "../../functions/store/customerStore";
+import SelectCustomer from "../Customers/SelectCustomer";
+import BillProductsModal from "./BillProductsModal";
+import { DownloadIcon } from "@chakra-ui/icons";
+import BillPrint from "../BillPrinter/BillPrint";
+import { useReactToPrint } from "react-to-print";
 
 const BillReports = () => {
   useCustomers({ type: "GET" });
+
+  const componentRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const [state, setState] = useState([
     {
@@ -162,6 +166,16 @@ const BillReports = () => {
                             <Td> {bill.billerName} </Td>
                             <Td>
                               <BillProductsModal products={bill.cart.product} />
+                              <Button
+                                ml={2}
+                                colorScheme="teal"
+                                onClick={handlePrint}
+                              >
+                                <div style={{ display: "none" }}>
+                                  <BillPrint entry={bill} ref={componentRef} />
+                                </div>
+                                <DownloadIcon />
+                              </Button>
                             </Td>
                           </Tr>
                         ))}

@@ -17,7 +17,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { CrDrCart } from "../../functions/services/cr-dr-services";
-import { BillReportProduct } from "../../functions/services/billing-services";
+import {
+  BillReport,
+  BillReportProduct,
+} from "../../functions/services/billing-services";
+import BillPrint from "../BillPrinter/BillPrint";
 
 interface Props {
   products: BillReportProduct[];
