@@ -98,24 +98,24 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               {BillEntries.map((entry) => (
                 <tr className="service">
                   <td className="tableitem">
-                    <h2 className="itemtext">{entry.productName}</h2>
+                    <h3 className="itemtext">{entry.productName}</h3>
                   </td>
                   <td className="tableitem">
-                    <h2 className="itemtext">{entry.quantity}</h2>
+                    <h3 className="itemtext">{entry.quantity}</h3>
                   </td>
                   <td className="tableitem">
-                    <h2 className="itemtext">{entry.unit}</h2>
+                    <h3 className="itemtext">{entry.unit}</h3>
                   </td>
                   <td className="tableitem">
-                    <h2 className="itemtext">
+                    <h3 className="itemtext">
                       {(entry.mrp * entry.currentUnitValue!).toFixed(2)}
-                    </h2>
+                    </h3>
                   </td>
                   <td className="tableitem">
-                    <h2 className="itemtext">{entry.billPrice.toFixed(2)}</h2>
+                    <h3 className="itemtext">{entry.billPrice.toFixed(2)}</h3>
                   </td>
                   <td className="tableitem">
-                    <h2 className="itemtext">{entry.total.toFixed(2)}</h2>
+                    <h3 className="itemtext">{entry.total.toFixed(2)}</h3>
                   </td>
                 </tr>
               ))}
@@ -128,26 +128,26 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               borderBottom="1px dashed #666"
             >
               <SimpleGrid columns={2}>
-                <p> Total Quantity: </p>
-                <p>
+                <h3> Total Quantity: </h3>
+                <h3>
                   {BillEntries.reduce(
                     (acc, entry: BillingEntry) => acc + entry.quantity,
                     0
                   )}
-                </p>
+                </h3>
               </SimpleGrid>
               <SimpleGrid columns={2}>
-                <p> Amount: </p>
-                <p>
+                <h3> Amount: </h3>
+                <h3>
                   {BillEntries.reduce(
                     (acc, entry: BillingEntry) => acc + entry.total,
                     0
                   ).toFixed(2)}
-                </p>
+                </h3>
               </SimpleGrid>
               <SimpleGrid columns={2}>
-                <p> Total Items: </p>
-                <p> {BillEntries.length} </p>
+                <h3> Total Items: </h3>
+                <h3> {BillEntries.length} </h3>
               </SimpleGrid>
             </SimpleGrid>
           </div>
