@@ -66,11 +66,12 @@ const KeyBoard = () => {
 
   useEffect(() => {
     if (focusedInput) {
-      if (focusedInput.id === "bill-quantity")
+      if (focusedInput.id === "bill-quantity") {
         updateBillEntryQuantity(
           parseInt(focusedInput.ariaLabel!),
-          parseInt(value.join(""))
+          parseFloat(value.join(""))
         );
+      }
       if (focusedInput.id === "bill-price")
         updateBillEntryPrice(
           parseInt(focusedInput.ariaLabel!),
@@ -103,11 +104,7 @@ const KeyBoard = () => {
 
           <Button onClick={() => updateValue(0)}>0</Button>
           <Button onClick={() => updateValue(".")}>.</Button>
-          <Button onClick={() => updateValue(0)}>0</Button>
-          <Box></Box>
-          <Button colorScheme="orange" onClick={clearState}>
-            <CloseIcon />
-          </Button>
+
           <Button
             colorScheme="red"
             {...bind()}
@@ -116,6 +113,9 @@ const KeyBoard = () => {
             <BsBackspace />
           </Button>
         </SimpleGrid>
+        <Button colorScheme="orange" onClick={clearState} width="100%" mt={2}>
+          <CloseIcon />
+        </Button>
       </Box>
     </div>
   );

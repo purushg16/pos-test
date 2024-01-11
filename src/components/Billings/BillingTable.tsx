@@ -33,6 +33,14 @@ interface Props {
   stock?: boolean;
 }
 
+const gramQuantities: { [key: string]: number } = {
+  "50": 0.05,
+  "100": 0.1,
+  "250 (1/4)": 0.25,
+  "500 (1/2)": 0.5,
+  "750 (3/4)": 0.75,
+};
+
 export const BillingTable = ({ stock = false }: Props) => {
   const { BillEntries, updateBillEntryQuantity, updateBillEntryPrice } =
     useBillStore();
@@ -102,6 +110,45 @@ export const BillingTable = ({ stock = false }: Props) => {
 
               {/*  Quantity  */}
               <Td borderRight="0.1px solid #d9d9d9" isNumeric>
+                <InputGroup>
+                  <Input
+                    // maxWidth={70}
+                    type="number"
+                    value={entry.quantity}
+                    onChange={(event) => {
+                      updateBillEntryQuantity(
+                        entry.productId,
+                        parseFloat(event.target.value)
+                      );
+                    }}
+                    inputMode="none"
+                    id="bill-quantity"
+                    aria-label={entry.productId.toString()}
+                  />
+                </InputGroup>
+
+                <Menu>
+                  <MenuButton as={Button} size="sm" width="100%">
+                    {"select"}
+                  </MenuButton>
+                  <MenuList>
+                    {Object.keys(gramQuantities).map((q) => (
+                      <MenuItem
+                        key={q}
+                        onClick={() => {
+                          updateBillEntryQuantity(
+                            entry.productId,
+                            gramQuantities[q]
+                          );
+                        }}
+                      >
+                        {q}
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </Menu>
+
+                {/* 
                 <Editable
                   value={entry.quantity.toString()}
                   onChange={(quantity) => {
@@ -117,7 +164,7 @@ export const BillingTable = ({ stock = false }: Props) => {
                     id="bill-quantity"
                     aria-label={entry.productId.toString()}
                   />
-                </Editable>
+                </Editable> */}
               </Td>
 
               <Td borderRight="0.1px solid #d9d9d9" isNumeric>
