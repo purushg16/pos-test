@@ -221,14 +221,14 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               <Box>
                 <Heading pb={2}> Cash </Heading>
                 {paymentMode !== "cash" && <Text> - </Text>}
-                <Text>
-                  {paymentMode === "cash" &&
-                    partialPayment === "no-credit" &&
-                    BillEntries.reduce(
+                {paymentMode === "cash" && partialPayment === "no-credit" && (
+                  <Text>
+                    {BillEntries.reduce(
                       (acc, entry: BillingEntry) => acc + entry.total,
                       0
                     ).toFixed(2)}
-                </Text>
+                  </Text>
+                )}
 
                 {paymentMode === "cash" &&
                   partialPayment === "partial-credit" &&

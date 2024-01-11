@@ -221,16 +221,19 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
             <Box>
               <Heading pb={2}> Cash </Heading>
               {entry.paymentMode !== "cash" && <Text> - </Text>}
-              <Text>
-                {entry.cart.product
-                  .reduce(
-                    (acc, entry) =>
-                      acc +
-                      (entry.stock / entry.selectedUnit) * entry.salesPrice,
-                    0
-                  )
-                  .toFixed(2)}
-              </Text>
+              {entry.paymentMode === "cash" &&
+                entry.payment === "no-credit" && (
+                  <Text>
+                    {entry.cart.product
+                      .reduce(
+                        (acc, entry) =>
+                          acc +
+                          (entry.stock / entry.selectedUnit) * entry.salesPrice,
+                        0
+                      )
+                      .toFixed(2)}
+                  </Text>
+                )}
 
               {entry.paymentMode === "cash" &&
                 entry.payment === "partial-credit" &&
@@ -256,17 +259,18 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
                   ).toFixed(2)}
                 </Text>
               )}
-
-              <Text>
-                {entry.cart.product
-                  .reduce(
-                    (acc, entry) =>
-                      acc +
-                      (entry.stock / entry.selectedUnit) * entry.salesPrice,
-                    0
-                  )
-                  .toFixed(2)}
-              </Text>
+              {entry.paymentMode === "credit" && (
+                <Text>
+                  {entry.cart.product
+                    .reduce(
+                      (acc, entry) =>
+                        acc +
+                        (entry.stock / entry.selectedUnit) * entry.salesPrice,
+                      0
+                    )
+                    .toFixed(2)}
+                </Text>
+              )}
             </Box>
           </SimpleGrid>
 
