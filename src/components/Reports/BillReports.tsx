@@ -31,14 +31,10 @@ import BillProductsModal from "./BillProductsModal";
 import { DownloadIcon } from "@chakra-ui/icons";
 import BillPrint from "../BillPrinter/BillPrint";
 import { useReactToPrint } from "react-to-print";
+import { ReportData } from "../entities/ReportData";
 
 const BillReports = () => {
   useCustomers({ type: "GET" });
-
-  const componentRef = useRef(null);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
 
   const [state, setState] = useState([
     {
@@ -156,8 +152,11 @@ const BillReports = () => {
                   <>
                     {!!filteredBillData && filteredBillData.length > 0 ? (
                       <Tbody>
-                        {filteredBillData.map((bill) => (
-                          <Tr background={bill.reversed! ? "red.300" : "none"}>
+                        {filteredBillData.map((bill, index) => (
+                          <Tr
+                            background={bill.reversed! ? "red.300" : "none"}
+                            key={bill._id}
+                          >
                             <Td> {convertDate(bill.createdAt)} </Td>
                             <Td>{bill.billNo}</Td>
                             <Td>{bill.customer.name}</Td>
@@ -165,17 +164,10 @@ const BillReports = () => {
                             <Td> {bill.billType} </Td>
                             <Td> {bill.billerName} </Td>
                             <Td>
-                              <BillProductsModal products={bill.cart.product} />
-                              <Button
-                                ml={2}
-                                colorScheme="teal"
-                                onClick={handlePrint}
-                              >
-                                <div style={{ display: "none" }}>
-                                  <BillPrint entry={bill} ref={componentRef} />
-                                </div>
-                                <DownloadIcon />
-                              </Button>
+                              <BillProductsModal
+                                products={bill.cart.product}
+                                entry={bill}
+                              />
                             </Td>
                           </Tr>
                         ))}

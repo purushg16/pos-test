@@ -1,5 +1,6 @@
 import {
   Button,
+  Icon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -16,18 +17,26 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
-import { CrDrCart } from "../../functions/services/cr-dr-services";
+import { BsPrinter } from "react-icons/bs";
 import {
   BillReport,
   BillReportProduct,
 } from "../../functions/services/billing-services";
 import BillPrint from "../BillPrinter/BillPrint";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 
 interface Props {
   products: BillReportProduct[];
+  entry: BillReport;
 }
 
-const BillProductsModal = ({ products }: Props) => {
+const BillProductsModal = ({ products, entry }: Props) => {
+  const componentRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -36,7 +45,13 @@ const BillProductsModal = ({ products }: Props) => {
       <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader> Bill Products </ModalHeader>
+          <ModalHeader>
+            Bill Products
+            <Button colorScheme="blue" onClick={handlePrint} mx={5}>
+              <Icon as={BsPrinter} mr={2} />
+              Print Bill
+            </Button>
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <TableContainer>
@@ -75,6 +90,9 @@ const BillProductsModal = ({ products }: Props) => {
             <Button colorScheme="blue" mr={3} onClick={onClose} variant="ghost">
               Close
             </Button>
+            <div style={{ display: "none" }}>
+              <BillPrint entry={entry} ref={componentRef} />
+            </div>
           </ModalFooter>
         </ModalContent>
       </Modal>
