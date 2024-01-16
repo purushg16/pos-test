@@ -11,8 +11,6 @@ interface PrintableComponentProps {
 
 const PendingBillContent = forwardRef<HTMLDivElement, PrintableComponentProps>(
   ({ entry }, ref) => {
-    // .sort((a, b) => a.age - b.age);
-
     return (
       <div id="invoice-POS" ref={ref}>
         <center id="top">
@@ -77,22 +75,22 @@ const PendingBillContent = forwardRef<HTMLDivElement, PrintableComponentProps>(
                 .map((product) => (
                   <tr className="service">
                     <td className="tableitem">
-                      <p className="itemtext"> {product.itemName} </p>
+                      <h3 className="itemtext"> {product.itemName} </h3>
                     </td>
                     <td className="tableitem">
-                      <p className="itemtext">
+                      <h3 className="itemtext">
                         {product.stock / product.selectedUnit}
-                      </p>
+                      </h3>
                     </td>
                     <td className="tableitem">
-                      <p className="itemtext">
+                      <h3 className="itemtext">
                         {product.selectedUnit === 1
                           ? product.unit
                           : product.topUnit}
-                      </p>
+                      </h3>
                     </td>
                     <td className="tableitem">
-                      <p className="itemtext">{product.zone}</p>
+                      <h3 className="itemtext">{product.zone}</h3>
                     </td>
                   </tr>
                 ))}
