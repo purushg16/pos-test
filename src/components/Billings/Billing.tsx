@@ -9,7 +9,7 @@ const Billing = () => {
       templateAreas={`"table details"`}
       gridTemplateColumns={"1fr 30%"}
       padding={5}
-      maxHeight="93vh"
+      // maxHeight="93vh"
       overflowY="scroll"
     >
       <GridItem area={"table"}>
@@ -27,11 +27,6 @@ const Billing = () => {
             borderRadius={7}
           >
             <BillingHeader billing />
-            {/* <Button
-              onClick={() => {
-                sessionStorage.clear();
-              }}
-            /> */}
           </Box>
 
           <Box flex={1} width="100%">

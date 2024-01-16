@@ -25,21 +25,11 @@ const Layout = () => {
 
   return (
     <>
-      {location.pathname !== "/bill" ? (
-        <>
-          <MenuBar />
-          <Box id="main" height="100%" overflowY="scroll">
-            <Outlet />
-          </Box>
-          <BarcodeScanner />
-        </>
-      ) : (
-        <>
-          <Box id="main" height="100%">
-            <Outlet />
-          </Box>
-        </>
-      )}
+      <MenuBar />
+      <Box id="main" height="100%" overflowY="hidden">
+        <Outlet />
+      </Box>
+      <BarcodeScanner />
     </>
   );
 };
