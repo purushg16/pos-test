@@ -26,7 +26,7 @@ const Layout = () => {
   return (
     <>
       <MenuBar />
-      <Box id="main" height="100%" overflowY="hidden" zIndex={999}>
+      <Box id="main" height="100%" overflowY="scroll" zIndex={999}>
         <Outlet />
       </Box>
       <BarcodeScanner />
