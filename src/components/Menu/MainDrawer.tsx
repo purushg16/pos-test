@@ -99,7 +99,6 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
   const logout = () => {
     onClose();
     localStorage.clear();
-    // navigate("/login");
     window.location.reload();
   };
 

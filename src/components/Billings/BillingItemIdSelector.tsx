@@ -14,7 +14,7 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import useBillStore from "../../functions/store/billStore";
 import useProductStore from "../../functions/store/ProductStore";
@@ -137,6 +137,30 @@ const BillingItemIdSelector = ({
     );
   };
 
+  const [menuListMaxHeight, setMenuListMaxHeight] = useState(0);
+  useEffect(() => {
+    // Calculate available body height and set it as the maxHeight for MenuList
+    const calculateMaxHeight = () => {
+      const windowHeight =
+        window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight;
+      const maxHeightPercentage = 0.35;
+      setMenuListMaxHeight(windowHeight * maxHeightPercentage);
+    };
+
+    // Initial calculation
+    calculateMaxHeight();
+
+    // Recalculate on window resize
+    window.addEventListener("resize", calculateMaxHeight);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", calculateMaxHeight);
+    };
+  }, []);
+
   return (
     <Box>
       <Menu>
@@ -164,7 +188,8 @@ const BillingItemIdSelector = ({
             ? "Select"
             : "using Product ID"}
         </MenuButton>
-        <MenuList>
+
+        <MenuList maxHeight={`${menuListMaxHeight}px`} overflowY="hidden">
           <Box paddingX={2} marginY={2}>
             <InputGroup>
               <InputLeftElement children={<BsSearch />} />
@@ -183,7 +208,7 @@ const BillingItemIdSelector = ({
             </InputGroup>
           </Box>
 
-          <Box maxHeight={400} overflowY="scroll" padding={2}>
+          <Box maxHeight="60vh" overflowY="scroll" padding={2} zIndex={1000}>
             {!searchedProductList ? (
               <Spinner />
             ) : searchedProductList.length > 0 && ref.current?.value ? (
