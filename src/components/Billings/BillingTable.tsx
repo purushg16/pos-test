@@ -97,7 +97,15 @@ export const BillingTable = ({ stock = false }: Props) => {
               {/* <Td borderRight="0.1px solid #d9d9d9"> {entry.productId} </Td> */}
 
               {/* Product Name */}
-              <Td borderRight="0.1px solid #d9d9d9"> {entry.productName} </Td>
+              <Td
+                borderRight="0.1px solid #d9d9d9"
+                maxW={60}
+                overflowX="auto"
+                whiteSpace="pre-line"
+                lineHeight={1.4}
+              >
+                {entry.productName}
+              </Td>
 
               {/*  Quantity  */}
               <Td borderRight="0.1px solid #d9d9d9" isNumeric>
@@ -120,7 +128,7 @@ export const BillingTable = ({ stock = false }: Props) => {
 
                 <Menu>
                   <MenuButton as={Button} size="sm" width="100%">
-                    {"select"}
+                    {"Select"}
                   </MenuButton>
                   <MenuList>
                     {Object.keys(gramQuantities).map((q) => (
