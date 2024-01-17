@@ -39,19 +39,20 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
           </p>
         </div>
         <h2 style={{ margin: "10px 0" }}> Cash Bill </h2>
+        <h2 style={{ margin: "10px 0" }}> Bill No: {entry.billNo} </h2>
 
         <SimpleGrid columns={2} my={1}>
           <SimpleGrid columns={2}>
-            <p> Bill No.: </p>
-            <p> {entry.billNo} </p>
+            <p> Biller: </p>
+            <p> {entry.billerName} </p>
           </SimpleGrid>
           <SimpleGrid columns={2}>
             <p> Date: </p>
             <p> {`${year}-${month}-${day}`} </p>
           </SimpleGrid>
           <SimpleGrid columns={2}>
-            <p> Biller: </p>
-            <p> {entry.billerName} </p>
+            <p> Handler: </p>
+            <p> {entry.handler} </p>
           </SimpleGrid>
           <SimpleGrid columns={2}>
             <p> Time: </p>

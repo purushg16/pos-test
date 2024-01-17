@@ -174,7 +174,7 @@ const useBillStore = create<BillEntryStore>((set) => ({
         entry.productId === productId
           ? {
               ...entry,
-              quantity: quantity || 0,
+              quantity: quantity,
 
               quantityPrice:
                 entry.billPrice * (quantity || 1) * (quantity || 1),

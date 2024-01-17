@@ -103,7 +103,7 @@ export const BillingTable = ({ stock = false }: Props) => {
               <Td borderRight="0.1px solid #d9d9d9" isNumeric>
                 <InputGroup>
                   <Input
-                    // maxWidth={70}
+                    min={0}
                     type="number"
                     value={entry.quantity}
                     onChange={(event) => {
@@ -246,11 +246,10 @@ export const BillingTable = ({ stock = false }: Props) => {
               background="teal.900"
               maxW="max-content"
             >
-              <BillTabContainer small billing /> <br />
-              <BillingItemIdSelector small />
+              <BillTabContainer small billing />
             </Td>
             <Td borderRight="0.1px solid #d9d9d9" background="teal.900">
-              -
+              <BillingItemIdSelector small />
             </Td>
 
             <Td borderRight="0.1px solid #d9d9d9" background="teal.900">

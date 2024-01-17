@@ -11,6 +11,7 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
   (props, ref) => {
     const BillEntries = useBillStore((s) => s.BillEntries);
     const biller = useEmployeStore((s) => s.currentBiller);
+    const handler = useEmployeStore((s) => s.currentHandler);
     const billNo = useBillStore((s) => s.billNo);
     const paymentMode = useBillStore((s) => s.paymentMode);
     const partialPayment = useBillStore((s) => s.partialPayment);
@@ -47,19 +48,20 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
             </p>
           </div>
           <h2 style={{ margin: "10px 0" }}> Cash Bill </h2>
+          <h2 style={{ margin: "10px 0" }}> Bill No: {billNo} </h2>
 
           <SimpleGrid columns={2} my={1}>
             <SimpleGrid columns={2}>
-              <p> Bill No.: </p>
-              <p> {billNo} </p>
+              <p> Biller: </p>
+              <p> {biller?.name} </p>
             </SimpleGrid>
             <SimpleGrid columns={2}>
               <p> Date: </p>
               <p> {`${year}-${month}-${day}`} </p>
             </SimpleGrid>
             <SimpleGrid columns={2}>
-              <p> Biller: </p>
-              <p> {biller?.name} </p>
+              <p> Handler: </p>
+              <p> {handler?.name} </p>
             </SimpleGrid>
             <SimpleGrid columns={2}>
               <p> Time: </p>
@@ -276,7 +278,6 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               <Text my={1}> {currentCustmer?.name} </Text>
               <Text my={1}> {currentCustmer?.phone}</Text>
             </Box> */}
-
             <Text textAlign="center" className="legal">
               <strong>வாருங்கள் வரவேற்கிறோம் வாழ்த்துங்கள் வளர்கிறோம்</strong> 
             </Text>

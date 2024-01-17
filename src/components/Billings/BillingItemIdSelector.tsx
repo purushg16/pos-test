@@ -8,6 +8,7 @@ import {
   InputLeftElement,
   Menu,
   MenuButton,
+  MenuItem,
   MenuList,
   Spinner,
   Text,
@@ -106,34 +107,36 @@ const BillingItemIdSelector = ({
     const item = searchedProductList![index];
 
     return (
-      <ButtonGroup
-        key={item._id}
-        size="md"
-        isAttached
-        variant="solid"
-        width="100%"
-        style={style}
-      >
-        <Button padding={2} fontSize="small">
-          {item.code}
-        </Button>
-        <Button
-          variant="outline"
-          textAlign="left"
-          paddingY={2}
-          width="100%"
+      <MenuItem background="none">
+        <ButtonGroup
           key={item._id}
-          onClick={() => {
-            pilferage
-              ? selectProduct(item)
-              : stock
-              ? addStockItem(item)
-              : addBillItem(item);
-          }}
+          size="md"
+          isAttached
+          variant="solid"
+          width="100%"
+          style={style}
         >
-          {item.itemName}
-        </Button>
-      </ButtonGroup>
+          <Button padding={2} fontSize="small">
+            {item.code}
+          </Button>
+          <Button
+            variant="outline"
+            textAlign="left"
+            paddingY={2}
+            width="100%"
+            key={item._id}
+            onClick={() => {
+              pilferage
+                ? selectProduct(item)
+                : stock
+                ? addStockItem(item)
+                : addBillItem(item);
+            }}
+          >
+            {item.itemName}
+          </Button>
+        </ButtonGroup>
+      </MenuItem>
     );
   };
 
