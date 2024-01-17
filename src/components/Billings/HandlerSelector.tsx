@@ -17,7 +17,11 @@ const HandlerSelector = () => {
       >
         {currentHandler ? currentHandler.name : "Select"}
       </MenuButton>
-      <MenuList overflowY="scroll" style={{ top: -250, position: "fixed" }}>
+      <MenuList
+        maxH={140}
+        overflowY="scroll"
+        style={{ top: -50, position: "fixed" }}
+      >
         {employeeList.map((employee, index) => (
           <MenuItem key={index} onClick={() => setHandler(employee)}>
             {employee.name}
