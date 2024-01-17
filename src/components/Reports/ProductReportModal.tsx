@@ -321,7 +321,7 @@ const ProductReportModal = ({ product }: Props) => {
                     />
                   ) : (
                     <Heading size="md">
-                      {product.unitConv || "-"} {product.topUnit}
+                      {product.unitConv || "-"} {product.unit}
                     </Heading>
                   )}
                 </CardBody>

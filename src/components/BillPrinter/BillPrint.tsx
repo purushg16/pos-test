@@ -98,7 +98,7 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
                 </td>
                 <td className="tableitem">
                   <h3 className="itemtext">
-                    {(product.productId.mrp * product.selectedUnit).toFixed(2)}
+                    {product.productId.mrp.toFixed(2)}
                   </h3>
                 </td>
                 <td className="tableitem">
@@ -128,16 +128,7 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
                 <h2>Total</h2>
               </td>
               <td className="tableitem">
-                <h2>
-                  {entry.cart.product
-                    .reduce(
-                      (acc, entry) =>
-                        acc +
-                        (entry.stock / entry.selectedUnit) * entry.salesPrice,
-                      0
-                    )
-                    .toFixed(2)}
-                </h2>
+                <h2>{entry.billAmount.toFixed(2)}</h2>
               </td>
             </tr>
           </table>
@@ -168,31 +159,15 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
 
         <div id="legalcopy" style={{ borderBottom: "1px dashed #666" }}>
           <Heading size="md" textAlign="center" pb={2}>
-            Net Amount:{" "}
-            {entry.cart.product
-              .reduce(
-                (acc, entry) =>
-                  acc + (entry.stock / entry.selectedUnit) * entry.salesPrice,
-                0
-              )
-              .toFixed(2)}
+            Net Amount: {entry.billAmount.toFixed(2)}
           </Heading>
           <Heading textAlign="center" size="sm" pb={2}>
             You have saved:{" "}
             {(
               entry.cart.product.reduce(
-                (acc, entry) =>
-                  acc +
-                  entry.productId.mrp *
-                    (entry.stock / entry.selectedUnit) *
-                    entry.selectedUnit,
+                (acc, entry) => acc + entry.productId.mrp * entry.stock,
                 0
-              ) -
-              entry.cart.product.reduce(
-                (acc, entry) =>
-                  acc + entry.salesPrice * (entry.stock / entry.selectedUnit),
-                0
-              )
+              ) - entry.billAmount
             ).toFixed(2)}
           </Heading>
 
@@ -201,16 +176,7 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
               <Heading pb={2}> UPI </Heading>
               {entry.paymentMode !== "upi" && <Text> - </Text>}
               {entry.paymentMode === "upi" && entry.payment === "no-credit" && (
-                <Text>
-                  {entry.cart.product
-                    .reduce(
-                      (acc, entry) =>
-                        acc +
-                        (entry.stock / entry.selectedUnit) * entry.salesPrice,
-                      0
-                    )
-                    .toFixed(2)}
-                </Text>
+                <Text>{entry.billAmount.toFixed(2)}</Text>
               )}
               {entry.paymentMode === "upi" &&
                 entry.payment === "partial-credit" && (
@@ -223,16 +189,7 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
               {entry.paymentMode !== "cash" && <Text> - </Text>}
               {entry.paymentMode === "cash" &&
                 entry.payment === "no-credit" && (
-                  <Text>
-                    {entry.cart.product
-                      .reduce(
-                        (acc, entry) =>
-                          acc +
-                          (entry.stock / entry.selectedUnit) * entry.salesPrice,
-                        0
-                      )
-                      .toFixed(2)}
-                  </Text>
+                  <Text>{entry.billAmount.toFixed(2)}</Text>
                 )}
 
               {entry.paymentMode === "cash" &&
@@ -249,27 +206,11 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
 
               {entry.payment === "partial-credit" && (
                 <Text>
-                  {(
-                    entry.cart.product.reduce(
-                      (acc, entry) =>
-                        acc +
-                        (entry.stock / entry.selectedUnit) * entry.salesPrice,
-                      0
-                    ) - entry.partialAmount!
-                  ).toFixed(2)}
+                  {(entry.billAmount - entry.partialAmount!).toFixed(2)}
                 </Text>
               )}
               {entry.paymentMode === "credit" && (
-                <Text>
-                  {entry.cart.product
-                    .reduce(
-                      (acc, entry) =>
-                        acc +
-                        (entry.stock / entry.selectedUnit) * entry.salesPrice,
-                      0
-                    )
-                    .toFixed(2)}
-                </Text>
+                <Text>{entry.billAmount.toFixed(2)}</Text>
               )}
             </Box>
           </SimpleGrid>
