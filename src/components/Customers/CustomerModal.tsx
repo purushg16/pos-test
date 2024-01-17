@@ -10,6 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import CustomerForm from "./CustomerForm";
+import { useEffect, useState } from "react";
 
 export default function CustomerModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,7 +32,11 @@ export default function CustomerModal() {
           <ModalHeader />
           <ModalCloseButton />
           <ModalBody>
-            <CustomerForm />
+            <CustomerForm
+              done={(status) => {
+                status && onClose();
+              }}
+            />
           </ModalBody>
 
           <ModalFooter>

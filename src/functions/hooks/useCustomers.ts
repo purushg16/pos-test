@@ -5,7 +5,9 @@ import { useToast } from "@chakra-ui/react";
 import { AuthError } from "./useAuth";
 import { AxiosError } from "axios";
 
-export const postNewCustomer = (done: (status: boolean) => void) => {
+export const postNewCustomer = (
+  done: (status: boolean, success: boolean) => void
+) => {
   const toast = useToast();
   const setCustomers = useCustomerStore((s) => s.setCustomers);
 
@@ -21,7 +23,7 @@ export const postNewCustomer = (done: (status: boolean) => void) => {
         position: "top",
       });
       getAllCustomer.getAll().then((res) => setCustomers(res.data));
-      done(false);
+      done(false, true);
     },
 
     onError: (err: AxiosError<AuthError>) => {
@@ -32,7 +34,7 @@ export const postNewCustomer = (done: (status: boolean) => void) => {
         isClosable: true,
         position: "top",
       });
-      done(false);
+      done(false, false);
     },
   });
 };

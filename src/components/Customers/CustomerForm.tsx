@@ -11,7 +11,11 @@ import {
 import { useEffect, useState } from "react";
 import { postNewCustomer } from "../../functions/hooks/useCustomers";
 
-const CustomerForm = () => {
+interface Props {
+  done?: (status: boolean) => void;
+}
+
+const CustomerForm = ({ done = () => {} }: Props) => {
   const [newCustomer, editCustomer] = useState({
     name: "",
     phone: parseInt(""),
@@ -20,7 +24,10 @@ const CustomerForm = () => {
   const [canSubmit, setSubmit] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
-  const { mutate } = postNewCustomer((yes) => setLoading(yes));
+  const { mutate } = postNewCustomer((yes, success) => {
+    setLoading(yes);
+    done(success);
+  });
 
   const onSubmit = () => {
     setLoading(true);

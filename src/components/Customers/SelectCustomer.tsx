@@ -11,6 +11,7 @@ import {
   Input,
   Spinner,
   VStack,
+  MenuItem,
 } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
 import CustomerModal from "./CustomerModal";
@@ -39,22 +40,24 @@ const SelectCustomer = ({ canAdd = true }: Props) => {
     const customer = selectedCustomers![index];
 
     return (
-      <Box style={style}>
-        <Button
-          width="100%"
-          key={index}
-          onClick={() => {
-            setCurrentCustomer(customer);
-          }}
-        >
-          {customer.name}
-          {!!customer.balance && customer.balance !== 0 && (
-            <Text pl={1} color={customer.balance! > 0 ? "green" : "red"}>
-              ({customer.balance})
-            </Text>
-          )}
-        </Button>
-      </Box>
+      <MenuItem background="none">
+        <Box style={style}>
+          <Button
+            width="100%"
+            key={index}
+            onClick={() => {
+              setCurrentCustomer(customer);
+            }}
+          >
+            {customer.name}
+            {!!customer.balance && customer.balance !== 0 && (
+              <Text pl={1} color={customer.balance! > 0 ? "green" : "red"}>
+                ({customer.balance})
+              </Text>
+            )}
+          </Button>
+        </Box>
+      </MenuItem>
     );
   };
 

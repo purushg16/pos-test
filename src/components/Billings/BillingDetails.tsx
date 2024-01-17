@@ -51,69 +51,6 @@ export const BillingDetails = () => {
           Customer Details
         </Heading>
         <SelectCustomer />
-        {/* <Menu>
-          <MenuButton
-            as={Button}
-            rightIcon={<ChevronDownIcon />}
-            width="100%"
-            textAlign="left"
-          >
-            {currentCustomer?.name || "Select Customer"}
-          </MenuButton>
-
-          <MenuList>
-            <Box paddingX={2} marginY={2}>
-              <InputGroup width="100%">
-                <InputLeftElement children={<BsSearch />} />
-                <Input
-                  ref={ref}
-                  placeholder="Search Customer..."
-                  variant={"filled"}
-                  borderRadius={7}
-                  onChange={() => {
-                    if (ref.current) {
-                      selectCustomers(ref.current.value);
-                    }
-                  }}
-                />
-              </InputGroup>
-              <Box paddingX={2} marginY={2}>
-                <CustomerModal />
-              </Box>
-            </Box>
-
-            {!selectedCustomers ? (
-              <Spinner />
-            ) : (
-              <Box maxHeight={300} overflowY="scroll">
-                <VStack marginX={3} gap={3}>
-                  {selectedCustomers?.map(
-                    (customer: Customer, index: number) => (
-                      <Button
-                        width="100%"
-                        marginX={2}
-                        key={index}
-                        onClick={() => {
-                          setCurrentCustomer(customer);
-                        }}
-                      >
-                        {customer.name}
-                        {!!customer.balance && customer.balance !== 0 && (
-                          <Text
-                            pl={1}
-                            color={customer.balance! > 0 ? "green" : "red"}
-                          >
-                            ({customer.balance})
-                          </Text>
-                        )}
-                      </Button>
-                    )
-                  )}
-                </VStack>
-              </Box>
-            )}
-          </MenuList>
-        </Menu> */}
       </Box>
       <Box padding={2} border="1px solid #80808030" borderRadius={7} flex="1">
         {BillEntries.length > 0 && (
