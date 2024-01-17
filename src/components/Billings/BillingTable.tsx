@@ -1,21 +1,13 @@
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Button,
-  Editable,
-  EditableInput,
-  EditablePreview,
   Input,
   InputGroup,
   InputLeftElement,
-  Kbd,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Table,
   TableContainer,
   Tbody,
@@ -27,7 +19,6 @@ import {
 import useBillStore from "../../functions/store/billStore";
 import BillTabContainer from "./BillTabContainer";
 import BillingItemIdSelector from "./BillingItemIdSelector";
-import { ChevronDownIcon } from "@chakra-ui/icons";
 
 interface Props {
   stock?: boolean;
@@ -74,7 +65,7 @@ export const BillingTable = ({ stock = false }: Props) => {
         <Thead width="100%" background="#7a7a7a21" border="0.1px solid #d9d9d9">
           <Tr width="100%">
             {/* <Th borderRight="0.1px solid #d9d9d9"> # </Th> */}
-            <Th borderRight="0.1px solid #d9d9d9"> Code </Th>
+            {/* <Th borderRight="0.1px solid #d9d9d9"> Code </Th> */}
             <Th borderRight="0.1px solid #d9d9d9"> Name </Th>
             <Th borderRight="0.1px solid #d9d9d9"> Qty </Th>
             <Th borderRight="0.1px solid #d9d9d9"> Unit </Th>
@@ -103,7 +94,7 @@ export const BillingTable = ({ stock = false }: Props) => {
               </Td> */}
 
               {/* Product Code */}
-              <Td borderRight="0.1px solid #d9d9d9"> {entry.productId} </Td>
+              {/* <Td borderRight="0.1px solid #d9d9d9"> {entry.productId} </Td> */}
 
               {/* Product Name */}
               <Td borderRight="0.1px solid #d9d9d9"> {entry.productName} </Td>
@@ -250,15 +241,18 @@ export const BillingTable = ({ stock = false }: Props) => {
           ))}
 
           <Tr>
-            <Td borderRight="0.1px solid #d9d9d9" background="teal.900">
-              <BillTabContainer small billing />
-            </Td>
-            <Td borderRight="0.1px solid #d9d9d9" background="teal.900">
+            <Td
+              borderRight="0.1px solid #d9d9d9"
+              background="teal.900"
+              maxW="max-content"
+            >
+              <BillTabContainer small billing /> <br />
               <BillingItemIdSelector small />
             </Td>
             <Td borderRight="0.1px solid #d9d9d9" background="teal.900">
               -
             </Td>
+
             <Td borderRight="0.1px solid #d9d9d9" background="teal.900">
               -
             </Td>
