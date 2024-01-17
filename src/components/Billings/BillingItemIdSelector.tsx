@@ -26,7 +26,6 @@ import { StockProduct } from "../entities/StockProduct";
 import useEmployeStore from "../../functions/store/employeStore";
 import useGSTStore from "../../functions/store/gstStore";
 import useCustomerStore from "../../functions/store/customerStore";
-import { FixedSizeList } from "react-window";
 import PaginatedWindow from "../Window/Window";
 
 interface Props {
@@ -89,7 +88,6 @@ const BillingItemIdSelector = ({
     addProduct(newStock);
     toast({
       title: "Item added to Stock List",
-      // description: desc,
       status: "success",
       duration: 1000,
       isClosable: true,
@@ -97,6 +95,7 @@ const BillingItemIdSelector = ({
     });
   };
 
+  const [productSelected, setProductSelected] = useState(false);
   const itemRenderer = ({
     index,
     style,
@@ -107,36 +106,35 @@ const BillingItemIdSelector = ({
     const item = searchedProductList![index];
 
     return (
-      <MenuItem background="none">
-        <ButtonGroup
-          key={item._id}
-          size="md"
-          isAttached
-          variant="solid"
+      <ButtonGroup
+        key={item._id}
+        size="md"
+        isAttached
+        variant="solid"
+        width="100%"
+        style={style}
+      >
+        <Button padding={2} fontSize="small">
+          {item.code}
+        </Button>
+        <Button
+          variant="outline"
+          textAlign="left"
+          paddingY={2}
           width="100%"
-          style={style}
+          key={item._id}
+          onClick={() => {
+            pilferage
+              ? selectProduct(item)
+              : stock
+              ? addStockItem(item)
+              : addBillItem(item);
+            setProductSelected(true);
+          }}
         >
-          <Button padding={2} fontSize="small">
-            {item.code}
-          </Button>
-          <Button
-            variant="outline"
-            textAlign="left"
-            paddingY={2}
-            width="100%"
-            key={item._id}
-            onClick={() => {
-              pilferage
-                ? selectProduct(item)
-                : stock
-                ? addStockItem(item)
-                : addBillItem(item);
-            }}
-          >
-            {item.itemName}
-          </Button>
-        </ButtonGroup>
-      </MenuItem>
+          {item.itemName}
+        </Button>
+      </ButtonGroup>
     );
   };
 
@@ -164,10 +162,19 @@ const BillingItemIdSelector = ({
     };
   }, []);
 
+  const btnRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (productSelected) {
+      btnRef.current?.click();
+      setProductSelected(false);
+    }
+  }, [productSelected]);
+
   return (
     <Box>
       <Menu>
         <MenuButton
+          ref={btnRef}
           isDisabled={
             !stock &&
             !pilferage &&
@@ -210,7 +217,6 @@ const BillingItemIdSelector = ({
               />
             </InputGroup>
           </Box>
-
           <Box maxHeight="60vh" overflowY="scroll" padding={2} zIndex={1000}>
             {!searchedProductList ? (
               <Spinner />
