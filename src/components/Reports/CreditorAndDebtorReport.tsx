@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
 import { convertDate } from "../../functions/conversions/dateConversion";
 import useCrDr from "../../functions/hooks/useCrDr";
-import useCustomers from "../../functions/hooks/useCustomers";
+import useGetCustomers from "../../functions/hooks/useCustomers";
 import crdrStore from "../../functions/store/crdrStore";
 import useCustomerStore from "../../functions/store/customerStore";
 import useSupplierStore from "../../functions/store/suppliersStore";
@@ -33,7 +33,7 @@ import { BsImage } from "react-icons/bs";
 type partyType = "dr" | "cr";
 
 const CreditorAndDebtorReport = () => {
-  useCustomers({ type: "GET" });
+  useGetCustomers();
 
   const [state, setState] = useState([
     {

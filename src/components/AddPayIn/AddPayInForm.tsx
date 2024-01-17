@@ -22,11 +22,11 @@ import { useEffect, useRef, useState } from "react";
 import { Customer } from "../entities/Customer";
 import useCustomerStore from "../../functions/store/customerStore";
 import { BsSearch } from "react-icons/bs";
-import useCustomers from "../../functions/hooks/useCustomers";
+import useGetCustomers from "../../functions/hooks/useCustomers";
 import usePayIn from "../../functions/hooks/usePayIn";
 
 const AddPayInForm = () => {
-  useCustomers({ type: "GET" });
+  useGetCustomers();
 
   const [newPayIn, editPayIn] = useState({
     customerId: "",

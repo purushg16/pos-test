@@ -1,24 +1,18 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { addCustomer, getAllCustomer } from "../services/customer-services";
-import { Customer } from "../../components/entities/Customer";
 import useCustomerStore from "../store/customerStore";
 import { useToast } from "@chakra-ui/react";
 import { AuthError } from "./useAuth";
 import { AxiosError } from "axios";
 
-interface Props {
-  type: "GET" | "POST";
-  customer?: Customer;
-}
-
 export const postNewCustomer = (done: (status: boolean) => void) => {
   const toast = useToast();
-  const addNewCustomer = useCustomerStore((s) => s.addNewCustomer);
+  const setCustomers = useCustomerStore((s) => s.setCustomers);
 
   return useMutation({
     mutationFn: addCustomer.postData,
 
-    onSuccess: (res, data) => {
+    onSuccess: (res) => {
       toast({
         title: res.msg,
         status: "success",
@@ -26,7 +20,7 @@ export const postNewCustomer = (done: (status: boolean) => void) => {
         isClosable: true,
         position: "top",
       });
-      addNewCustomer(data);
+      getAllCustomer.getAll().then((res) => setCustomers(res.data));
       done(false);
     },
 
@@ -43,17 +37,8 @@ export const postNewCustomer = (done: (status: boolean) => void) => {
   });
 };
 
-const useCustomers = ({ type, customer }: Props) => {
+const useGetCustomers = () => {
   const setCustomers = useCustomerStore((s) => s.setCustomers);
-
-  if (type == "POST") {
-    if (customer)
-      return useQuery({
-        queryKey: ["party", customer],
-        queryFn: () => addCustomer.postData(customer).then((res) => res),
-        enabled: false,
-      });
-  }
 
   return useQuery({
     queryKey: ["party", "allCustomers"],
@@ -64,4 +49,4 @@ const useCustomers = ({ type, customer }: Props) => {
   });
 };
 
-export default useCustomers;
+export default useGetCustomers;

@@ -8,7 +8,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import useCustomers from "../../functions/hooks/useCustomers";
 import useEmployee from "../../functions/hooks/useEmployee";
 
 const EmployeeForm = () => {

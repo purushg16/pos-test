@@ -14,7 +14,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import useCustomers from "../../functions/hooks/useCustomers";
+import useGetCustomers from "../../functions/hooks/useCustomers";
 import useEmployee from "../../functions/hooks/useEmployee";
 import useGST from "../../functions/hooks/useGST";
 import useBillStore from "../../functions/store/billStore";
@@ -39,7 +39,7 @@ export const BillingDetails = () => {
   const setItemDelievered = useBillStore((s) => s.setItemDelieverd);
   const currentUserType = useTokenStore((s) => s.currentUserType);
 
-  useCustomers({ type: "GET" });
+  useGetCustomers();
   useEmployee({ type: "GET" });
   useGST({ type: "GET" });
   const { isOpen, onOpen, onClose } = useDisclosure();

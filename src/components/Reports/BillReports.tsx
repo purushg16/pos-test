@@ -23,7 +23,7 @@ import { DateRange } from "react-date-range";
 import { MdClear } from "react-icons/md";
 import { convertDate } from "../../functions/conversions/dateConversion";
 import { useGetBills } from "../../functions/hooks/useBilling";
-import useCustomers from "../../functions/hooks/useCustomers";
+import useGetCustomers from "../../functions/hooks/useCustomers";
 import { BillReport } from "../../functions/services/billing-services";
 import useCustomerStore from "../../functions/store/customerStore";
 import SelectCustomer from "../Customers/SelectCustomer";
@@ -34,7 +34,7 @@ import { useReactToPrint } from "react-to-print";
 import { ReportData } from "../entities/ReportData";
 
 const BillReports = () => {
-  useCustomers({ type: "GET" });
+  useGetCustomers();
 
   const [state, setState] = useState([
     {
