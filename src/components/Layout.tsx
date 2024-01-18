@@ -26,6 +26,7 @@ const Layout = () => {
   return (
     <>
       <MenuBar />
+      <button id="none" style={{ position: "absolute" }} />
       <Box id="main" height="100%" overflowY="scroll" zIndex={999}>
         <Outlet />
       </Box>

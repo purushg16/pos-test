@@ -2,23 +2,15 @@ import { AddIcon, ChevronDownIcon, MinusIcon } from "@chakra-ui/icons";
 import {
   Button,
   ButtonGroup,
-  Divider,
   IconButton,
   Input,
   InputGroup,
-  InputLeftAddon,
   InputLeftElement,
   InputRightAddon,
-  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Table,
   TableContainer,
   Tbody,
@@ -26,7 +18,6 @@ import {
   Th,
   Thead,
   Tr,
-  VStack,
 } from "@chakra-ui/react";
 import useBillStore from "../../functions/store/billStore";
 import BillTabContainer from "./BillTabContainer";
@@ -78,10 +69,7 @@ export const BillingTable = ({ stock = false }: Props) => {
           <Tr width="100%">
             {/* <Th borderRight="0.1px solid #d9d9d9"> # </Th> */}
             {/* <Th borderRight="0.1px solid #d9d9d9"> Code </Th> */}
-            <Th borderRight="0.1px solid #d9d9d9">
-              Name
-              <button id="none" />
-            </Th>
+            <Th borderRight="0.1px solid #d9d9d9">Name</Th>
             <Th borderRight="0.1px solid #d9d9d9"> Qty </Th>
             <Th borderRight="0.1px solid #d9d9d9"> Unit </Th>
             <Th borderRight="0.1px solid #d9d9d9" textAlign="center">
@@ -165,7 +153,6 @@ export const BillingTable = ({ stock = false }: Props) => {
                       variant="outline"
                       height="100%"
                     >
-                      {/* <Button>Save</Button> */}
                       <IconButton
                         height="100%"
                         border={0}
@@ -185,10 +172,11 @@ export const BillingTable = ({ stock = false }: Props) => {
                         aria-label="Add to friends"
                         icon={<MinusIcon />}
                         onClick={() => {
-                          updateBillEntryQuantity(
-                            entry.productId,
-                            entry.quantity - 1
-                          );
+                          if (entry.quantity !== 0)
+                            updateBillEntryQuantity(
+                              entry.productId,
+                              entry.quantity - 1
+                            );
                         }}
                       />
                     </ButtonGroup>

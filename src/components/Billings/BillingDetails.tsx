@@ -84,7 +84,7 @@ export const BillingDetails = () => {
                   (items: {BillEntries.length}) (Quantity:
                   {BillEntries.reduce((acc, entry: BillingEntry) => {
                     return acc + entry.quantity;
-                  }, 0)}
+                  }, 0).toFixed(2)}
                   )
                 </small>
               </Heading>
