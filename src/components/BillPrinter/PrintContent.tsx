@@ -101,21 +101,21 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
                     <h3 className="itemtext">{entry.productName}</h3>
                   </td>
                   <td className="tableitem">
-                    <h3 className="itemtext">{entry.quantity}</h3>
+                    <h2 className="itemtext">{entry.quantity}</h2>
                   </td>
                   <td className="tableitem">
-                    <h3 className="itemtext">{entry.unit}</h3>
+                    <h2 className="itemtext">{entry.unit}</h2>
                   </td>
                   <td className="tableitem">
-                    <h3 className="itemtext">
+                    <h2 className="itemtext">
                       {(entry.mrp * entry.currentUnitValue!).toFixed(2)}
-                    </h3>
+                    </h2>
                   </td>
                   <td className="tableitem">
-                    <h3 className="itemtext">{entry.billPrice.toFixed(2)}</h3>
+                    <h2 className="itemtext">{entry.billPrice.toFixed(2)}</h2>
                   </td>
                   <td className="tableitem">
-                    <h3 className="itemtext">{entry.total.toFixed(2)}</h3>
+                    <h2 className="itemtext">{entry.total.toFixed(2)}</h2>
                   </td>
                 </tr>
               ))}
