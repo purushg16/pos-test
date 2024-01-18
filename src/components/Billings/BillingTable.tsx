@@ -66,7 +66,10 @@ export const BillingTable = ({ stock = false }: Props) => {
           <Tr width="100%">
             {/* <Th borderRight="0.1px solid #d9d9d9"> # </Th> */}
             {/* <Th borderRight="0.1px solid #d9d9d9"> Code </Th> */}
-            <Th borderRight="0.1px solid #d9d9d9"> Name </Th>
+            <Th borderRight="0.1px solid #d9d9d9">
+              Name
+              <button id="none" />
+            </Th>
             <Th borderRight="0.1px solid #d9d9d9"> Qty </Th>
             <Th borderRight="0.1px solid #d9d9d9"> Unit </Th>
             <Th borderRight="0.1px solid #d9d9d9" textAlign="center">
@@ -135,6 +138,9 @@ export const BillingTable = ({ stock = false }: Props) => {
                       <MenuItem
                         key={q}
                         onClick={() => {
+                          (
+                            document.getElementById("none") as HTMLElement
+                          )?.focus();
                           updateBillEntryQuantity(
                             entry.productId,
                             gramQuantities[q]
@@ -177,21 +183,27 @@ export const BillingTable = ({ stock = false }: Props) => {
                   </MenuButton>
                   <MenuList>
                     <MenuItem
-                      onClick={() =>
-                        updateUnitPrice(1, entry.productId, entry.unit)
-                      }
+                      onClick={() => {
+                        (
+                          document.getElementById("none") as HTMLElement
+                        )?.focus();
+                        updateUnitPrice(1, entry.productId, entry.unit);
+                      }}
                     >
                       {entry.unit}
                     </MenuItem>
                     {entry.topUnit && (
                       <MenuItem
-                        onClick={() =>
+                        onClick={() => {
+                          (
+                            document.getElementById("none") as HTMLElement
+                          )?.focus();
                           updateUnitPrice(
                             entry.unitConv,
                             entry.productId,
                             entry.topUnit
-                          )
-                        }
+                          );
+                        }}
                       >
                         {entry.topUnit}
                       </MenuItem>

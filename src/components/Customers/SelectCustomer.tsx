@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
 import CustomerModal from "./CustomerModal";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useCustomerStore from "../../functions/store/customerStore";
 import PaginatedWindow from "../Window/Window";
 
@@ -29,6 +29,16 @@ const SelectCustomer = ({ canAdd = true }: Props) => {
   const selectedCustomers = useCustomerStore((s) => s.selectedCustomers);
   const currentCustomer = useCustomerStore((s) => s.currentCustmer);
   const setCurrentCustomer = useCustomerStore((s) => s.setCurrentCustomer);
+  const [clicked, setClicked] = useState(false);
+
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (clicked) {
+      btnRef.current?.click();
+      setClicked(false);
+    }
+  }, [clicked]);
 
   const CustomerItem = ({
     index,
@@ -40,30 +50,31 @@ const SelectCustomer = ({ canAdd = true }: Props) => {
     const customer = selectedCustomers![index];
 
     return (
-      <MenuItem background="none">
-        <Box style={style}>
-          <Button
-            width="100%"
-            key={index}
-            onClick={() => {
-              setCurrentCustomer(customer);
-            }}
-          >
-            {customer.name}
-            {!!customer.balance && customer.balance !== 0 && (
-              <Text pl={1} color={customer.balance! > 0 ? "green" : "red"}>
-                ({customer.balance})
-              </Text>
-            )}
-          </Button>
-        </Box>
-      </MenuItem>
+      <Box style={style}>
+        <Button
+          width="100%"
+          key={index}
+          onClick={() => {
+            setCurrentCustomer(customer);
+            setClicked(true);
+            (document.getElementById("none") as HTMLElement)?.focus();
+          }}
+        >
+          {customer.name}
+          {!!customer.balance && customer.balance !== 0 && (
+            <Text pl={1} color={customer.balance! > 0 ? "green" : "red"}>
+              ({customer.balance})
+            </Text>
+          )}
+        </Button>
+      </Box>
     );
   };
 
   return (
     <Menu>
       <MenuButton
+        ref={btnRef}
         as={Button}
         rightIcon={<ChevronDownIcon />}
         width="100%"

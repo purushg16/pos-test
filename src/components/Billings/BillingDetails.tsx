@@ -134,10 +134,20 @@ export const BillingDetails = () => {
                 {billType || "Not Selected"}
               </MenuButton>
               <MenuList>
-                <MenuItem onClick={() => setBillType("wholesale")}>
+                <MenuItem
+                  onClick={() => {
+                    setBillType("wholesale");
+                    (document.getElementById("none") as HTMLElement)?.focus();
+                  }}
+                >
                   Wholesale
                 </MenuItem>
-                <MenuItem onClick={() => setBillType("retail")}>
+                <MenuItem
+                  onClick={() => {
+                    setBillType("retail");
+                    (document.getElementById("none") as HTMLElement)?.focus();
+                  }}
+                >
                   Retail
                 </MenuItem>
               </MenuList>
@@ -151,7 +161,10 @@ export const BillingDetails = () => {
             id="item-handled"
             colorScheme="teal"
             isChecked={itemHandled}
-            onChange={() => setItemHandled(!itemHandled)}
+            onChange={() => {
+              (document.getElementById("none") as HTMLElement)?.focus();
+              setItemHandled(!itemHandled);
+            }}
           />
         </SimpleGrid>
 
@@ -161,7 +174,10 @@ export const BillingDetails = () => {
             id="item-handled"
             colorScheme="teal"
             isChecked={itemDelivered}
-            onChange={() => setItemDelievered(!itemDelivered)}
+            onChange={() => {
+              (document.getElementById("none") as HTMLElement)?.focus();
+              setItemDelievered(!itemDelivered);
+            }}
           />
         </SimpleGrid>
       </Box>

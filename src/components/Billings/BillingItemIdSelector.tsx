@@ -164,6 +164,7 @@ const BillingItemIdSelector = ({
 
   const btnRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
+    (document.activeElement as HTMLButtonElement).blur();
     if (productSelected) {
       btnRef.current?.click();
       setProductSelected(false);
@@ -245,3 +246,22 @@ const BillingItemIdSelector = ({
 };
 
 export default BillingItemIdSelector;
+
+// Function to simulate a click at specified coordinates
+function simulateClick(x: number, y: number) {
+  // Create a new mouse event
+  const event = new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    clientX: x,
+    clientY: y,
+  });
+
+  // Find the element at the specified coordinates
+  const element = document.elementFromPoint(x, y);
+
+  // Dispatch the click event on the element
+  if (element) {
+    element.dispatchEvent(event);
+  }
+}

@@ -23,7 +23,13 @@ const EmployeSelector = () => {
         style={{ top: -50, position: "fixed" }}
       >
         {employeeList.map((employee, index) => (
-          <MenuItem key={index} onClick={() => setBiller(employee)}>
+          <MenuItem
+            key={index}
+            onClick={() => {
+              (document.getElementById("none") as HTMLElement)?.focus();
+              setBiller(employee);
+            }}
+          >
             {employee.name}
           </MenuItem>
         ))}

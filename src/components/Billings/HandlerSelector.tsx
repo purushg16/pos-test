@@ -23,7 +23,13 @@ const HandlerSelector = () => {
         style={{ top: -50, position: "fixed" }}
       >
         {employeeList.map((employee, index) => (
-          <MenuItem key={index} onClick={() => setHandler(employee)}>
+          <MenuItem
+            key={index}
+            onClick={() => {
+              (document.getElementById("none") as HTMLElement)?.focus();
+              setHandler(employee);
+            }}
+          >
             {employee.name}
           </MenuItem>
         ))}

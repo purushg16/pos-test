@@ -19,7 +19,13 @@ const GSTSelector = () => {
       </MenuButton>
       <MenuList>
         {gstList.map((gst, index) => (
-          <MenuItem key={index} onClick={() => setGstin(gst)}>
+          <MenuItem
+            key={index}
+            onClick={() => {
+              (document.getElementById("none") as HTMLElement)?.focus();
+              setGstin(gst);
+            }}
+          >
             {gst.gstinNo}
           </MenuItem>
         ))}

@@ -20,6 +20,7 @@ import useBillStore from "../../functions/store/billStore";
 import useEmployeStore from "../../functions/store/employeStore";
 import useGSTStore from "../../functions/store/gstStore";
 import useCustomerStore from "../../functions/store/customerStore";
+import { useRef } from "react";
 
 interface Props {
   small?: boolean;
@@ -50,6 +51,8 @@ const BillTabContainer = ({
   const currentHandler = useEmployeStore((s) => s.currentHandler);
   const currentGstin = useGSTStore((s) => s.currentGstin);
   const currentCustmer = useCustomerStore((s) => s.currentCustmer);
+
+  const modalRef = useRef<HTMLButtonElement>(null);
 
   return (
     <Box>
@@ -89,6 +92,7 @@ const BillTabContainer = ({
       {!inline && selector && <Button onClick={onOpen}>Select Category</Button>}
 
       <Modal
+        finalFocusRef={modalRef}
         closeOnOverlayClick={false}
         isOpen={isOpen}
         onClose={() => {
