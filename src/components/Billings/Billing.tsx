@@ -12,7 +12,8 @@ const Billing = () => {
   useEffect(() => {
     if (tableRef.current)
       tableRef.current.scrollTop = tableRef.current.scrollHeight;
-  }, [BillEntries]);
+  }, [BillEntries.length]);
+
   return (
     <Grid
       templateAreas={`"table details"`}
