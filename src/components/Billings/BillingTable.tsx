@@ -1,9 +1,15 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { AddIcon, ChevronDownIcon, MinusIcon } from "@chakra-ui/icons";
 import {
   Button,
+  ButtonGroup,
+  Divider,
+  IconButton,
   Input,
   InputGroup,
+  InputLeftAddon,
   InputLeftElement,
+  InputRightAddon,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,
@@ -20,6 +26,7 @@ import {
   Th,
   Thead,
   Tr,
+  VStack,
 } from "@chakra-ui/react";
 import useBillStore from "../../functions/store/billStore";
 import BillTabContainer from "./BillTabContainer";
@@ -117,13 +124,14 @@ export const BillingTable = ({ stock = false }: Props) => {
 
               {/*  Quantity  */}
               <Td borderRight="0.1px solid #d9d9d9" isNumeric>
-                <NumberInput
+                {/* <NumberInput
                   min={0}
-                  value={entry.quantity}
+                  value={entry.quantity || 0}
                   onChange={(event) => {
+                    const value = parseFloat(event);
+                    console.log(value);
                     updateBillEntryQuantity(entry.productId, parseFloat(event));
                   }}
-                  inputMode="none"
                   id="bill-quantity"
                   aria-label={entry.productId.toString()}
                 >
@@ -132,10 +140,11 @@ export const BillingTable = ({ stock = false }: Props) => {
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                   </NumberInputStepper>
-                </NumberInput>
+                </NumberInput> */}
 
-                {/* <InputGroup>
+                <InputGroup overflow="hidden">
                   <Input
+                    overflow="hidden"
                     min={0}
                     type="number"
                     value={entry.quantity}
@@ -149,7 +158,42 @@ export const BillingTable = ({ stock = false }: Props) => {
                     id="bill-quantity"
                     aria-label={entry.productId.toString()}
                   />
-                </InputGroup> */}
+                  <InputRightAddon overflow="hidden" background="gray" p={0}>
+                    <ButtonGroup
+                      size="sm"
+                      isAttached
+                      variant="outline"
+                      height="100%"
+                    >
+                      {/* <Button>Save</Button> */}
+                      <IconButton
+                        height="100%"
+                        border={0}
+                        aria-label="Add to friends"
+                        icon={<AddIcon />}
+                        borderRight="1px solid white"
+                        onClick={() => {
+                          updateBillEntryQuantity(
+                            entry.productId,
+                            entry.quantity + 1
+                          );
+                        }}
+                      />
+                      <IconButton
+                        height="100%"
+                        border={0}
+                        aria-label="Add to friends"
+                        icon={<MinusIcon />}
+                        onClick={() => {
+                          updateBillEntryQuantity(
+                            entry.productId,
+                            entry.quantity - 1
+                          );
+                        }}
+                      />
+                    </ButtonGroup>
+                  </InputRightAddon>
+                </InputGroup>
 
                 <Menu>
                   <MenuButton as={Button} size="sm" width="100%">
