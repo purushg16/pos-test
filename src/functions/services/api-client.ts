@@ -11,7 +11,7 @@ const createAxiosInstance = () => {
 
   // Create a base Axios instance without headers
   const axiosInstance = axios.create({
-    baseURL: "https://padma-stores.onrender.com/", // Replace with your API base URL
+    baseURL: "https://padma-stores1.onrender.com/", // Replace with your API base URL
     headers: {
       // Set the Authorization header with the token
       Authorization: token ? token : undefined,
