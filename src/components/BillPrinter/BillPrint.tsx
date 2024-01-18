@@ -92,21 +92,23 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
                   <h3 className="itemtext">{product.productId.itemName}</h3>
                 </td>
                 <td className="tableitem">
-                  <h2 className="itemtext">{product.stock}</h2>
+                  <h2 className="itemtext float">{product.stock}</h2>
                 </td>
                 <td className="tableitem">
-                  <h2 className="itemtext">{product.productId.unit}</h2>
+                  <h2 className="itemtext float">{product.productId.unit}</h2>
                 </td>
                 <td className="tableitem">
-                  <h2 className="itemtext">
+                  <h2 className="itemtext float">
                     {product.productId.mrp.toFixed(2)}
                   </h2>
                 </td>
                 <td className="tableitem">
-                  <h2 className="itemtext">{product.salesPrice.toFixed(2)}</h2>
+                  <h2 className="itemtext float">
+                    {product.salesPrice.toFixed(2)}
+                  </h2>
                 </td>
                 <td className="tableitem">
-                  <h2 className="itemtext">
+                  <h2 className="itemtext float">
                     {(product.salesPrice * product.stock).toFixed(2)}
                   </h2>
                 </td>

@@ -110,9 +110,14 @@ td {
 .item {
   width: 24mm;
 }
+
 .itemtext {
-  font-size: 0.5em !important;
+  font-size: 0.6em !important;
   font-weight: 600 !important;
+}
+
+.float {
+  font-size: 0.7em !important;
 }
 
 #legalcopy {
