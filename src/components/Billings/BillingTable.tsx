@@ -8,6 +8,11 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Table,
   TableContainer,
   Tbody,
@@ -112,7 +117,24 @@ export const BillingTable = ({ stock = false }: Props) => {
 
               {/*  Quantity  */}
               <Td borderRight="0.1px solid #d9d9d9" isNumeric>
-                <InputGroup>
+                <NumberInput
+                  min={0}
+                  value={entry.quantity}
+                  onChange={(event) => {
+                    updateBillEntryQuantity(entry.productId, parseFloat(event));
+                  }}
+                  inputMode="none"
+                  id="bill-quantity"
+                  aria-label={entry.productId.toString()}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+
+                {/* <InputGroup>
                   <Input
                     min={0}
                     type="number"
@@ -127,7 +149,7 @@ export const BillingTable = ({ stock = false }: Props) => {
                     id="bill-quantity"
                     aria-label={entry.productId.toString()}
                   />
-                </InputGroup>
+                </InputGroup> */}
 
                 <Menu>
                   <MenuButton as={Button} size="sm" width="100%">
