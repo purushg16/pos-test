@@ -105,6 +105,11 @@ const BillingItemIdSelector = ({
   }) => {
     const item = searchedProductList![index];
 
+    const itemStyle: React.CSSProperties = {
+      ...style,
+      padding: 10,
+    };
+
     return (
       <ButtonGroup
         key={item._id}
@@ -112,7 +117,7 @@ const BillingItemIdSelector = ({
         isAttached
         variant="solid"
         width="100%"
-        style={style}
+        style={itemStyle}
       >
         <Button padding={2} fontSize="small">
           {item.code}
@@ -200,7 +205,7 @@ const BillingItemIdSelector = ({
             : "using Product ID"}
         </MenuButton>
 
-        <MenuList maxHeight={`${menuListMaxHeight}px`} overflowY="hidden">
+        <MenuList>
           <Box paddingX={2} marginY={2}>
             <InputGroup>
               <InputLeftElement children={<BsSearch />} />
@@ -218,13 +223,13 @@ const BillingItemIdSelector = ({
               />
             </InputGroup>
           </Box>
-          <Box maxHeight="60vh" overflowY="scroll" padding={2} zIndex={1000}>
+          <Box>
             {!searchedProductList ? (
               <Spinner />
             ) : searchedProductList.length > 0 && ref.current?.value ? (
               <PaginatedWindow
                 children={itemRenderer}
-                height={400}
+                height={menuListMaxHeight}
                 length={searchedProductList.length}
                 width="100%"
                 itemSize={50}
@@ -246,22 +251,3 @@ const BillingItemIdSelector = ({
 };
 
 export default BillingItemIdSelector;
-
-// Function to simulate a click at specified coordinates
-function simulateClick(x: number, y: number) {
-  // Create a new mouse event
-  const event = new MouseEvent("click", {
-    bubbles: true,
-    cancelable: true,
-    clientX: x,
-    clientY: y,
-  });
-
-  // Find the element at the specified coordinates
-  const element = document.elementFromPoint(x, y);
-
-  // Dispatch the click event on the element
-  if (element) {
-    element.dispatchEvent(event);
-  }
-}
