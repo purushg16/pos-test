@@ -186,6 +186,7 @@ export const BillingDetails = () => {
         <Button
           colorScheme="blue"
           width="100%"
+          zIndex={99999}
           isDisabled={
             currentUserType !== "admin"
               ? true
