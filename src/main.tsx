@@ -10,12 +10,12 @@ import router from "./routing/router";
 const client = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <Heading> This app does not exists! </Heading>
-  // <React.StrictMode>
-  //   <ChakraProvider theme={theme}>
-  //     <QueryClientProvider client={client}>
-  //       <RouterProvider router={router} />
-  //     </QueryClientProvider>
-  //   </ChakraProvider>
-  // </React.StrictMode>
+  // <Heading> This app does not exists! </Heading>
+  <React.StrictMode>
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={client}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </ChakraProvider>
+  </React.StrictMode>
 );
