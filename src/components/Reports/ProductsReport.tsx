@@ -129,7 +129,7 @@ const ProductsReport = () => {
             </SimpleGrid>
           </CardHeader>
         </Card>
-        <Box height="90vh" overflowY="scroll">
+        <Box maxHeight="90vh" overflowY="scroll">
           <PaginatedWindow
             children={productItem}
             height={800}
