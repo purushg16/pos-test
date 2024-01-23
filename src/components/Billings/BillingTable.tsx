@@ -164,6 +164,9 @@ export const BillingTable = ({ stock = false }: Props) => {
                             entry.productId,
                             entry.quantity + 1
                           );
+                          (
+                            document.getElementById("none") as HTMLElement
+                          )?.focus();
                         }}
                       />
                       <IconButton
@@ -172,11 +175,14 @@ export const BillingTable = ({ stock = false }: Props) => {
                         aria-label="Add to friends"
                         icon={<MinusIcon />}
                         onClick={() => {
-                          if (entry.quantity !== 0)
+                          if (entry.quantity - 1 > 0)
                             updateBillEntryQuantity(
                               entry.productId,
                               entry.quantity - 1
                             );
+                          (
+                            document.getElementById("none") as HTMLElement
+                          )?.focus();
                         }}
                       />
                     </ButtonGroup>
