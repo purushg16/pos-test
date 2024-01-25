@@ -154,7 +154,7 @@ const CashFlowReport = () => {
         </Heading>
         <Heading size="md">
           Total Bill Amount:{" "}
-          {cashflowList?.reduce((acc, d) => acc + d.amount, 0)}
+          {cashflowList?.reduce((acc, d) => acc + d.amount, 0).toFixed(2)}
         </Heading>
       </Flex>
 

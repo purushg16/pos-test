@@ -10,6 +10,7 @@ import {
   MenuItem,
   MenuList,
   Spacer,
+  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -30,6 +31,7 @@ const GPReports = () => {
   const reportList = reportStore((s) => s.orderedGroupedReports);
   const [selected, setSelected] = useState(false);
   const setReports = reportStore((s) => s.setReports);
+  const [loading, setLoading] = useState(false);
 
   const [state, setState] = useState([
     {
@@ -42,10 +44,12 @@ const GPReports = () => {
   const { refetch } = useReport(state[0].startDate, state[0].endDate);
 
   const onSumbit = () => {
+    setLoading(true);
     setSelected(true);
     if (state[0].startDate && state[0].endDate)
       refetch().then((res) => {
         if (res.data) setReports(res.data || []);
+        setLoading(false);
       });
   };
 
@@ -117,74 +121,83 @@ const GPReports = () => {
       </Flex>
 
       {selected ? (
-        <TableContainer my={5}>
-          {reportList.length > 0 ? (
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>Serial</Th>
-                  <Th>
-                    {type} Name
-                    <Button
-                      ml={2}
-                      size="sm"
-                      onClick={() => {
-                        setSortName(sortName === 1 ? -1 : 1);
-                        sortReports("name", sortName === 1 ? -1 : 1);
-                      }}
-                    >
-                      {sortName === 1 ? <ArrowUpIcon /> : <ArrowDownIcon />}
-                    </Button>
-                  </Th>
-                  <Th isNumeric>
-                    Profit
-                    <Button
-                      ml={2}
-                      size="sm"
-                      onClick={() => {
-                        setSortProfit(sortProfit === 1 ? -1 : 1);
-                        sortReports("profit", sortProfit === 1 ? -1 : 1);
-                      }}
-                    >
-                      {sortProfit === 1 ? <ArrowUpIcon /> : <ArrowDownIcon />}
-                    </Button>
-                  </Th>
-                  {type === "Product" && (
-                    <Th isNumeric>
-                      Zone
+        loading ? (
+          <Spinner />
+        ) : (
+          <TableContainer my={5}>
+            {reportList.length > 0 ? (
+              <Table variant="simple">
+                <Thead>
+                  <Tr>
+                    <Th>Serial</Th>
+                    <Th>
+                      {type} Name
                       <Button
                         ml={2}
                         size="sm"
                         onClick={() => {
                           setSortName(sortName === 1 ? -1 : 1);
-                          sortReports("quantity", sortName === 1 ? -1 : 1);
+                          sortReports("name", sortName === 1 ? -1 : 1);
                         }}
                       >
                         {sortName === 1 ? <ArrowUpIcon /> : <ArrowDownIcon />}
                       </Button>
                     </Th>
-                  )}
-                </Tr>
-              </Thead>
-
-              <Tbody>
-                {reportList.map((product, index) => (
-                  <Tr key={index}>
-                    <Td>{index + 1}</Td>
-                    <Td> {product.name} </Td>
-                    <Td isNumeric color={product.profit > 0 ? "green" : "red"}>
-                      {product.profit.toFixed(2)}
-                      <small>{product.profit > 0 ? "(+)" : "(-)"}</small>
-                    </Td>
-                    {type === "Product" && <Td isNumeric> {product.zone} </Td>}
+                    <Th isNumeric>
+                      Profit
+                      <Button
+                        ml={2}
+                        size="sm"
+                        onClick={() => {
+                          setSortProfit(sortProfit === 1 ? -1 : 1);
+                          sortReports("profit", sortProfit === 1 ? -1 : 1);
+                        }}
+                      >
+                        {sortProfit === 1 ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                      </Button>
+                    </Th>
+                    {type === "Product" && (
+                      <Th isNumeric>
+                        Zone
+                        <Button
+                          ml={2}
+                          size="sm"
+                          onClick={() => {
+                            setSortName(sortName === 1 ? -1 : 1);
+                            sortReports("quantity", sortName === 1 ? -1 : 1);
+                          }}
+                        >
+                          {sortName === 1 ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                        </Button>
+                      </Th>
+                    )}
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          ) : (
-            <Heading> No data found </Heading>
-          )}
-        </TableContainer>
+                </Thead>
+
+                <Tbody>
+                  {reportList.map((product, index) => (
+                    <Tr key={index}>
+                      <Td>{index + 1}</Td>
+                      <Td> {product.name} </Td>
+                      <Td
+                        isNumeric
+                        color={product.profit > 0 ? "green" : "red"}
+                      >
+                        {product.profit.toFixed(2)}
+                        <small>{product.profit > 0 ? "(+)" : "(-)"}</small>
+                      </Td>
+                      {type === "Product" && (
+                        <Td isNumeric> {product.zone} </Td>
+                      )}
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            ) : (
+              <Heading> No data found </Heading>
+            )}
+          </TableContainer>
+        )
       ) : (
         <Heading textAlign="center"> Please Select Date Range </Heading>
       )}
