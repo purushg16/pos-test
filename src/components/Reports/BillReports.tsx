@@ -18,7 +18,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
 import { MdClear } from "react-icons/md";
 import { convertDate } from "../../functions/conversions/dateConversion";
@@ -28,10 +28,6 @@ import { BillReport } from "../../functions/services/billing-services";
 import useCustomerStore from "../../functions/store/customerStore";
 import SelectCustomer from "../Customers/SelectCustomer";
 import BillProductsModal from "./BillProductsModal";
-import { DownloadIcon } from "@chakra-ui/icons";
-import BillPrint from "../BillPrinter/BillPrint";
-import { useReactToPrint } from "react-to-print";
-import { ReportData } from "../entities/ReportData";
 
 const BillReports = () => {
   useGetCustomers();
@@ -46,6 +42,7 @@ const BillReports = () => {
 
   const [selected, setSelected] = useState(false);
   const [billData, setBillDate] = useState<BillReport[]>(undefined || []);
+  const [loading, setLoading] = useState(false);
   const [filteredBillData, setFilteredBillDate] = useState<BillReport[]>(
     undefined || []
   );
@@ -54,6 +51,7 @@ const BillReports = () => {
   const setCurrentCustomer = useCustomerStore((s) => s.setCurrentCustomer);
 
   const onSumbit = () => {
+    setLoading(true);
     setSelected(true);
     if (state[0].startDate && state[0].endDate)
       refetch().then((res) => {
@@ -61,6 +59,7 @@ const BillReports = () => {
           setBillDate(res.data?.data || []);
           setFilteredBillDate(res.data?.data || []);
         }
+        setLoading(false);
       });
   };
 
@@ -124,62 +123,68 @@ const BillReports = () => {
           Total Bills: {filteredBillData.length}
         </Heading>
         <Heading size="md">
-          Total Bill Amount:{" "}
-          {filteredBillData.reduce((acc, d) => acc + d.billAmount, 0)}
+          Total Bill Amount:
+          {filteredBillData
+            .reduce((acc, d) => acc + d.billAmount, 0)
+            .toFixed(2)}
         </Heading>
       </Flex>
 
       <Box mt={10}>
         {selected ? (
-          <>
-            <TableContainer>
-              <Table variant="simple">
-                <Thead>
-                  <Tr>
-                    <Th> Date </Th>
-                    <Th>Bill No</Th>
-                    <Th>Customer</Th>
-                    <Th> Bill Amount </Th>
-                    <Th> Bill Type </Th>
-                    <Th> Biller </Th>
-                    <Th> Action</Th>
-                  </Tr>
-                </Thead>
+          !loading ? (
+            <>
+              <TableContainer>
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>
+                      <Th> Date </Th>
+                      <Th>Bill No</Th>
+                      <Th>Customer</Th>
+                      <Th> Bill Amount </Th>
+                      <Th> Bill Type </Th>
+                      <Th> Biller </Th>
+                      <Th> Action</Th>
+                    </Tr>
+                  </Thead>
 
-                {!filteredBillData ? (
-                  <Spinner />
-                ) : (
-                  <>
-                    {!!filteredBillData && filteredBillData.length > 0 ? (
-                      <Tbody>
-                        {filteredBillData.map((bill, index) => (
-                          <Tr
-                            background={bill.reversed! ? "red.300" : "none"}
-                            key={bill._id}
-                          >
-                            <Td> {convertDate(bill.createdAt)} </Td>
-                            <Td>{bill.billNo}</Td>
-                            <Td>{bill.customer.name}</Td>
-                            <Td> {bill.billAmount} </Td>
-                            <Td> {bill.billType} </Td>
-                            <Td> {bill.billerName} </Td>
-                            <Td>
-                              <BillProductsModal
-                                products={bill.cart.product}
-                                entry={bill}
-                              />
-                            </Td>
-                          </Tr>
-                        ))}
-                      </Tbody>
-                    ) : (
-                      <Heading> No data found! </Heading>
-                    )}
-                  </>
-                )}
-              </Table>
-            </TableContainer>
-          </>
+                  {!filteredBillData ? (
+                    <Spinner />
+                  ) : (
+                    <>
+                      {!!filteredBillData && filteredBillData.length > 0 ? (
+                        <Tbody>
+                          {filteredBillData.map((bill, index) => (
+                            <Tr
+                              background={bill.reversed! ? "red.300" : "none"}
+                              key={bill._id}
+                            >
+                              <Td> {convertDate(bill.createdAt)} </Td>
+                              <Td>{bill.billNo}</Td>
+                              <Td>{bill.customer.name}</Td>
+                              <Td> {bill.billAmount.toFixed(2)} </Td>
+                              <Td> {bill.billType} </Td>
+                              <Td> {bill.billerName} </Td>
+                              <Td>
+                                <BillProductsModal
+                                  products={bill.cart.product}
+                                  entry={bill}
+                                />
+                              </Td>
+                            </Tr>
+                          ))}
+                        </Tbody>
+                      ) : (
+                        <Heading> No data found! </Heading>
+                      )}
+                    </>
+                  )}
+                </Table>
+              </TableContainer>
+            </>
+          ) : (
+            <Spinner />
+          )
         ) : (
           <Heading textAlign="center"> Please Select Date Range </Heading>
         )}
