@@ -38,6 +38,12 @@ export interface InternalError {
   message: string;
 }
 
+const PPartial = {
+  "UPI/Cash": "no-credit",
+  "Partial Credit": "partial-credit",
+  Credit: "credit",
+};
+
 const Partial = ["No Credit", "Partial Credit", "Credit"];
 
 export default function BillPaymentModal({ isOpen, onClose }: Props) {
@@ -121,7 +127,11 @@ export default function BillPaymentModal({ isOpen, onClose }: Props) {
                 <Text> Payment: </Text>
                 <Menu>
                   <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                    {partialPayment || "Not Selected"}
+                    {!!partialPayment
+                      ? partialPayment === "no-credit"
+                        ? "UPI/Cash"
+                        : partialPayment
+                      : "Not Selected"}
                   </MenuButton>
 
                   <MenuList>
@@ -132,7 +142,7 @@ export default function BillPaymentModal({ isOpen, onClose }: Props) {
                           setPartialPayment(p.replace(" ", "-").toLowerCase())
                         }
                       >
-                        {p}
+                        {p === "No Credit" ? "UPI/Cash" : p}
                       </MenuItem>
                     ))}
                   </MenuList>
