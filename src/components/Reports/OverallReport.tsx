@@ -101,6 +101,7 @@ const OverallReport = () => {
             <SimpleGrid columns={cashFlow.length} textAlign="left" spacing={2}>
               {cashFlow.map((flow) => (
                 <Box
+                  key={flow._id.mode}
                   textAlign="right"
                   borderRadius={7}
                   padding={2}
@@ -110,7 +111,7 @@ const OverallReport = () => {
                       : "red.300"
                   }
                 >
-                  <Heading size="lg"> {flow.totalAmount} </Heading>
+                  <Heading size="lg"> {flow.totalAmount.toFixed(2)} </Heading>
                   <Heading size="sm">{flow._id.nature}</Heading>
                 </Box>
               ))}
@@ -130,6 +131,7 @@ const OverallReport = () => {
             <SimpleGrid columns={upiFlow.length} textAlign="left" spacing={2}>
               {upiFlow.map((flow) => (
                 <Box
+                  key={flow._id.mode}
                   textAlign="right"
                   borderRadius={7}
                   padding={2}
@@ -139,7 +141,7 @@ const OverallReport = () => {
                       : "red.300"
                   }
                 >
-                  <Heading size="lg"> {flow.totalAmount} </Heading>
+                  <Heading size="lg"> {flow.totalAmount.toFixed(2)} </Heading>
                   <Heading size="sm">{flow._id.nature}</Heading>
                 </Box>
               ))}
