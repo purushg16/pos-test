@@ -86,6 +86,7 @@ const ProductForm = () => {
         setBarcodeData((prevData) => prevData + event.key);
       } else if (event.key === "Enter") {
         if (
+          document.activeElement?.id === "product-barCode" &&
           document.getElementById("product-barCode") &&
           location.pathname === "/addProduct"
         ) {
