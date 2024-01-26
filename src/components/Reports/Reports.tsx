@@ -65,7 +65,7 @@ const Reports = () => {
               </CardHeader>
             </Card>
 
-            <Card
+            {/* <Card
               borderRadius={15}
               cursor="pointer"
               onClick={() => {
@@ -85,7 +85,7 @@ const Reports = () => {
                   <Button colorScheme="teal"> View </Button>
                 </Flex>
               </CardHeader>
-            </Card>
+            </Card> */}
 
             <Card
               borderRadius={15}
@@ -156,7 +156,7 @@ const Reports = () => {
       )}
 
       <Box pt={5}>
-        {reportTab === "Prodcuts" && <ProductsReport />}
+        {/* {reportTab === "Prodcuts" && <ProductsReport />} */}
         {reportTab === "gp" && <GPReports />}
         {reportTab === "cashflow" && <CashFlowReport />}
         {reportTab === "bill" && <BillReports />}

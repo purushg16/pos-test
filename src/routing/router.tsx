@@ -19,6 +19,7 @@ import PendingBills from "../components/ReviewBills/PendingBills";
 import StockForm from "../components/Stock/StockForm";
 import { SuppliersForm } from "../components/Suppliers/SuppliersForm";
 import Pilferages from "../components/Pilferages/Pilferages";
+import ProductsReport from "../components/Reports/ProductsReport";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       { path: "/postAttendance", element: <AttendenceForm /> },
       { path: "/viewAttendance", element: <AttendanceReport /> },
       { path: "/reports", element: <Reports /> },
+      { path: "/productsReport", element: <ProductsReport /> },
       { path: "/reviewBills", element: <PendingBills /> },
     ],
   },

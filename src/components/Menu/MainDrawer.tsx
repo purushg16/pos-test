@@ -22,6 +22,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { CiBoxes } from "react-icons/ci";
 import axios, { AxiosResponse } from "axios";
 import { IconType } from "react-icons";
 import {
@@ -66,6 +67,11 @@ const routes: {
   Billing: ["/", BsCalculator, ["Perform Billing"]],
   Attendence: ["/attendance", BsJournalCheck, ["Manage Attendence"]],
   Reports: ["/reports", MdOutlineAccountTree, ["Review Reports"]],
+  "Products Reports": [
+    "/productsReport",
+    CiBoxes,
+    ["Review All Product related reports"],
+  ],
   "Add Product": ["/addProduct", BsBox, ["Add New Products"]],
   "Add Stock": ["/addStock", BsKanban, ["Add stock to existing Products Data"]],
   "Manage Pilferage": [
@@ -146,7 +152,12 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
           </DrawerHeader>
 
           <DrawerBody padding={10}>
-            <SimpleGrid columns={4} spacing={10} padding={10}>
+            <SimpleGrid
+              columns={{ base: 2, md: 3, lg: 4 }}
+              spacing={10}
+              paddingX={3}
+              paddingY={10}
+            >
               {Object.keys(routes).map((route, index) => (
                 <Box
                   boxShadow="dark-lg"
@@ -217,7 +228,7 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
                 </SimpleGrid>
               </Box> */}
 
-              <Button
+              {/* <Button
                 height="100%"
                 boxShadow="dark-lg"
                 borderRadius={20}
@@ -225,7 +236,7 @@ export default function MainDrawer({ isOpen, onClose }: Props) {
                 colorScheme="red"
               >
                 <Icon as={MdClose} boxSize={20} />
-              </Button>
+              </Button> */}
             </SimpleGrid>
           </DrawerBody>
         </DrawerContent>
