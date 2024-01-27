@@ -176,6 +176,29 @@ const ProductReportModal = ({ product }: Props) => {
               <Card boxShadow="2xl" p={2}>
                 <CardBody textAlign="left">
                   <Heading size="xs" fontWeight="normal" color="gray">
+                    Zone:
+                  </Heading>
+                  {edit ? (
+                    <Input
+                      value={editProduct.zone}
+                      type="number"
+                      onChange={(event) => {
+                        setEditProduct({
+                          ...editProduct,
+                          zone: parseFloat(event.target.value),
+                        });
+                      }}
+                      my={2}
+                    />
+                  ) : (
+                    <Heading size="md">{product.zone}</Heading>
+                  )}
+                </CardBody>
+              </Card>
+
+              <Card boxShadow="2xl" p={2}>
+                <CardBody textAlign="left">
+                  <Heading size="xs" fontWeight="normal" color="gray">
                     Category:
                   </Heading>
                   <Heading size="md">{product.category.name}</Heading>
@@ -351,7 +374,6 @@ const ProductReportModal = ({ product }: Props) => {
                 </CardBody>
               </Card>
 
-              <Box></Box>
               {edit && (
                 <Button
                   colorScheme="blue"
