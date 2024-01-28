@@ -67,7 +67,7 @@ const OverallReport = () => {
               </GridItem>
 
               <GridItem textAlign="right">
-                <Heading> {currentFlow.salesTotal} </Heading>
+                <Heading> {currentFlow.salesTotal.toFixed(2)} </Heading>
                 <Heading size="sm" color="gray">
                   Sales Total
                 </Heading>
@@ -77,7 +77,7 @@ const OverallReport = () => {
                 <Text> + </Text>
               </GridItem>
               <GridItem textAlign="right">
-                <Heading> {currentFlow.creditTotal} </Heading>
+                <Heading> {currentFlow.creditTotal.toFixed(2)} </Heading>
                 <Heading size="sm" color="gray">
                   Credits
                 </Heading>
