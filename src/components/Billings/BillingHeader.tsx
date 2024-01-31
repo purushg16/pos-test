@@ -100,7 +100,6 @@ export const BillingHeader = ({
             )
           }
           onClick={() => {
-            console.log("clicked");
             refetch();
           }}
         >
