@@ -10,6 +10,7 @@
   margin: 0 auto;
   width: 50%;
   background: #fff;
+  overflow-y: scroll;
 }
 
 ::selection {
