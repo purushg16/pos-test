@@ -5,6 +5,15 @@ body,
   overflow-y: hidden;
 }
 
+@media print {
+  html,
+  body,
+  #root {
+    height: auto !important;
+    overflow-y: visible !important;
+  }
+}
+
 #main > div {
   height: 100%;
 }
