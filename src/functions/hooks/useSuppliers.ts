@@ -1,30 +1,44 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { GetSuppliers, PostSupplier } from "../services/suppliers-services";
 import useSupplierStore from "../store/suppliersStore";
-import { Supplier } from "../../components/entities/Supplier";
+import { AxiosError } from "axios";
+import { AuthError } from "./useAuth";
+import { useToast } from "@chakra-ui/react";
 
-interface Props {
-  type: "GET" | "POST";
-  supplier?: Supplier;
-}
-
-const useSuppliers = ({ type, supplier }: Props) => {
+const usePostSupplier = (done: (status: boolean, success: boolean) => void) => {
   const setSuppliers = useSupplierStore((s) => s.setSuppliers);
+  const toast = useToast();
 
-  if (type === "POST") {
-    if (supplier) {
-      return useQuery({
-        queryKey: ["suppliers", supplier],
-        queryFn: () =>
-          PostSupplier.postData(supplier).then((res) => {
-            console.log(res);
-            return res;
-          }),
-        staleTime: 0,
-        enabled: false,
+  return useMutation({
+    mutationFn: PostSupplier.postData,
+    onSuccess: (res) => {
+      toast({
+        title: res.msg,
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+        position: "top",
       });
-    }
-  }
+      GetSuppliers.getAll().then((res) => {
+        setSuppliers(res.data);
+      });
+      done(false, true);
+    },
+    onError: (err: AxiosError<AuthError>) => {
+      toast({
+        title: err.response?.data.err,
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+        position: "top",
+      });
+      done(false, false);
+    },
+  });
+};
+
+const useGetSupplier = () => {
+  const setSuppliers = useSupplierStore((s) => s.setSuppliers);
 
   return useQuery({
     queryKey: ["suppliers"],
@@ -38,4 +52,4 @@ const useSuppliers = ({ type, supplier }: Props) => {
   });
 };
 
-export default useSuppliers;
+export { useGetSupplier, usePostSupplier };

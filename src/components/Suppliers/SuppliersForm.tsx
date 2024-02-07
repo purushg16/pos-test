@@ -1,53 +1,27 @@
-import {
-  Flex,
-  Heading,
-  Input,
-  Button,
-  Box,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import useSuppliers from "../../functions/hooks/useSuppliers";
+import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { usePostSupplier } from "../../functions/hooks/useSuppliers";
 
-export const SuppliersForm = () => {
+interface Props {
+  done?: (status: boolean) => void;
+}
+
+export const SuppliersForm = ({ done = () => {} }: Props) => {
   const [newSupplier, editSupplier] = useState({
     name: "",
     phone: parseInt(""),
   });
   const [canSubmit, setSubmit] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const toast = useToast();
 
-  const { refetch } = useSuppliers({ type: "POST", supplier: newSupplier });
+  const { mutate } = usePostSupplier((yes, success) => {
+    setLoading(yes);
+    done(yes);
+  });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit = () => {
     setLoading(true);
-
-    refetch().then((res) => {
-      const { data, isSuccess, isError } = res;
-
-      if (isSuccess) {
-        toast({
-          title: data.msg,
-          status: "success",
-          duration: 1000,
-          isClosable: true,
-          position: "top",
-        });
-        setLoading(false);
-        editSupplier({ name: "", phone: parseInt("") });
-      } else if (isError) {
-        toast({
-          title: data.message,
-          status: "error",
-          duration: 1000,
-          isClosable: true,
-          position: "top",
-        });
-      }
-    });
+    mutate(newSupplier);
   };
 
   useEffect(() => {
@@ -59,7 +33,7 @@ export const SuppliersForm = () => {
       <Box width={500}>
         <Heading> Add Supplier </Heading>
 
-        <form onSubmit={(event) => onSubmit(event)}>
+        <form onSubmit={onSubmit}>
           <Flex flexDirection="column" gap={5} marginY={7}>
             <Box>
               <Text>Supplier Name</Text>

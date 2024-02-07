@@ -4,6 +4,7 @@ import { Supplier } from "../../components/entities/Supplier";
 interface SupplierStore {
   suppliersList: Supplier[];
   setSuppliers: (suppliers: Supplier[]) => void;
+  addSupplier: (supplier: Supplier) => void;
 
   selectSupplier: (name: string) => void;
   selectedSuppliers: Supplier[] | undefined;
@@ -16,6 +17,12 @@ const useSupplierStore = create<SupplierStore>((set) => ({
   suppliersList: [],
   setSuppliers: (suppliers) =>
     set(() => ({ suppliersList: suppliers, selectedSuppliers: suppliers })),
+
+  addSupplier: (newSupplier) =>
+    set((store) => ({
+      suppliersList: [...store.suppliersList, newSupplier],
+      selectedSuppliers: [...store.selectedSuppliers!, newSupplier],
+    })),
 
   selectedSuppliers: undefined,
   selectSupplier: (name) =>

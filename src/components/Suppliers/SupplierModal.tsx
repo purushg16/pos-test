@@ -26,7 +26,7 @@ export default function SupplierModal() {
           <ModalHeader />
           <ModalCloseButton />
           <ModalBody>
-            <SuppliersForm />
+            <SuppliersForm done={(yes) => yes && onClose()} />
           </ModalBody>
 
           <ModalFooter>

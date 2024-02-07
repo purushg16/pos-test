@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { ChangeEvent, useRef, useState } from "react";
 import useStock from "../../functions/hooks/useStock";
-import useSuppliers from "../../functions/hooks/useSuppliers";
+import { useGetSupplier } from "../../functions/hooks/useSuppliers";
 import useStockStore from "../../functions/store/stockStore";
 import useSupplierStore from "../../functions/store/suppliersStore";
 import SelectSuppliers from "./SelectSuppliers";
@@ -23,7 +23,7 @@ const StockDetails = () => {
   const stockProducts = useStockStore((s) => s.stockProducts);
   const [loading, setLoading] = useState(false);
 
-  useSuppliers({ type: "GET" });
+  useGetSupplier();
 
   const { mutate } = useStock((yes) => setLoading(yes));
   const data = new FormData();

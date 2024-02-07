@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import useSuppliers from "../../functions/hooks/useSuppliers";
+import { useGetSupplier } from "../../functions/hooks/useSuppliers";
 import useSupplierStore from "../../functions/store/suppliersStore";
 import SupplierModal from "../Suppliers/SupplierModal";
 import PaginatedWindow from "../Window/Window";
@@ -21,7 +21,7 @@ import PaginatedWindow from "../Window/Window";
 const SelectSuppliers = () => {
   const ref = useRef<HTMLInputElement>(null);
 
-  useSuppliers({ type: "GET" });
+  useGetSupplier();
   const selectSupplier = useSupplierStore((s) => s.selectSupplier);
   const selectedSuppliers = useSupplierStore((s) => s.selectedSuppliers);
   const currentSupplier = useSupplierStore((s) => s.currentSupplier);

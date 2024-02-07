@@ -22,9 +22,9 @@ import {
 import { useEffect, useState } from "react";
 import { useLongPress } from "use-long-press";
 import { postNewProduct } from "../../functions/hooks/useProducts";
-import useSuppliers from "../../functions/hooks/useSuppliers";
 import useCategoryStore from "../../functions/store/categoryStore";
 import BillTabContainer from "../Billings/BillTabContainer";
+import { useGetSupplier } from "../../functions/hooks/useSuppliers";
 
 const UNITS = [
   "None",
@@ -52,7 +52,7 @@ const UNITS = [
 ];
 
 const ProductForm = () => {
-  useSuppliers({ type: "GET" });
+  useGetSupplier();
 
   const [barcodeData, setBarcodeData] = useState<string>("");
   const currentCategory = useCategoryStore((s) => s.currentCategory);
