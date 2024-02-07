@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../functions/hooks/useAuth";
-import LoadingPage from "../LoadingPage/LoadingPage";
 
 const Authentication = () => {
   const [show, setShow] = useState(false);
@@ -47,7 +46,12 @@ const Authentication = () => {
   };
 
   return (
-    <LoadingPage>
+    <Box
+      display="flex"
+      justifyContent="center"
+      height="100vh"
+      alignItems="center"
+    >
       <Box textAlign="center">
         <Heading mb={5}> Login </Heading>
         <FormControl isRequired mb={5}>
@@ -90,7 +94,7 @@ const Authentication = () => {
           Login
         </Button>
       </Box>
-    </LoadingPage>
+    </Box>
   );
 };
 

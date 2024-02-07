@@ -66,17 +66,7 @@ const ProductsReport = () => {
     );
   };
 
-  if (!productReports)
-    return (
-      <LoadingPage
-        children={
-          <>
-            <Spinner mr={3} />
-            <Heading> Loading... </Heading>
-          </>
-        }
-      />
-    );
+  if (!productReports) return <LoadingPage />;
 
   return (
     <Box paddingX={20} py={3}>
