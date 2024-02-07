@@ -1,8 +1,8 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Heading, Spinner } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const LoadingPage = ({ children }: Props) => {
@@ -13,7 +13,14 @@ const LoadingPage = ({ children }: Props) => {
       height="100vh"
       alignItems="center"
     >
-      {children}
+      {children ? (
+        children
+      ) : (
+        <>
+          <Spinner mr={3} />
+          <Heading> Loading... </Heading>
+        </>
+      )}
     </Box>
   );
 };

@@ -1,4 +1,3 @@
-import { DownloadIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -21,6 +20,7 @@ import { convertDate } from "../../functions/conversions/dateConversion";
 import useReview from "../../functions/hooks/useReview";
 import PendingBillsStore from "../../functions/store/pendingBillsStore";
 import PendingModal from "./PendingModal";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 const PendingBills = () => {
   useReview({ type: "GET" });
@@ -30,7 +30,8 @@ const PendingBills = () => {
   const currentFilter = PendingBillsStore((s) => s.currentFilter);
   const clearFilter = PendingBillsStore((s) => s.clearFilter);
 
-  if (!pendingBills) return <Spinner />;
+  if (!pendingBills) return <LoadingPage />;
+
   return (
     <Box padding={10}>
       <Flex my={2}>
