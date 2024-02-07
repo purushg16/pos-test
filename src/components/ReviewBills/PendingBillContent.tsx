@@ -28,6 +28,7 @@ const PendingBillContent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               232 சேலம் மெயின் ரோடு
               <br />
               சின்ன சேலம் <br />
+              9042342288,9443392256
             </p>
           </div>
           <h2 style={{ margin: "10px 0" }}> Pending Bill </h2>

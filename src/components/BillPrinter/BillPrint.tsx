@@ -36,9 +36,10 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
             232 சேலம் மெயின் ரோடு
             <br />
             சின்ன சேலம் <br />
+            9042342288,9443392256
           </p>
         </div>
-        <h2 style={{ margin: "10px 0" }}> Cash Estimate </h2>
+        <h2 style={{ margin: "10px 0" }}> Estimate </h2>
         <h2 style={{ margin: "10px 0" }}> Bill No: {entry.billNo} </h2>
 
         <SimpleGrid columns={2} my={1}>
