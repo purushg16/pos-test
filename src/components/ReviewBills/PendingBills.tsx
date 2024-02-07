@@ -89,7 +89,7 @@ const PendingBills = () => {
                 <Td> {bill.customer[0].name} </Td>
                 <Td>
                   <small>₹</small>
-                  {bill.billAmount}
+                  {bill.billAmount.toFixed(2)}
                 </Td>
                 <Td textAlign="center">
                   <Image
