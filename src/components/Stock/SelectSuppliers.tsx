@@ -11,7 +11,7 @@ import {
   Spinner,
   VStack,
 } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import useSuppliers from "../../functions/hooks/useSuppliers";
 import useSupplierStore from "../../functions/store/suppliersStore";
@@ -26,6 +26,16 @@ const SelectSuppliers = () => {
   const selectedSuppliers = useSupplierStore((s) => s.selectedSuppliers);
   const currentSupplier = useSupplierStore((s) => s.currentSupplier);
   const setCurrentSupplier = useSupplierStore((s) => s.setCurrentSupplier);
+  const [clicked, setClicked] = useState(false);
+
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (clicked) {
+      btnRef.current?.click();
+      setClicked(false);
+    }
+  }, [clicked]);
 
   // Custom component for rendering each supplier in the FixedSizeList
   const SupplierItem = ({
@@ -43,6 +53,7 @@ const SelectSuppliers = () => {
           width="100%"
           key={index}
           onClick={() => {
+            setClicked(true);
             setCurrentSupplier(supplier);
           }}
         >
@@ -55,6 +66,7 @@ const SelectSuppliers = () => {
   return (
     <Menu>
       <MenuButton
+        ref={btnRef}
         as={Button}
         rightIcon={<ChevronDownIcon />}
         width="100%"
