@@ -5,7 +5,7 @@ import { StockProduct } from "../../components/entities/StockProduct";
 interface StockStore {
   supplierId: string | undefined;
   amount: number | null;
-  billNo: number | undefined;
+  billNo: string | undefined;
   stockProducts: StockProduct[];
   total: number | null;
 
@@ -13,7 +13,7 @@ interface StockStore {
   updateUnitQuantity: (productId: string, quanity: number) => void;
 
   setSupplier: (supplier: ProductSuppliers) => void;
-  setBillNo: (billNo: number) => void;
+  setBillNo: (billNo: string) => void;
   addProducts: (products: StockProduct) => void;
   updateStockPrice: (producId: string, amount: number) => void;
   clearStock: () => void;

@@ -8,7 +8,7 @@ interface StockProducts {
 export interface Stock {
   supplierId: string;
   amount: number;
-  billNo: number;
+  billNo: string;
   products: StockProducts[];
   link?: string;
 }

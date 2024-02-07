@@ -95,9 +95,7 @@ const StockDetails = () => {
               variant={"filled"}
               borderRadius={7}
               value={billNo}
-              onChange={(event) => {
-                setBillNo(parseInt(event.target.value));
-              }}
+              onChange={(event) => setBillNo(event.target.value)}
             />
           </InputGroup>
         </Box>
