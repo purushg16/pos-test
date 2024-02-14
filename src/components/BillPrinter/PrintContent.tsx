@@ -190,7 +190,7 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
               ).toFixed(2)}
             </Heading>
             <Heading textAlign="center" size="sm" pb={2}>
-              You have saved:{" "}
+              உங்கள் சேமிப்பு:{" "}
               {(
                 BillEntries.reduce(
                   (acc, entry: BillingEntry) =>

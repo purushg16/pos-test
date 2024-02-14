@@ -166,7 +166,7 @@ const BillPrint = forwardRef<HTMLDivElement, Props>(({ entry }, ref) => {
             Net Amount: {entry.billAmount.toFixed(2)}
           </Heading>
           <Heading textAlign="center" size="sm" pb={2}>
-            You have saved:{" "}
+            உங்கள் சேமிப்பு:{" "}
             {(
               entry.cart.product.reduce(
                 (acc, entry) => acc + entry.productId.mrp * entry.stock,
