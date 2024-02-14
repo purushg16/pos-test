@@ -77,7 +77,11 @@ const BillProductsModal = ({ products, entry }: Props) => {
                           : product.productId.unit}
                       </Td>
                       <Td>
-                        {(product.salesPrice * product.selectedUnit).toFixed(2)}
+                        {(
+                          product.salesPrice *
+                          product.selectedUnit *
+                          product.stock
+                        ).toFixed(2)}
                       </Td>
                     </Tr>
                   ))}
