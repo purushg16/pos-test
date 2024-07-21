@@ -102,7 +102,9 @@ const PrintableComponent = forwardRef<HTMLDivElement, PrintableComponentProps>(
                     <h3 className="itemtext">{entry.productName}</h3>
                   </td>
                   <td className="tableitem">
-                    <h2 className="itemtext float">{entry.quantity}</h2>
+                    <h2 className="itemtext float">
+                      {entry.quantity * (entry.currentUnitValue || 1)}
+                    </h2>
                   </td>
                   <td className="tableitem">
                     <h2 className="itemtext float">{entry.unit}</h2>

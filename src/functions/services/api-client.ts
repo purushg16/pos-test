@@ -15,6 +15,7 @@ const createAxiosInstance = () => {
     headers: {
       // Set the Authorization header with the token
       Authorization: token ? token : undefined,
+      // Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwiaWF0IjoxNzA0MDA4OTEyfQ.RpBL_MDwcDI7ubYDNGIMFjEi2kG-IdCKEZGRC57spm0",
     },
   });
 
