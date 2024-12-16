@@ -67,6 +67,9 @@ interface ProductStore {
   searchedProductList: Product[] | undefined;
   searchProductById: (digits: string) => void;
 
+  // By Name
+  searchProductByName: (name: string) => void;
+
   barcodeProduct: Product | undefined;
   getProductUsingBarCode: (code: string | number) => void;
   deleteBarCodeProduct: () => void;
@@ -101,6 +104,14 @@ const useProductStore = create<ProductStore>((set) => ({
       ),
     }));
   },
+
+  searchProductByName: (name) =>
+    set((store) => ({
+      searchedProductList:
+        searchProductByName(store.baseProducts, name).length > 0
+          ? searchProductByName(store.baseProducts, name)
+          : store.baseProducts.filter((p) => p.itemName === name),
+    })),
 
   searchProductById: (digits) =>
     set((store) => ({

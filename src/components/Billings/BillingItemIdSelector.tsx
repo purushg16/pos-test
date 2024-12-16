@@ -6,6 +6,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,
@@ -27,6 +28,7 @@ import useEmployeStore from "../../functions/store/employeStore";
 import useGSTStore from "../../functions/store/gstStore";
 import useCustomerStore from "../../functions/store/customerStore";
 import PaginatedWindow from "../Window/Window";
+import AudioBiller from "./AudioBiller";
 
 interface Props {
   small?: boolean;
@@ -53,7 +55,8 @@ const BillingItemIdSelector = ({
   const currentGstin = useGSTStore((s) => s.currentGstin);
   const currentCustomer = useCustomerStore((s) => s.currentCustmer);
 
-  const ref = useRef<HTMLInputElement>(null);
+  // const ref = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState<string>("");
 
   const addBillItem = (item: Product) => {
     addBillEntries(convertToBill(item, billType!));
@@ -211,22 +214,27 @@ const BillingItemIdSelector = ({
               <InputLeftElement children={<BsSearch />} />
               <Input
                 focusBorderColor="gray.300"
-                ref={ref}
                 placeholder="Search Products..."
                 variant={"filled"}
                 borderRadius={7}
-                onChange={() => {
-                  if (ref.current) {
-                    searchProductById(ref.current.value);
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val) {
+                    setValue(val);
+                    searchProductById(val);
                   }
                 }}
+                value={value}
+              />
+              <InputRightElement
+                children={<AudioBiller setValue={setValue} />}
               />
             </InputGroup>
           </Box>
           <Box>
             {!searchedProductList ? (
               <Spinner />
-            ) : searchedProductList.length > 0 && ref.current?.value ? (
+            ) : searchedProductList.length > 0 && value ? (
               <PaginatedWindow
                 children={itemRenderer}
                 height={menuListMaxHeight}
@@ -234,7 +242,7 @@ const BillingItemIdSelector = ({
                 width="100%"
                 itemSize={50}
               />
-            ) : searchedProductList.length === 0 && ref.current?.value ? (
+            ) : searchedProductList.length === 0 && value ? (
               <Text textAlign="center" fontSize="lg">
                 No Products found!
               </Text>

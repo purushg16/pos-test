@@ -191,7 +191,7 @@ export const BillingTable = ({ stock = false }: Props) => {
 
                 <Menu>
                   <MenuButton as={Button} size="sm" width="100%">
-                    {"Select"}
+                    Select
                   </MenuButton>
                   <MenuList>
                     {Object.keys(gramQuantities).map((q) => (
