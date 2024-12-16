@@ -21,7 +21,6 @@ const AudioBiller = ({ setValue }: Props) => {
 
   useEffect(() => {
     if (transcript) {
-      console.log(transcript);
       setValue(transcript);
       searchProductById(transcript);
     }
