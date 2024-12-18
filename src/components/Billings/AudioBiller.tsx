@@ -19,17 +19,27 @@ const AudioBiller = ({ setValue }: Props) => {
 
   const searchProductById = useProductStore((s) => s.searchProductByName);
 
+  // Start Tamil speech recognition
+  const startListening = () => {
+    SpeechRecognition.startListening({
+      language: "ta-IN", // Set Tamil as the language
+      continuous: false, // Stop listening after a single input
+    });
+  };
+
   useEffect(() => {
     if (transcript) {
       setValue(transcript);
-      searchProductById(transcript);
+      searchProductById(transcript); // Search product based on recognized text
     }
   }, [transcript]);
 
   useEffect(() => {
-    if (listening)
-      toast({ title: "Listening...", duration: 60 * 5000, position: "top" });
-    else toast.closeAll();
+    if (listening) {
+      toast({ title: "Listening...", duration: 5000, position: "top" });
+    } else {
+      toast.closeAll();
+    }
   }, [listening]);
 
   return (
@@ -38,7 +48,7 @@ const AudioBiller = ({ setValue }: Props) => {
         as={BsMic}
         onClick={() =>
           browserSupportsSpeechRecognition
-            ? SpeechRecognition.startListening()
+            ? startListening()
             : toast({
                 status: "error",
                 title: "Not Supported on this browser!",
@@ -46,6 +56,7 @@ const AudioBiller = ({ setValue }: Props) => {
               })
         }
         opacity={listening || !browserSupportsSpeechRecognition ? 0.5 : 1}
+        cursor="pointer"
       />
     </>
   );
