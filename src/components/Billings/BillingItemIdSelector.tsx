@@ -29,6 +29,7 @@ import useGSTStore from "../../functions/store/gstStore";
 import useCustomerStore from "../../functions/store/customerStore";
 import PaginatedWindow from "../Window/Window";
 import AudioBiller from "./AudioBiller";
+import PaginatedProductResult from "./PaginatedProductResult";
 
 interface Props {
   small?: boolean;
@@ -99,77 +100,6 @@ const BillingItemIdSelector = ({
   };
 
   const [productSelected, setProductSelected] = useState(false);
-  const itemRenderer = ({
-    index,
-    style,
-  }: {
-    index: number;
-    style: React.CSSProperties;
-  }) => {
-    const item = searchedProductList![index];
-
-    const itemStyle: React.CSSProperties = {
-      ...style,
-      padding: 10,
-    };
-
-    return (
-      <ButtonGroup
-        key={item._id}
-        size="md"
-        isAttached
-        variant="solid"
-        width="100%"
-        style={itemStyle}
-      >
-        <Button padding={2} fontSize="small">
-          {item.code}
-        </Button>
-        <Button
-          variant="outline"
-          textAlign="left"
-          paddingY={2}
-          width="100%"
-          key={item._id}
-          onClick={() => {
-            pilferage
-              ? selectProduct(item)
-              : stock
-              ? addStockItem(item)
-              : addBillItem(item);
-            setProductSelected(true);
-          }}
-        >
-          {item.itemName}
-        </Button>
-      </ButtonGroup>
-    );
-  };
-
-  const [menuListMaxHeight, setMenuListMaxHeight] = useState(0);
-  useEffect(() => {
-    // Calculate available body height and set it as the maxHeight for MenuList
-    const calculateMaxHeight = () => {
-      const windowHeight =
-        window.innerHeight ||
-        document.documentElement.clientHeight ||
-        document.body.clientHeight;
-      const maxHeightPercentage = 0.35;
-      setMenuListMaxHeight(windowHeight * maxHeightPercentage);
-    };
-
-    // Initial calculation
-    calculateMaxHeight();
-
-    // Recalculate on window resize
-    window.addEventListener("resize", calculateMaxHeight);
-
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", calculateMaxHeight);
-    };
-  }, []);
-
   const btnRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     (document.activeElement as HTMLButtonElement).blur();
@@ -235,12 +165,16 @@ const BillingItemIdSelector = ({
             {!searchedProductList ? (
               <Spinner />
             ) : searchedProductList.length > 0 && value ? (
-              <PaginatedWindow
-                children={itemRenderer}
-                height={menuListMaxHeight}
-                length={searchedProductList.length}
-                width="100%"
-                itemSize={50}
+              <PaginatedProductResult
+                callback={(item) => {
+                  pilferage
+                    ? selectProduct(item)
+                    : stock
+                    ? addStockItem(item)
+                    : addBillItem(item);
+                  setProductSelected(true);
+                }}
+                productList={searchedProductList}
               />
             ) : searchedProductList.length === 0 && value ? (
               <Text textAlign="center" fontSize="lg">

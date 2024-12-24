@@ -2,6 +2,7 @@ import { Box, Button, ButtonGroup, useDisclosure } from "@chakra-ui/react";
 import MainDrawer from "./MainDrawer";
 import { Link } from "react-router-dom";
 import { BsFullscreen } from "react-icons/bs";
+import AudioBillerModal from "../Billings/AudioBillerModal";
 
 export const MenuBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -42,6 +43,8 @@ export const MenuBar = () => {
           <BsFullscreen />
         </Button>
       </ButtonGroup>
+
+      <AudioBillerModal />
 
       <MainDrawer onOpen={onOpen} isOpen={isOpen} onClose={onClose} />
     </Box>
